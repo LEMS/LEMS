@@ -1,0 +1,75 @@
+<Lems>
+
+
+<ComponentType name="Display">
+    <Text name="title"/>   
+	<Parameter name="xmin" dimension="none"/>
+	<Parameter name="xmax" dimension="none"/>
+	<Parameter name="ymin" dimension="none"/>
+	<Parameter name="ymax" dimension="none"/>
+
+	<Parameter name="timeScale" dimension="time"/>
+    <Children name="lines" type="Line"/>
+
+    <Simulation>
+         <DataDisplay title="title" dataRegion="xmin,xmax,ymin,ymax"/>
+    </Simulation>
+</ComponentType>
+
+
+<ComponentType name="Line">
+    <Parameter name="scale" dimension="*"/>
+	 <Parameter name="timeScale" dimension="*"/>
+    <Text name="color"/>
+    <Path name="quantity"/>
+    <Simulation>
+        <Record quantity="quantity" timeScale="timeScale" scale="scale" color="color"/>
+    </Simulation>
+</ComponentType>
+
+
+<ComponentType name="OutputFile">
+	<Text name="path"/>
+	<Text name="fileName"/>
+	
+	<Children name="outputColumn" type="OutputColumn"/>
+	
+	<Simulation>
+		<DataWriter path="path" fileName="fileName"/>
+	</Simulation>
+
+</ComponentType>
+
+
+<ComponentType name="OutputColumn">
+     <Path name="quantity"/>
+	 <Simulation>
+        <Record quantity="quantity"/>
+    </Simulation>
+</ComponentType>
+
+
+
+<ComponentType name="Simulation">
+    <Parameter name="length" dimension="time"/>
+    <Parameter name="step" dimension="time"/>
+    
+    <ComponentReference name="target" type="Component"/>
+
+
+    <Children name="displays" type="Display"/>
+       
+    <Children name="outputs" type="OutputFile"/>
+   
+    <Dynamics>
+        <StateVariable name="t" dimension="time"/>
+    </Dynamics>
+    
+    <Simulation>
+        <Run component="target" variable="t" increment="step" total="length"/>
+    </Simulation>
+</ComponentType>
+
+
+
+</Lems>

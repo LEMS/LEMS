@@ -1,0 +1,39 @@
+<Lems>
+<ComponentType name="Network">
+    <Children name="populations" type="Population"/>
+    <Children name="connectivities" type="EventConnectivity"/>
+</ComponentType>
+
+
+<ComponentType name="Population">
+    <ComponentReference name="component" type="Component"/>
+    <Parameter name="size" dimension="none"/>
+    <Structure>
+	    <MultiInstantiate number="size" component="component"/>
+	</Structure>
+</ComponentType>
+
+
+
+<ComponentType name="EventConnectivity">
+    <Link name="source" type="Population"/>
+    <Link name="target" type="Population"/>
+    <Child name="Connections" type="ConnectionPattern"/>
+</ComponentType>
+
+<ComponentType name="ConnectionPattern"/>
+
+
+
+<ComponentType name="AllAll" extends="ConnectionPattern">
+   	<Structure>
+            <ForEach instances="../source" as="a">
+                 <ForEach instances="../target" as="b">
+                      <EventConnection from="a" to="b"/>
+                 </ForEach>
+            </ForEach>    
+   	</Structure>
+       
+</ComponentType>
+
+</Lems>
