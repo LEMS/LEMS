@@ -1,4 +1,10 @@
 Some examples of LEMS files.
-Note, these are currently included in folders https://github.com/LEMS/pylems/tree/master/examples and
-https://github.com/LEMS/jLEMS/tree/master/src/test/resources, but the master copy of these willeventually be moved here
+
+Note, these are currently included in the jLEMS/pyLEMS repositories: 
+
+    https://github.com/LEMS/pylems/tree/master/examples
+
+    https://github.com/LEMS/jLEMS/tree/master/src/test/resources
+    
+but the master copy of these willeventually be moved here. 
 See https://github.com/LEMS/LEMS/issues/1
