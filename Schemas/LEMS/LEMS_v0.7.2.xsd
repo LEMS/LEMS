@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    NOTE: This will only at present validate LEMS description files containing Dimension, Unit, Include, ComponentType
-    elements in that order! This is a restriction which seems adequate for defining the NeuroML 2 core ComponentTypes
+    v0.7.2 added the ability to validate LEMS files contyaining Simulation elements, as the form of this element
+    is reasonably stable now
 
-    v0.6 & v0.7 are updates prompted by the refactored Java LEMS implementation (https://github.com/robertcannon/jLEMS)
-    and pylems (https://github.com/lisphacker/pylems)
-    v0.7.1 is a minor update, re adding the DerivedParameter element in ComponentType, and fully specifying the 
+    v0.7.1 was a minor update, re adding the DerivedParameter element in ComponentType, and fully specifying the 
     Simulation element so Simulation.xml can be validated
+    
+    v0.6 & v0.7 were updates prompted by the refactored Java LEMS implementation (https://github.com/robertcannon/jLEMS)
+    and pylems (https://github.com/lisphacker/pylems)
 -->
 
-<xs:schema targetNamespace="http://www.neuroml.org/lems/0.7.1"
-    xmlns="http://www.neuroml.org/lems/0.7.1"
+<xs:schema targetNamespace="http://www.neuroml.org/lems/0.7.2"
+    xmlns="http://www.neuroml.org/lems/0.7.2"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     elementFormDefault="qualified"
     attributeFormDefault="unqualified">
