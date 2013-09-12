@@ -12,10 +12,28 @@ body {
      min-width: 600px; 
      margin: 0px; 
      padding: 0px; 
-     z-index    : 1;
-     background-image : url(leftborder.png);
-     background-repeat : repeat-y;
-     
+}
+
+
+div.pagemain {
+	position : relative;
+}
+
+
+div.leftbg {
+ 	position : absolute;
+	width : 136px;
+	top : 0px;
+	bottom : 0px;
+	left : 0px;
+	background-color : #e0e0e0;
+	border-right : 1px solid #c0c0c0;
+}
+
+
+#left { 
+     width: 136px;
+     padding-top : 60px;
 }
 
 p {
@@ -45,13 +63,6 @@ h3 {
 	margin-top : 24px;	
 }
 
-#left { 
-     top: 0px;
-     left: 0px; 
-     width: 136px;
-     padding-top : 60px;
-}
-
 #left a {
 	text-decoration : none;	
 }
@@ -66,12 +77,8 @@ h3 {
 
  
 #content { 
-     position : absolute;
-     top: 0px; 
-     left: 136px;
-     width: auto;
-
-   	 margin : 0px;
+     position : relative;
+   	margin-left : 136px;
     padding : 40px;
 }
 

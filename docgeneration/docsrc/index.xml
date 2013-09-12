@@ -1,7 +1,7 @@
 <page title="LEMS - Low Entropy Model Specification">
 
 
-<h1>LEMS - Low Entropy Model Specification</h1>
+<h1>LEMS: Low Entropy Model Specification</h1>
  <h2 class="sub">A language for specifying hierarchical models based on fundamental physical relationships</h2>
 
 
@@ -17,26 +17,32 @@
    	and the inclusion of basic physical concepts such as dimensionality and physical nesting as 
    	part of the language.
    </p>
-   <p>
-   	The examples shown here use XML as the model description format, but LEMS is not an 
-   	XML language (the preferred format doesn't support a schema for example). You can also use 
-   	a bracket-free indentation-based layout for models.
-   </p>
+
    <p>
    	The main goal is to enable model developers to write declarative models in LEMS in
    	much the same way as software developers write software applications in computer languages 
    	such as in c, Java or Python. 
    </p>
    
+      <p>
+   	The examples shown here use XML for expressing models as text, but LEMS is not 
+   	primarily an XML language. Rather it defines a set of structures for representing
+   	models. The reference implementation also supports a more concise indentation-based
+   	format for representing models.
+   </p>
+   
+   <p>
+   	There are two independent implementaitons of LEMS: jLEMS, written in Java 
+   	and pyLEMS written in Python. Both are hosted on the <a href="http://github.com/LEMS">github.com/LEMS</a>.
+   </p>
    
    
    <h2>Contents</h2>
  <p>
  <ul>
  <li>A <a href="introduction.html">An overview</a> of how types and models are declared</li>
-    <li>A <a href="elements.html">set of XML elements</a> for defining and using user-defined types</li>
-   
-    <li>A proof-of-concept <a href="interpreter.html">interpreter</a> for processing and running models built with these elements</li>
+    <li>A <a href="elements.html">The elements available</a> for defining and using user-defined types</li>
+  
        <li>Some examples (left menu)
       illustrating how elements can be defined and used.</li>     
     <li>A brief <a href="discussion">discussion</a> of the objectives, design issues, benefits and weaknesses of this approach</li>
@@ -48,13 +54,10 @@
     The best place to start is probably the <a href="example1.html">first example</a>. Anyone familiar with modeling and 
     model specification should be able to read the XML and make out what is going on.  
  </p>
- <p>
-    After that, feel free to download the <a href="interpreter.html">interpreter</a>, run the examples, and try constructing
-     your own.
- </p>
+ 
+ 
   
-  
- <h2>What it does so far</h2>
+ <h2>Capabilities</h2>
  
  <p>
     You can define <x>ComponentType</x>s (e.g. a "HH channel" or "a bi-exponential synapse") which express the general

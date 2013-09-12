@@ -44,11 +44,17 @@
 
 
 			<body>
-                            <div id="left">
+				<div class="pagemain">
+	
+			
+			
+			   <div class="leftbg">
+			   
+			
+ 	           <div id="left">
                              <div><a href="index.html">About</a></div>
                             <div><a href="introduction.html">Introduction</a></div>
                             <div><a href="elements.html">Elements</a></div>
-                            <div><a href="interpreter.html">Download</a></div>
                             <div><a href="example1.html">Example 1</a></div>
                             <div><a href="example2.html">Example 2</a></div>
                             <div><a href="example3.html">Example 3</a></div>
@@ -64,15 +70,16 @@
                             <div class="footer">
                                 Code and content GPL
                             </div>
-                            </div>
+                   </div>
+			   </div>
 
-                            <div id="content">
+                    <div id="content">
                             <xsl:apply-templates>
                                 <xsl:with-param name="name" select="@name" />
                             </xsl:apply-templates>
-                            </div>
+                   </div>
 
-
+				</div>
 			
 
 			</body>
