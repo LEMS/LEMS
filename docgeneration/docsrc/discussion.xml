@@ -1,0 +1,425 @@
+<page title="LEMS requirements">
+
+<h1>Status, problems and future requirements</h1>
+
+
+<p>
+    This is only a proof-of-concept implementation of the rudiments of a specification language. However, it is extensive
+    enough to define a range of models including a variety of synapses and simple networks. This should help inform
+     where further capabilities are needed. Some such areas are  described below.
+
+</p>
+
+<h2>Status</h2>
+<p>
+    This proof of concept prioritizes various things that other specification 
+    languages treat as optional extras to be included in some distant version. In particular:
+    <ul>
+        <li>There is a proper model for dimensions and units. Units are not just strings: they refer to a structured
+        entity which specifies the dimensionality in terms of Mass, Length, Time and Current (you can't 
+        express luminous intensity as yet).</li>
+        <li>All equations are checked to make sure they are dimensionally consistent.</li>
+        <li>It supports extension and specialization among ComponentTypes (eg "this ComponentType has all the properties of that one and a
+        few extras" or "it has all the properties of that one except some are set to particular values so the user only needs to 
+        set the rest").</li>
+        <li>It supports component prototyping ("this model element is like that one but these bits are different").</li>
+        <li>There is a clear distinction between ComponentTypes (categories of thing), components (a thing with a particular set of parameter values) and
+        and the model that is run (any number of instances corresponding to each set of parameter values).</li>
+    </ul>
+</p>
+ 
+  <p>
+    Notably, it does not have any support at present for <b>user-defined functions.</b> Somewhat surprisingly, it is possible that these may not be needed.
+        See for example the implementation of the conventional HH model. A priori I would have expected any 
+        compact expression of this model to require user defined functions, but it doesn't use any functions and 
+        is still relatively compact. One could, of course, introduce a generic functions to express the functional form
+        of, for example, the sigmoid used in the example, but it is not clear that this would make it more compact, readable
+        or of lower entropy. At some stage, an external reference to a generic case is actually of higher entropy than 
+        a concise local expression with no other dependencies.
+      
+</p>
+
+ 
+ 
+
+
+<h2>Technical issues</h2>
+<p>
+    A number of technical issues exist with the specification and the interpreter. Some should be straightforward to resolve.
+    Others may take more work.
+</p>
+<p>
+<ul>
+    <li><x>DerivedVariables</x> currently require a dimension even though this should be deducible from their target</li>
+    <li>Paths in derived variables use simple expressions, but only the simplest forms are supported by the interpreter.
+    It needs a smarter XPath like grammar and support for this in the interpreter*.</li>
+    <li>You can't define and use functions yet</li>
+    <li>The numerics are trivial: it could do with smarter numerics and code generation. Janino would be a good 
+    choice (as used with Catacomb) to dynamically compile component Behaviores.</li>
+    <li>Error reporting is somewhat cryptic and full of stack traces.</li>
+</ul>
+</p>
+<p>
+* With respect to accessing variables on the running simulation,  it may be
+that a good solution would be to (virtually) expand the component definitions to a full XML tree and use genuine 
+XPath expressions over that tree. This could be more difficult than it sounds because of constructs like that in example3
+which dynamically instantiate component instances (inserting synapses in this case) that are not defined in the component
+hierarchy itself. This may still work OK because the container for the instances is still there in the xpath, but 
+a path to its contents won't resolve until after a model is built. On the other hand, since the focus here is on synapse
+modeling, not on large networks but it is probably reasonable to map the instantiated model to xml and use a standard
+XPath processor on that.
+</p>
+<p>
+On another, related, point. Excluding visualization, parsing and file utilities, the current interpreter is about 4000 
+lines of Java (7000 with the parsers). I'd guess that, thanks largely to XPath,  a model could be mapped to 
+an XML representation of the runnable instantiation via XSLT with a similar, possibly smaller, amount of XLST. I'm not sure
+if this would be useful, but it would be very interesting to know. In general it seems that a good rule of thumb is that
+a specification such as this shouldn't include anything that can't be processed relatively easily in XSLT. If a need 
+for such a thing arises, then it could suggest that the concept should be expanded into a "more declarative" form until
+it can be handled by straightforward XSLT.
+</p>
+
+
+<h2>Other problems</h2>
+
+<p>
+    A system allowing user-defined types can go wrong in a number of ways. 
+    It could fail to work at all. It could prove too hard to use for anyone to bother. It could be formally powerful but 
+    too complicated for anyone (else?) to write an interpreter. It could yield model representations that are too messy to 
+    appeal to users (high entropy models). It could make it too complicated to do simple things that users expect to be 
+    simple. It could force people to think in an unfamiliar way to the extent that they choose to do something else. It could
+    end up as just another programming language. 
+   </p>
+   <p>
+    The last point is a particular concern. After all, a programming language is a pretty powerful user-defined type 
+    system: the thing that differentiates it from a model specification language is precisely the restrictions in the latter. If 
+    you keep taking restrictions away, at some stage it ceases to achieve other objectives.
+</p>
+<p>
+    Of these, the most likely pitfalls here seem to be that it could require users to think in an unfamiliar way and 
+    it could become too complicated for anyone to write an interpreter. Both of these issues relate to the three-layer 
+    structure involving types, components and instances (for comparison, SBML just has a 1 layer structure: models are the 
+    same as state instances). As far as I can see, three layers are the minimum for a 
+    low entropy model description capable of expressing the type of models that need to be expressed but I'm sure others 
+    disagree. The main counter-contender seems to be the NeuroSpaces approach with a smooth (rather than layered) 
+    hierarchy which makes a seamless transition
+    from type to instance within a single layer by using prototyping throughout (rather than two  class/instance 
+    divisions as here).
+</p>
+
+
+
+
+
+
+<h2>Miscellaneous observations</h2>
+ 
+
+    <h3>Layers</h3>
+    <p>
+       The need for user defined types in NeuroML parallels in some ways the goals of NineML.  
+         However, NineML is layered by design. LEMS is slightly layered, but not very: one could compare the structure available 
+         for defining types to the NineML abstraction layer, and the structures for using them to the user layer. 
+         However, looking at the <a href="elements.html">list of elements</a> (ignoring the deprecated bits), 95% is 
+         to do with defining types, and only one paragraph describes how they are used. If someone only wanted to use types,
+         they would also need some of the information in the types section, such as the syntax of path expressions, so there 
+         would be a little more than one paragraph to a "user layer" specification,  but it would still be an extremely
+         short document.
+         On the other hand, every example defines a new bunch of types: if <i>these</i> were included as part of the user
+         level specification, then it could rapidly become very large. But a more natural place for these seems to be some catalog
+         of type definitions rather than a specification document. There is scope for selecting a preferred set of 
+         types (eg for HH or Kinetic Scheme channels) so you don't get a proliferation of similar but incompatible 
+         models, but the best mechanism for doing this is not clear. 
+    </p>
+
+    <h3>Single element type in the user-layer</h3>
+    <p>
+        Given the simplicity of the model specification layer, (defining components rather than types),
+        where everything is a component or a parameter value, it could be argued that there should be  some segregation into different
+        component types (eg things that produce spikes, things that define connectivity etc).
+        For convenience, I started with custom types for simulation and display elements but rapidly got rid of them. They are 
+        slightly easier to implement as custom types, but insidious problems keep cropping up. Eg, the runtime in a simulation
+        specification element should have dimensions time, but specific dimensions, such as time are only defined in component-space,
+        not type-space so you can't actually say that a hard-coded component has a parameter with a particular dimensionality.
+         Issues like this strongly suggest that everything in a model should just be a "component" corresponding
+       to a particular user defined type - no special cases. For expressive convenience, though, models don't have to be 
+       written "&lt;Component type="MySynapse" .../&gt;, but simply as &lt;MySynapse .../&gt;. This proves to be simple to
+       implement and makes the models much more readable. But it would also cause confusion if there were any elements allowed
+        that <i>weren't</i> the names of user-defined types - another reason to make everything a component.
+    </p>
+    
+    <h3>Specific types for networks and populations not needed</h3>
+    <p>
+        As well as starting with a hard-coded simulation element, the early examples also have hard-coded network and population
+        elements. I had previously thought that this would be hard to avoid but it turns out not to be as bad as expected.
+        The <x>Build</x> element with <x>MultiInstantiate</x> and <x>ForEach</x> children proved sufficient to replace the
+        (albeit trivial) hard-coded population and connectivity elements with user defined types. Whether this extends to 
+        more subtle ways of specifying networks remains to be seen, but I suspect that by adding a few more constructs like 
+        <x>ForEach</x> (Choose, When, Otherwise, If etc) and using the selection rules effectively one could do most of what would 
+        be needed. This relates to the debate as to whether the NineML user layer needs network-specific constructs, and would 
+        tend to suggest that it doesn't.
+    </p>
+
+    <h3>Joys of dimension checking</h3>
+    <p>
+        Even from limited experience making up the toy models, the automated dimension checking for equations and 
+        transparent unit handling is invaluable. It cuts out a whole family of time-consuming potential errors.  It is just a shame there isn't support for this kind of thing in
+        IDEs yet...
+    </p>
+
+
+    <h3>What to do if you get beyond point process models</h3>
+    <p>
+        Everything here is to do with point models without any spatial extent. While it would be easy to define types
+         to represent, say, a cell morphology, I have no clue how to attach a Behavior to them in a meaningful way.
+         For a morphology, one could imagine associating a membrane potential state variable with each section, and 
+         computing resistances to the neighboring sections, but that would be some kind of crime against numerical analysis
+         since it would actually be representing a different model (one where all the capacitance was at the midpoints 
+         of the segments). A correct approach would involve introducing Behavior elements for scalar fields and geometrical
+         volumes but this could well increase the complexity to the point where it becomes useless to try writing an 
+         interpreter. Perhaps an intermediate route via magic tags to say for example "this structure can be approximated 
+         by a 1D scalar field satisfying equation ... etc" might work.  
+    </p>
+    
+    <h3>Retrofitting existing component types</h3>
+    <p>
+        After the false start with hard-coded elements for specifying networks and display settings, it proved 
+        surprisingly easy to retrofit user defined types to these elements. In general, this was not even restricted to creating
+        equivalent functionality, but it could use exactly the same xml. If this applies in general, then it might be 
+        possible to retrofit more extensive building-block languages such as NeuroML or PSICS with user defined types. 
+        For the point models this could let a generic simulator run them. It wouldn't help with more complex, spatially extended,
+         models but it would at least make it rather easier 
+        to read and process them. In a sense, the type definitions would just be acting like a rather restricted 
+        domain-specific schema.
+    </p>
+    
+    <h3>Correspondence to XSL</h3>
+    <p>
+        If one ignores "apply-templates", the structures used for building populations and connections are more than 
+        a little reminiscent of XSL. In a way this is hardly surprising, given that they are both about processing 
+        nodes from a tree. It also suggests that maybe using XSL and XPath directly might work, and would avoid gradually
+        introducing equivalents to half the element types in XSL as they prove to be needed. 
+    </p>
+    
+    <h3>Correspondence to CSS</h3>
+    <p>
+        Somewhat surprisingly, there isn't any. None of the examples seemed to fit better with a css-like pattern than 
+        with an XPath like one. Perhaps this is because you generally need to be sure which nodes you will hit instead of 
+        the rather heterogeneous matching that css is best for.
+    </p>
+    
+ <h2>Orientation</h2>
+ 
+ <p>
+    Model description languages differ markedly in where their focus lies and how they value (or disregard) 
+    particular features. Such features include how important it is for model specifications to be:
+    <ul>
+        <li>Concise</li>
+        <li>Minimally redundant</li>
+        <li>Low entropy (see below)</li>
+        <li>Machine readable</li>
+        <li>human readable</li>
+        <li>Writable from existing simulators</li>
+        <li>Writable by hand</li>  
+        <li>Mappable onto existing simulators</li>
+        <li>Language independent</li>
+        <li>Declarative</li>
+        <li>Mathematically oriented (dimensionless variables and equations)</li>
+        <li>Physically/biologically oriented (everything dimensional)</li>
+    </ul>
+    </p>
+    
+    <h3>Low entropy</h3>
+        <p>
+            The term "entropy" is used as a loose analogy. The idea is that a model as conceived by a modeler or 
+            as described in a paper is highly structured. The quantities occurring in it 
+            are physical quantities (voltages and times rather than just numbers) and the structures are concise, 
+            hierarchical and minimally redundant. This is a low entropy representation.  As the model gets converted into something that can be run
+            on a computer, most of the structure is removed. Dimensional quantities get divided by units to provide 
+            dimensionless numbers and mechanistic concepts get converted to equations. It goes through a state of being a 
+            bunch of state variables and equations and eventually ends up numerical code implementing state update rules.
+            This is the high entropy end. Models that are only available as compiled executables are the extreme high entropy end.
+            Those that are only available as c-code are a close second which can only be converted to low entropy forms by 
+            extensive manual curation.
+         </p>
+            <p>
+            You can automate the process of turning a low-entropy representation into a runnable model, but in general
+            you can't automatically get back to a low entropy representation from a higher entropy one. 
+            Simulators vary in how well they represent and preserve low entropy models, but, particularly older simulators
+            tend to increase the entropy from the start and the only internal model representation used is often of rather higher
+            entropy than the model representation created by the modeler. For example a modeler might be forced to render 
+            their model dimensionless before getting it into the simulator. The units they used to do this would probably be 
+            there in comments in the source files, but they are not part of the internal state of the simulator so it is 
+            unable to write out a low entropy model.
+          </p>    
+    
+            <p>
+                This proposal is all about expressing and protecting low entropy representations. These are the most
+                valuable representation of a model because they can readily be turned into a variety of higher 
+                entropy representations as used by different simulators. Note that this low entropy focus may not be 
+                suitable to a <i>model exchange</i> language such as NineML which is intended to be writable 
+                by existing simulators. For that a medium entropy representation is probably required. 
+                
+            </p>
+    
+    
+    
+       <p>
+>                For those familiar with software engineering, the entropy discussion is essentially a 
+>                variant of the <a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> 
+>                (Don't Repeat Yourself, or 'DIE': Duplication Is Evil) principle in software design.
+>             </p>
+    
+    
+    
+    
+    
+    
+    <h3>Mathematical v. Physical/biological</h3>
+
+    <p>
+        There are two issues here. One is whether a bundle of state variables and equations is enough to make a model. 
+        Mathematically, of course, this is all there is to many models, but scientifically, such a representation is 
+        of relatively high entropy since the structure, hierarchy and relations have been lost.  
+        The second question is about quantities that go into a model. Are they numbers or are they physical quantities?
+        The distinction is that for a mathematical model one might say (as eg CellML does) 
+        "v is a number which represents a voltage measured in 
+        milliviolts" Ie, its what you get when you take a voltage and divide it by another voltage which is 1mV. 
+        For a physical model, you'd just say "v is a voltage" and leave it at that. Then v is a rich quantity with 
+        magnitude and dimensions.
+    </p>
+    <p>
+        If your modeling system takes the first approach, it can force the user to render quantities dimensionless 
+        themselves or can provide some support for unit conversions. But in either case, the quantities in the 
+        equations that the modeler enters are just numbers.  
+    </p>
+    <p>
+        In the second approach, the quantities occurring in equations are dimensional quantities. This is the norm in 
+        written model descriptions but it is generally not the norm in model description software.  
+           Being focused on turning things
+         into executable code (involving bare numbers) the latter tends to  dispense with dimensionality as soon as possible. 
+         This seems unfortunate because premature non-dimensionalisation opens up all sorts of cans of worms for the 
+         modeler and indeed for the software developer that simply don't need to be opened up. Sticking with dimensional 
+         quantities throughout the model description phase makes most of these problems vanish.
+    </p>
+ 
+ <p>
+    Incidentally, this is related to the xml construct often seen in model specifications where a 
+    quantity has both a value and a unit as in '&lt;mass value="3" unit="kg"/&gt;'. This suggests that somehow 
+    the mass of the item, (the 'value' of its mass)  was '3' and that the mass itself has a unit, rather than 
+    its mass (or the 'value' thereof) being '3kg' as in normal usage. In fact, of course, neither the '3' or the 'kg'
+    are attributes of the mass. Exactly the same quantity could be expressed with '3000' and 'g' or '3E-6' and 'Ton'.  
+    Neither is meaningful in on their own, so ideally this looks to call for an XML datatype.
+ </p>
+ 
+ 
+ <h2>Objectives</h2>
+ <p>
+    In the light of the above discussion, this proposal prioritizes:
+    <ul>
+        <li>Low entropy models</li>
+        <li>Human readability</li>
+        <li>Human writability</li>
+        <li>Physical/biological (as opposed to mathematical or computational) model specification</li>
+        <li>Conciseness and minimal redundancy</li>        
+    </ul>
+ </p>
+ <p>
+    A consequence of these priorities is that it is probably going to be very hard to automatically
+     export models in this format from existing simulators unless they already have a low-entropy internal 
+     representation. In general, it will involve rewriting them by hand.  
+ </p>
+
+
+
+
+
+<h2>Canonical form</h2>
+
+<p>
+    This format is not intended as a canonical form for a model, although there is a clear need for such a model
+    specification format. Rather, it is better to think of it as lightweight XML user interface to a nascent 
+    canonical form. Canonical forms are inevitably hard to work with directly (eg, a canonical form for model specification
+    should probably use MathML which requires an intermediate tool to read or write) and the present form makes a much
+    simpler structure within which to develop and explore model specification capabilities. Once a suitable structures 
+    have been arrived at, the corresponding canonical form can be specified.
+</p>
+<p>
+   It is intended that a relatively simple XML mapping should map losslessly between this format and the canonical form
+   with a couple of constraints. The present format allows multiple ways to express the same model. For example, the 
+   same quantity can be expressed with different magnitude units and elements can be written in a number of different ways.
+   Such variants of the same model should all map to the same canonical form. For the mapping to be invertible, the additional
+   information (such as that the original value of a current was given in nA for example) will have to be stored in 
+   metadata in the canonical form of the model.   
+</p>
+<p>
+   <a href="canonical.html">More on canonical forms.</a>
+</p>
+
+
+<h2>Comparison with other systems</h2>
+    
+    <p>
+        There are strong parallels in VHDL. The hierarchical components proposal for SBML level 
+        3 looks to be heading towards the same end point from a different direction.
+        There are also comparisons to be made with the facilities for modular model 
+        representation in CellML 1.1. Like SBML, it is arriving from the other end, with
+        a substantial body of models expressed in a standalone, medium entropy form and 
+        a curation process to abstract out modules that can then be referenced 
+        from several models.  
+    </p>
+    <p>
+        There are also close parallels with NineML, which may, ideally, provide a
+        standardized format for losslessly writing and re-reading models expressed in LEMS.
+    </p>
+    
+    
+    <h3>Comparison with 'building-block' languages</h3>
+    <p>
+        The great thing about a building-block language is that a model can be reliably and relatively easily mapped onto 
+        efficient code to execute it. This is not the case with the present proposal or with other general systems 
+        where the user can define their own equations. One way round this is to develop smarter symbolic algebra capabilities so 
+        that efficient numerical implementations can be generated from the equations. This could work in some cases. It is 
+        hard to see it working in all cases.
+        Another way round it is for an implementation to spot structures it recognizes and 
+        map them to efficient hard-coded implementations, but to keep the capability to run new, unrecognized, structures
+        (albeit more slowly). However, I'm not aware of any implementations that actually do this yet, so it remains to 
+        bee seen whether it is a workable approach. 
+       </p>
+       <p>
+        If a system in which modelers develop new models and simulators gradually 
+        add hard-code support for the most popular ones is to be made to work, then there must be a 
+        strong incentive for reusing an existing type (that can then be recognized by the simulator) rather than 
+        re-expressing the whole model from scratch. This is probably more of an issues for simulators and model sharing
+        infrastructure than for the language itself, although, of course, the language itself must provide capabilities 
+        to do this cleanly.  
+    </p>
+    
+
+    <h2>XML format</h2>
+    <p>
+        It is designed to be read and written by hand (as well as machines). Nevertheless, the parsers used 
+        for the XML and the expressions are among the more straightforward parts of the implementation. 
+        The most common alternative is to 
+        to pre-parse the expressions and make the XML store the parse tree. This would make it easier to process in a 
+        simulator (no need for an expression parser). Similarly, dimensional quantities could be split into a number 
+        attribute and a unit attribute which would also make it slightly easier to process. However, these benefits
+        are slight, and would only accrue to the small number of developers writing simulators. In the meantime, every 
+        modeler would have to write quantities out the long way and find a way to generate the xml parse trees for 
+        expressions.  At the very least, an interpreter should provide tools for the user to do this, so the user can write
+        input as a normal expression. But if the interpreter can do this, why standardize on the unreadable post-parsed 
+        form rather than the concise form written by the user? It has been suggested that this is necessary to avoid
+        ambiguities in what a model means, but I suspect that is more of a hypothetical danger than a real problem,
+         given all the other thins that can go wrong with a model specification.
+      </p>
+       <p>
+        Finally, for those who want it, it is straightforward to convert models in this format to 
+        pre-digested element-only XML with parse trees instead of expressions. Indeed, the interpreter will generate this 
+        format if called with the '-p' qualifier in 'java -jar lems-x.x.x.jar -p model.xml'.
+    </p>
+
+
+
+
+
+</page>

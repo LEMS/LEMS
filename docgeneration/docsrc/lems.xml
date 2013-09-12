@@ -1,0 +1,25 @@
+<doc>
+    <title>LEMS - User-defined types for model specification</title>
+    <credits>Robert Cannon and Padraig Gleeson, October 2011</credits>
+    <chapter file="index"/>
+    <chapter file="introduction"/>
+    <chapter file="elements"/>
+    <chapter file="interpreter"/>
+    
+    <chapter file="example1"/>
+    <chapter file="example2"/>
+    <chapter file="example3"/>
+    <chapter file="example4"/>
+    <chapter file="example5"/>
+    <chapter file="example6"/>
+    <chapter file="example7"/>
+     <chapter file="example-regimes"/>
+     
+    <!--<chapter file="neuroml2"/>-->
+    
+    <chapter file="discussion"/>
+
+    <chapter file="example-n"/>
+    
+
+</doc>

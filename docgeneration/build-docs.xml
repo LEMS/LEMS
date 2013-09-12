@@ -1,0 +1,133 @@
+
+<project name="LEMS documentation" default="html" basedir=".">
+
+	<description>
+	        LEMS documentation
+	    </description>
+
+	<property environment="env" />
+
+
+	<property name="version.date" value="vdate" />
+	<property name="version.number" value="vnumber" />
+
+
+	<path id="generation.classpath">
+		<pathelement location="bin" />
+		<pathelement location="../../jLEMS/target/classes" />
+	</path>
+
+
+	<target name="clean" description="Cleaning up">
+		<delete failonerror="false">
+			<fileset dir="html" includes="**/*" />
+		</delete>
+	</target>
+
+
+
+	<target name="extractdocs" description="Extract documentation from annotations and write to xml">
+		<mkdir dir="extractedannotations"/>
+
+		<java classname="org.lemsml.jlems.docextraction.DocExtractor" fork="false">
+			<arg value="extractedannotations/sourceannotations.xml" />
+			<classpath refid="generation.classpath" />
+
+		</java>
+	</target>
+
+
+
+
+	<target name="html" description="Generate HTML documentation in dir site from source XML in docsrc." depends="clean, extractdocs">
+
+		<mkdir dir="html" />
+
+		<xslt basedir="docsrc" destdir="html" includes="**/*.xml" processor="trax" style="xsl/page.xsl" extension=".html">
+			<param name="datestamp" expression="${datestamp}" />
+			<param name="datetext" expression="${datetext}" />
+			<param name="vnum" expression="${version.number}" />
+			<param name="vdate" expression="${version.date}" />
+		</xslt>
+
+		<copy todir="html" file="css/static.css" />
+
+		<copy todir="html">
+			<fileset dir="images" includes="*.png" />
+		</copy>
+		<copy todir="html">
+			<fileset dir="examples" includes="*.xml" />
+		</copy>
+
+	</target>
+
+
+	<target name="upload-docs">
+		<ftp server="psics.org" remotedir="/www/lems" userid="xxx" password="xxx" action="send" passive="yes" depends="no" binary="yes" verbose="yes" ignoreNoncriticalErrors="yes" skipFailedTransfers="yes">
+			<fileset dir="site">
+				<include name="**/*.html" />
+				<include name="**/*.xml" />
+				<include name="**/*.png" />
+				<include name="**/*.css" />
+				<include name="**/*.zip" />
+				<include name="**/*.php" />
+				<include name="**/*.jar" />
+
+			</fileset>
+		</ftp>
+	</target>
+
+
+	<target name="upload-html">
+		<ftp server="psics.org" remotedir="/www/lems" userid="xxx" password="xxx" action="send" passive="yes" depends="no" binary="yes" verbose="yes" ignoreNoncriticalErrors="yes" skipFailedTransfers="yes">
+			<fileset dir="site">
+				<include name="**/*.html" />
+			</fileset>
+		</ftp>
+	</target>
+
+
+
+
+
+	<target name="merge" depends="clean">
+		<mkdir dir="tmp" />
+		<xslt basedir="docsrc" destdir="tmp" in="docsrc/lems.xml" out="tmp/wklems.xml" processor="trax" style="xsl/merge.xsl" extension=".xml">
+		</xslt>
+	</target>
+
+
+
+	<target name="fo" depends="merge">
+
+		<xslt basedir="tmp" destdir="tmp/fo" in="tmp/wklems.xml" out="tmp/wklems.fo" processor="trax" style="xsl/doctofo.xsl" extension=".fo">
+			<param name="datestamp" expression="${datestamp}" />
+			<param name="datetext" expression="${datetext}" />
+		</xslt>
+	</target>
+
+	
+	<!--
+	<taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
+		<classpath>
+			<fileset dir="antlib">
+				<include name="fop*.jar" />
+			</fileset>
+		</classpath>
+	</taskdef>
+
+
+	<target name="pdfdocs" depends="fo" description="Generates PDF of content of website">
+
+		<mkdir dir="site" />
+
+		<fop format="application/pdf" fofile="tmp/wklems.fo" outfile="site/lems.pdf" />
+
+	</target>
+
+
+-->
+
+
+
+</project>

@@ -1,0 +1,85 @@
+<page title="LEMS Interpreter">
+
+    <h1>LEMS Reference Implementation</h1>
+
+       <p>To illustrate the concepts of LEMS and to facilitate building, validating and execting models
+       specified in the format, a Reference Implementation in Java has been created.</p>
+    <p>
+        The implementation will process and run models defined using the <a href="elements.html">proposed elements</a>.
+        It is mainly focused on model processing and validation. In particular, as well as 
+        handling type and component inheritance, it performs dimensionality checks on all 
+        equations to identify any inconsistencies. 
+       </p>
+       <p>
+        It has a limited ability to run models, but only with the simplest possible
+        (forward Euler) integration scheme. It doesn't do any symbolic manipulations and expressions are evaluated by
+        visiting their parse trees.
+    </p>
+    <p>
+        After running a model, it opens a window to display the results and only exits when this window is closed. The image below shows traces of
+        the V and U state variables from 2 instances of the <a href="neuroml2.html#Izhikevich">Izhikevich cell model</a> specified in LEMS and run using the interpreter.
+    </p>
+
+    <img src="Izh.png"/>
+
+    <h2>Installation of LEMS Reference Implementation</h2>
+
+    <p>Install Java J2SE 5 or higher. Available <a href="http://java.sun.com/javase/downloads/index.jsp">here</a>. It's better to download the <strong>JDK
+                (Java Development Kit)</strong>, which includes the command line tools for compiling Java.</p>
+
+
+    <p>
+      To try LEMS out, all you need is the executable jar file:
+    <ul>
+        <li><downloadlink/></li>
+    </ul>
+    
+        Just download this file and run:<br/>
+        <code>
+            java -jar lems-x.x.x.jar model.xml</code>
+        where model.xml is the file containing the main model.
+     </p>
+
+
+	<h3>Source code installation with examples</h3>
+
+
+    <p>If you do not have <a href="http://subversion.apache.org/">Subversion</a> installed, it may be simplest to <a href="lems-latest.zip">download the latest code</a>,
+    unzip the file, and run the code as described below.</p>
+
+    <p>Alternatively, check out the latest version of the code (from the
+    <a href="http://neuroml.svn.sourceforge.net/viewvc/neuroml/LEMS/">NeuroML SourceForge SVN repository</a>) using:
+        <code>
+          svn co https://neuroml.svn.sourceforge.net/svnroot/neuroml/LEMS
+          cd LEMS
+        </code>
+    </p>
+    <p>To compile the code it's best to install Ant (see below), but the code can be compiled using:
+        <code>
+          ./make.sh                               (Linux or Mac)
+          make.bat                                (Windows)
+        </code>
+    </p>
+    <p>The standard examples can be found in the examples directory. These can be run using:
+        <code>
+          ./lems examples/example1.xml            (Linux or Mac)
+          lems.bat examples\example5.xml          (Windows)
+        </code>
+    </p>
+
+    <p>If <a href="http://ant.apache.org/">Apache Ant</a> is installed, the options for compiling/running examples with this include:
+        <code>
+          ant                                 (build the main jar file)
+          ant ex1                             (run the main examples ex1 to ex8)
+          ant test                            (perform a number of tests including running all examples)
+          
+          ant -p                              (list all options)
+        </code>
+    </p>
+
+    <p>A number of links to examples showing the core behaviour of LEMS is available in the left column. <!--See <a href="lemsneuroml2.html">here</a> for a brief overview of the relationship between LEMS and NeuroML 2.--></p>
+
+
+    
+    
+</page>

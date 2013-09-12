@@ -1,0 +1,183 @@
+<page title="LEMS - Low Entropy Model Specification">
+
+
+<h1>LEMS - Low Entropy Model Specification</h1>
+ <h2 class="sub">A language for specifying hierarchical models based on fundamental physical relationships</h2>
+
+
+ <p class="version">Current version: <versioninfo/>  &#160;&#160; <a href="lems.pdf">These pages as a single PDF</a></p>	
+   
+   
+   <p>
+   	LEMS is being developed to provide a compact, minimally redundant, human-readable,
+   	human-writable, declarative way of expressing models of biological systems. 
+   </p>
+   <p>
+   	It differs from other systems such as CellML or SBML in its requirement to be human writable
+   	and the inclusion of basic physical concepts such as dimensionality and physical nesting as 
+   	part of the language.
+   </p>
+   <p>
+   	The examples shown here use XML as the model description format, but LEMS is not an 
+   	XML language (the preferred format doesn't support a schema for example). You can also use 
+   	a bracket-free indentation-based layout for models.
+   </p>
+   <p>
+   	The main goal is to enable model developers to write declarative models in LEMS in
+   	much the same way as software developers write software applications in computer languages 
+   	such as in c, Java or Python. 
+   </p>
+   
+   
+   
+   <h2>Contents</h2>
+ <p>
+ <ul>
+ <li>A <a href="introduction.html">An overview</a> of how types and models are declared</li>
+    <li>A <a href="elements.html">set of XML elements</a> for defining and using user-defined types</li>
+   
+    <li>A proof-of-concept <a href="interpreter.html">interpreter</a> for processing and running models built with these elements</li>
+       <li>Some examples (left menu)
+      illustrating how elements can be defined and used.</li>     
+    <li>A brief <a href="discussion">discussion</a> of the objectives, design issues, benefits and weaknesses of this approach</li>
+     
+ </ul>
+ </p>
+ 
+ <p>
+    The best place to start is probably the <a href="example1.html">first example</a>. Anyone familiar with modeling and 
+    model specification should be able to read the XML and make out what is going on.  
+ </p>
+ <p>
+    After that, feel free to download the <a href="interpreter.html">interpreter</a>, run the examples, and try constructing
+     your own.
+ </p>
+  
+  
+ <h2>What it does so far</h2>
+ 
+ <p>
+    You can define <x>ComponentType</x>s (e.g. a "HH channel" or "a bi-exponential synapse") which express the general
+    properties of a particular type of thing that goes in a model. This includes saying what parameters they have, what 
+    child elements they are allowed, and how they behave (the equations).
+ </p>
+ <p>
+    You can then define <x>Component</x>s based on these types by supplying values for the parameters and adding any child elements
+    that are required, so, for example, a bi-exponential synapse model with rise time 1ms and decay 5ms would be a component.
+ </p>
+ <p><x>ComponentType</x>s can extend other <x>ComponentType</x>s to add extra parameters, fix certain values, and otherwise
+ modify their behavior. <x>Component</x>s can extend other <x>Component</x>s to reuse specified parameter values.
+ There is also a loose notion of abstract types, so a component can accept children with a particular lineage
+ without needing to know exactly what type they are. This can be used, for example, to define cells that accept 
+ synaptic connections provided they have a particular signature.
+ </p>
+ 
+ <p>Each <x>ComponentType</x> can have a <x>Behavior</x> element that specifies how it behaves: what the state variables are, the equations
+ that govern them, and what happens when events are sent or received. 
+    The interpreter takes a model consisting of type and component elements referenced from a network, builds an instance
+    from them and runs it.
+ </p>
+ 
+ <p>
+    For those familiar with object oriented languages, the <x>ComponentType</x>/<x>Component</x> distinction is close to the normal
+    Class/Instance distinction. When the model is run, the same pattern applies again, with the <x>Component</x>s acting
+    as class definitions, with their "instances" actually containing the state variables in the running mode.
+ </p>
+ 
+ 
+ <h2>Background</h2>
+ <p>
+    The <a href="http://www.neuroml.org/files/NeuroMLWorkshop2010.pdf">March 2010 NeuroML meeting</a> identified a need to extend the capability within NeuroML for expressing a range
+    of models of synapses. It was decided that the hitherto adopted approach of defining parameterized building blocks to 
+    construct models by combining blocks and setting parameters was unlikely to be flexible enough to cope with the needs 
+    for synapse models. This is not obvious a-priori, since, for example, the pre NeuroML 2.0 ion channel
+    building blocks are fully adequate to describe the Behavior of a wide range existing channel models. But there appears to be
+     no such commonality in models used for synapses, where the mechanisms used range from highly detailed biochemical
+    models to much more abstract ones.
+ </p>
+   
+ 
+    <p>
+        This work also has antecedents in Catacomb 3, which was essentially a GUI for a component definition system and 
+        model builder using a type system similar to that proposed here. Much of the XML processing code used in the interpreter
+        was taken from <a href="http://www.neuroml.org/tool_support.php#PSICS">PSICS</a> which itself currently uses the "building block" approach to model specification.
+        The need for user-defined types has been considered with respect to future PSICS development, and this proposal also
+        reflects potential requirements for PSICS.
+ </p>
+ 
+ <h2>Example</h2>
+ 
+ <p>
+ Here is the XML for a simple integrate-and-fire cell definition:
+ <xcode>
+<ComponentType name="refractiaf">
+    <Parameter name="threshold" dimension="voltage"/>
+    <Parameter name="refractoryPeriod" dimension="time"/>
+    <Parameter name="capacitance" dimension="capacitance"/>
+    <Parameter name="vleak" dimension="voltage"/>
+    <Parameter name="gleak" dimension="conductance"/>
+
+    <Parameter name="current" dimension="current"/>
+    <Parameter name="vreset" dimension="voltage"/>
+    <Parameter name="deltaV" dimension="voltage"/>
+    <Parameter name="v0" dimension="voltage"/>
+
+    <EventPort name="out" direction="out"/>
+    <EventPort name="in" direction="in"/>
+
+    <Exposure name="v" dimension="voltage"/>
+
+<Behavior>
+   <StateVariable name="v" exposure="v" dimension="voltage" />   
+   <OnStart>
+    <StateAssignment variable="v" value="v0"/>
+   </OnStart>
+
+   <Regime name="refr">
+      <StateVariable name="tin" dimension="time"/>
+      <OnEntry>
+         <StateAssignment variable="tin" value="t" />
+         <StateAssignment variable="v" value="vreset" />
+      </OnEntry>
+      <OnCondition test="t .gt. tin + refractoryPeriod">
+          <Transition regime="int" />
+      </OnCondition>
+   </Regime>
+
+   <Regime name="int" initial="true">
+      <TimeDerivative variable="v" value="(current + gleak * (vleak - v)) / capacitance" />
+      <OnCondition test="v .gt. threshold">
+         <EventOut port="out" />
+         <Transition regime="refr" />
+      </OnCondition>
+      <OnEvent port="in">
+        <StateAssignment variable="v" value="v + deltaV"/>
+      </OnEvent>
+
+   </Regime>
+</Behavior>
+
+</ComponentType>
+</xcode>
+ </p>
+ 
+ <p>
+ Once this definition is available, a particular model using this structure can be specified with the following 
+ XML: 
+ <xcode>
+    <refractiaf threshold="-40mV" refractoryPeriod="5ms" capacitance="1nF"
+               vleak = "-80mV" gleak="100pS" vreset="-70mV" v0="-70mV" deltaV="10mV"/>
+ </xcode>
+ </p>
+
+<p>
+    More complex models will have nested components and other types of parameters, but the basic principle of 
+    separating out the equations and parameters for reusable model components, such that the equations are 
+    only stated once, remains the same.
+</p>
+
+<p>
+    
+</p>
+
+</page>

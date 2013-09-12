@@ -1,0 +1,61 @@
+<page title="LEMS elements">
+ 
+<h1>All elements</h1>
+
+<p>
+This page summarizes all the element types currently supported by the proof-of-concept interpreter. The explanations are 
+somewhat cursory so it is probably better to look at the examples to work out what is going on.
+</p>
+<p>
+There is one block for each element type. All element names are in <span class="eltname">fixed width bold</span>. Attribute 
+names are in <span class="attname">normal fixed width</span>.
+Each block shows the attributes supported by an element and then the types of children allowed.
+</p>
+
+<h2>Model structure</h2>
+<p>
+Models can be spread over multiple files. The root element in each file is <x>Lems</x>.
+</p>
+
+<GeneratedElementsList section="root"/>
+
+<Elt name="Include">
+    <Label name="file">the name or relative path of a file to be included</Label>
+    <Info>
+        Files are included where the <x>Include</x> declaration occurs. The enclosing <x>Lems</x> block is stripped
+        off and the rest of the content included as is.
+    </Info>
+</Elt>
+
+
+<h2>Units and dimensions</h2>
+ 
+ <GeneratedElementsList section="unitsdimensions"/>
+ 
+<h2>Defining ComponentTypes</h2>
+
+<GeneratedElementsList section="componenttypes"/>
+
+<h2>Dynamics</h2>
+
+<GeneratedElementsList section="dynamics"/>
+
+<h2>Structure</h2>
+
+<GeneratedElementsList section="structure"/>
+
+<h2>Simulation</h2>
+
+<GeneratedElementsList section="simulation"/>
+
+<h2>Procedure</h2>
+
+<GeneratedElementsList section="procedure"/>
+
+
+<h2>Defining Components</h2>
+
+<GeneratedElementsList section="components"/>
+  
+
+</page>

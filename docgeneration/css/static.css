@@ -1,0 +1,242 @@
+html {
+    margin      : 0px;
+    padding     : 0px;
+}
+
+
+
+
+body { 
+    font-family : Arial, Verdana, Sans-serif;
+    font-size : 10pt;
+     min-width: 600px; 
+     margin: 0px; 
+     padding: 0px; 
+     z-index    : 1;
+     background-image : url(leftborder.png);
+     background-repeat : repeat-y;
+     
+}
+
+p {
+	max-width : 800;	
+}
+
+p.version {
+	color : #808080;
+	font-size : 8pt;	
+}
+
+p.release {
+	padding-top : 28px;	
+}
+ 
+h1 {
+	font-size : 16pt;
+	color : #606060;	
+}
+
+h2 {
+	font-size : 14pt;
+	color : #606060;	
+	margin-top : 36px;	
+}
+h3 {
+	margin-top : 24px;	
+}
+
+#left { 
+     top: 0px;
+     left: 0px; 
+     width: 136px;
+     padding-top : 60px;
+}
+
+#left a {
+	text-decoration : none;	
+}
+
+#left div {
+	padding : 4px 4px 4px 12px;	
+}
+
+#left a:hover {
+	text-decoration : underline;
+}
+
+ 
+#content { 
+     position : absolute;
+     top: 0px; 
+     left: 136px;
+     width: auto;
+
+   	 margin : 0px;
+    padding : 40px;
+}
+
+
+#left div.footer {
+	margin-top : 100px;
+	font-size : 8pt;
+	border-top : 1px dotted #ffffff;
+	border-bottom : 1px dotted #ffffff;
+	padding : 6px 6px 6px 6px;	
+}
+ 
+ 
+
+img.fig {
+        border : none;
+        padding : 0px;
+        margin : 0px;
+}
+
+
+div.fig {
+        float : right;
+        padding : 4px;
+        border : 1px solid #d0d0d0;
+        background-color : #f0f0f0;
+        margin : 10px 2px 16px 10px;
+        clear : right;
+}
+
+div.figcaptin {
+       padding : 6px 8px 2px 8px;
+}
+
+
+div.clearboth {
+    clear : both;
+}
+
+div.xcode, div.xcodefile {
+	font-family : courier;
+	font-size : 10pt;
+	line-height : 18px;
+	background-color : #fafafa;	
+	padding : 6px;
+	border : 1px solid #c0c0c0;
+	max-width : 800;	
+}
+
+div.xcodefile {
+    margin-bottom : 54px;
+
+}
+
+
+
+div.xcodeelement {
+    margin : 4px;	
+}
+
+tt {
+	font-family : courier;
+	color : #000080;	
+}
+
+span.xmlverb-attr-name {
+    color : #000080;	
+}
+
+span.xmlverb-element-name {
+    font-weight : bold;
+	color : #205020;
+}
+
+span.xelt {
+    font-family : courier;
+	 font-weight : bold;
+    color : #205020;
+}
+
+span.xmlverb-attr-content {
+	color : #800080;
+}
+
+div.fileincludetitle {
+    padding : 6px;
+    margin-top : 16px;
+    text-align : center;	
+    font-weight : bold;
+}
+
+li {
+    margin-top : 6px;
+    margin-bottom : 6px;	
+}
+
+
+div.eltdef {
+    border : 1px solid #b0b0b0;
+    background-color : #faf6ff;
+    margin : 20px 40px 10px 40px;
+    padding : 4px 10px 8px 4px;
+}
+
+div.eltdef h3 {
+    margin : 0px;
+    padding : 0px 0px 6px 10px;	
+    color : #505050;
+    font-family : courier;
+}
+
+
+div.attdef {
+	position : relative;
+	margin-left : 180px;
+}
+
+div.attdef div.attdefname {
+    position : absolute;
+    top : 0px;
+    left : -140px;	
+    font-family : courier;
+}
+
+div.attdef div.childofname {
+     position : absolute;
+    top : 0px;
+    left : -140px;	
+    font-family : courier;
+}
+
+div.childof {
+	margin-top : 12px;	
+	font-size : 9pt;
+}
+
+span.attmeta {
+    font-size : 8pt;
+    font-family : sanserif;
+    font-style : italic;
+    color : #606060;	
+    font-weight : normal;
+}
+
+
+div.chlddef {
+	margin-left : 40px;
+	font-weight : bold;
+	color : #505050;
+	font-family : courier;
+}
+
+span.eltname {
+    font-weight : bold;	
+    color : #505050;
+    font-family : courier;
+}
+span.attname {
+    font-family : courier;
+}
+div.info {
+    padding : 10px;
+    font-style : italic;	
+}
+
+div.cancontain {
+	padding : 8px;	
+}
