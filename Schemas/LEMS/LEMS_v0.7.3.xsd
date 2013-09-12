@@ -455,9 +455,11 @@
 
     <xs:complexType name="ForEach">
 
-        <xs:sequence>
+        <xs:choice>
             <xs:element name="MultiInstantiate" type="MultiInstantiate" minOccurs="0" maxOccurs="1"/>
-        </xs:sequence>
+            <xs:element name="ForEach" type="ForEach" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="EventConnection" type="EventConnection" minOccurs="0" maxOccurs="1"/>
+        </xs:choice>
 
         <xs:attribute name="instances" type="xs:string" use="required"/>
         <xs:attribute name="as" type="xs:string" use="required"/>
