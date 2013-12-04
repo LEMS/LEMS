@@ -75,7 +75,7 @@
  synaptic connections provided they have a particular signature.
  </p>
  
- <p>Each <x>ComponentType</x> can have a <x>Behavior</x> element that specifies how it behaves: what the state variables are, the equations
+ <p>Each <x>ComponentType</x> can have a <x>Dynamics</x> element that specifies how it behaves: what the state variables are, the equations
  that govern them, and what happens when events are sent or received. 
     The interpreter takes a model consisting of type and component elements referenced from a network, builds an instance
     from them and runs it.
@@ -94,7 +94,7 @@
     of models of synapses. It was decided that the hitherto adopted approach of defining parameterized building blocks to 
     construct models by combining blocks and setting parameters was unlikely to be flexible enough to cope with the needs 
     for synapse models. This is not obvious a-priori, since, for example, the pre NeuroML 2.0 ion channel
-    building blocks are fully adequate to describe the Behavior of a wide range existing channel models. But there appears to be
+    building blocks are fully adequate to describe the dynamics of a wide range existing channel models. But there appears to be
      no such commonality in models used for synapses, where the mechanisms used range from highly detailed biochemical
     models to much more abstract ones.
  </p>
@@ -113,54 +113,51 @@
  <p>
  Here is the XML for a simple integrate-and-fire cell definition:
  <xcode>
-<ComponentType name="refractiaf">
-    <Parameter name="threshold" dimension="voltage"/>
-    <Parameter name="refractoryPeriod" dimension="time"/>
-    <Parameter name="capacitance" dimension="capacitance"/>
-    <Parameter name="vleak" dimension="voltage"/>
-    <Parameter name="gleak" dimension="conductance"/>
+     <ComponentType name="refractiaf">
+         <Parameter name="threshold" dimension="voltage"/>
+         <Parameter name="refractoryPeriod" dimension="time"/>
+         <Parameter name="capacitance" dimension="capacitance"/>
+         <Parameter name="vleak" dimension="voltage"/>
+         <Parameter name="gleak" dimension="conductance"/>
 
-    <Parameter name="current" dimension="current"/>
-    <Parameter name="vreset" dimension="voltage"/>
-    <Parameter name="deltaV" dimension="voltage"/>
-    <Parameter name="v0" dimension="voltage"/>
+         <Parameter name="current" dimension="current"/>
+         <Parameter name="vreset" dimension="voltage"/>
+         <Parameter name="deltaV" dimension="voltage"/>
+         <Parameter name="v0" dimension="voltage"/>
 
-    <EventPort name="out" direction="out"/>
-    <EventPort name="in" direction="in"/>
+         <EventPort name="out" direction="out"/>
+         <EventPort name="in" direction="in"/>
 
-    <Exposure name="v" dimension="voltage"/>
+         <Exposure name="v" dimension="voltage"/>
 
-<Behavior>
-   <StateVariable name="v" exposure="v" dimension="voltage" />   
-   <OnStart>
-    <StateAssignment variable="v" value="v0"/>
-   </OnStart>
+         <Dynamics>
+             <StateVariable name="v" exposure="v" dimension="voltage" />   
+             <StateVariable name="tin" dimension="time"/>
+             <OnStart>
+                 <StateAssignment variable="v" value="v0"/>
+             </OnStart>
 
-   <Regime name="refr">
-      <StateVariable name="tin" dimension="time"/>
-      <OnEntry>
-         <StateAssignment variable="tin" value="t" />
-         <StateAssignment variable="v" value="vreset" />
-      </OnEntry>
-      <OnCondition test="t .gt. tin + refractoryPeriod">
-          <Transition regime="int" />
-      </OnCondition>
-   </Regime>
+             <Regime name="refr">
+                 <OnEntry>
+                     <StateAssignment variable="tin" value="t" />
+                     <StateAssignment variable="v" value="vreset" />
+                 </OnEntry>
+                 <OnCondition test="t .gt. tin + refractoryPeriod">
+                     <Transition regime="int" />
+                 </OnCondition>
+             </Regime>
 
-   <Regime name="int" initial="true">
-      <TimeDerivative variable="v" value="(current + gleak * (vleak - v)) / capacitance" />
-      <OnCondition test="v .gt. threshold">
-         <EventOut port="out" />
-         <Transition regime="refr" />
-      </OnCondition>
-      <OnEvent port="in">
-        <StateAssignment variable="v" value="v + deltaV"/>
-      </OnEvent>
+             <Regime name="int" initial="true">
+                 <TimeDerivative variable="v" value="(current + gleak * (vleak - v)) / capacitance" />
+                 <OnCondition test="v .gt. threshold">
+                     <EventOut port="out" />
+                     <Transition regime="refr" />
+                 </OnCondition>
 
-   </Regime>
-</Behavior>
+             </Regime>
+         </Dynamics>
 
-</ComponentType>
+     </ComponentType>
 </xcode>
  </p>
  

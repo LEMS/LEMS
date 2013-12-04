@@ -116,7 +116,7 @@ components with nested children though, the second form is definitely clearer (e
 <p>
 As well as restricting types when you extend them, you can also add new parameters as shown in the next type. This also 
 introduces an <x>EventPort</x>, to indicate that instances of components built from this type can receive events, and, finally,
-a <x>Behavior</x> block. This is where the Behavior of instances of the component can be specified.
+a <x>Dynamics</x> block. This is where the Dynamics of instances of the component can be specified.
 The phrase "instances of the component" is intentional. The type itself doesn't "behave": it is just a definition. A component
 built from the type doesn't "behave" either: it is just a set of parameter values linked back to the type. The 
 thing that "behaves" is an instance in a runnable model that actually contains state variables. In general, many components
@@ -135,20 +135,20 @@ may be based on one type, and one component may give rise to many instances in a
     <EventPort name="spikes-in" direction="in"/>
     <Exposure name="v" dimension="voltage"/>
 
-    <Behavior>
+    <Dynamics>
        <StateVariable name="v" exposure="v" dimension="voltage"/>
        <TimeDerivative variable="v" value="leakConductance * (leakReversal - v) / capacitance"/>
 
        <OnEvent port="spikes-in">
             <StateAssignment variable="v" value="v + deltaV"/>
        </OnEvent>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
 
 <p>
-The <x>Behavior</x> involves a single state variable, a voltage called "v", and one equation,
+The <x>Dynamics</x> involves a single state variable, a voltage called "v", and one equation,
 expressing how v drifts towards the leak reversal potential. 
 The event block specifies what happens when an instance receives an event. In this case the state variable v is bumped up
  by deltaV. The value attribute in the TimeDerivative element is an expression involving the parameters and the state 
@@ -157,7 +157,7 @@ The event block specifies what happens when an instance receives an event. In th
  </p>
 
 <p>
-Below is another example of a Behavior, this time with an output port and a condition testing block that sends an event
+Below is another example of a Dynamics, this time with an output port and a condition testing block that sends an event
 when the condition becomes true. The test attribute in the <x>OnCondition</x> element is a boolean valued expression. 
 These use Fortran style operators (.gt.  and .lt. for &gt; and &lt;) to avoid confusion with xml angle brackets.
 </p>
@@ -167,14 +167,14 @@ These use Fortran style operators (.gt.  and .lt. for &gt; and &lt;) to avoid co
     <Parameter name="period" dimension="time"/>
     <EventPort name="a" direction="out"/>
     <Exposure name="tsince" dimension="time"/>
-    <Behavior>
+    <Dynamics>
         <StateVariable name="tsince" exposure="tsince" dimension="time"/>
         <TimeDerivative variable="tsince" value="1"/>
         <OnCondition test="tsince .gt. period">
             <StateAssignment variable="tsince" value="0"/>
             <EventOut port="a"/>
         </OnCondition>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
@@ -188,7 +188,7 @@ that is always available) and uses that in the test condition.
 
 <xcode>
 <ComponentType name="spikeGenerator2" extends="spikeGenerator">
-    <Behavior>
+    <Dynamics>
         <GlobalVariable name="t" dimension="time"/>
         <StateVariable name="tlast" dimension="time"/>
         <DerivedVariable name="tsince" exposure="tsince" value="t - tlast"/>
@@ -196,7 +196,7 @@ that is always available) and uses that in the test condition.
             <StateAssignment variable="tlast" value="t"/>
             <EventOut port="a"/>
         </OnCondition>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
@@ -205,7 +205,7 @@ that is always available) and uses that in the test condition.
    The examples so far have all been of very simple components which just had a single set of parameters. Real models 
    however require rather more structure than this with components having children of various types and possibly multiple
    children of certain types. To illustrate this, the next example shows how the concept of an ion channel using 
-   Hodgkin-Huxley Behavior can be defined. 
+   Hodgkin-Huxley Dynamics can be defined. 
 </p>
 <p>
 Starting from the bottom, we define the different types of rate equations that occur. These will supply terms in the 
@@ -214,13 +214,13 @@ but they can all be expressed with three parameters, rate, midpoint and scale. W
 then extend it for the three cases. 
 </p>
 <p>
- The <x>HHRate</x> Behavior shows two new constructs. An <x>Exposure</x> declares that the component makes
+ The <x>HHRate</x> Dynamics shows two new constructs. An <x>Exposure</x> declares that the component makes
  a quantity available to other components. A <x>Requirement</x> specifies that 
  the component needs to know about a variable that it doesn't define itself. When it is used in a model, the specified
  variable must be available (and have the right dimension) in the parent component or one of its more remote ancestors.
  </p>
  <p>
-Note that the general <x>HHRate</x> class defines an <x>Exposure</x> without a Behavior block to actually set its
+Note that the general <x>HHRate</x> class defines an <x>Exposure</x> without a Dynamics block to actually set its
 value. This is analogous
 to an abstract class in java: you can't actually make a component out of the <x>HHRate</x> element directly (the interpreter will
 complain) but any component using a <x>HHRate</x> will know it has an exposed variable called "r". 
@@ -242,23 +242,23 @@ The types that extend
 </ComponentType>
 
 <ComponentType name="HHExpRate" extends="HHRate">
-    <Behavior>
+    <Dynamics>
         <DerivedVariable name="r" exposure="r" value="rate * exp((v - midpoint)/scale)"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 
 
 <ComponentType name="HHSigmoidRate" extends="HHRate">
-    <Behavior>
+    <Dynamics>
         <DerivedVariable name="r" exposure="r" value="rate / (1 + exp(0 - (v - midpoint)/scale))"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 
  <ComponentType name="HHExpLinearRate" extends="HHRate">
-    <Behavior>
+    <Dynamics>
         <DerivedVariable name="x" value="(v - midpoint) / scale"/>
         <DerivedVariable name="r" exposure="r" value="rate * x / (1 - exp(0 - x))"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
  </xcode>
  
@@ -275,13 +275,13 @@ of the specified type. A HH gate needs subcomponents for the forward and reverse
     <Child name="Reverse" type="HHRate"/>
     <Exposure name="fcond" dimension="none"/>
     <Requirement name="v" dimension="voltage"/>
-    <Behavior>
+    <Dynamics>
         <StateVariable name="q" dimension="none"/>
         <DerivedVariable name="rf" select="Forward/r"/>
         <DerivedVariable name="rr" select="Reverse/r"/> 
         <TimeDerivative variable="q" value="rf * (1 - q) - rr * q"/>
         <DerivedVariable name="fcond" exposure="fcond" value="q^power"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
  
@@ -300,7 +300,7 @@ better with a naive integration scheme. This is what it looks like with x instea
     <Child name="Reverse" type="HHRate"/>
     <Exposure name="fcond" dimension="none"/>
     <Requirement name="v" dimension="voltage"/>
-    <Behavior>
+    <Dynamics>
         <StateVariable name="x" dimension="none"/>
         <DerivedVariable name="ex" dimension="none" value="exp(x)"/>
         <DerivedVariable name="q" dimension="none" value="ex / (1 + ex)"/>
@@ -308,7 +308,7 @@ better with a naive integration scheme. This is what it looks like with x instea
         <DerivedVariable name="rr" select="Reverse/r"/> 
         <TimeDerivative variable="x" value="(1 + ex)^2 / ex * (rf * (1 - q) - rr * q)"/>
         <DerivedVariable name="fcond" exposure="fcond" value="q^power"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
@@ -326,18 +326,18 @@ In this picture, a channel just has a conductance and one or more gates:
     <Requirement name="v" dimension="voltage"/>
     <Exposure name="g" dimension="conductance"/>
     
-    <Behavior>
+    <Dynamics>
         
         <DerivedVariable name="gatefeff" select="gates[*]/fcond" reduce="multiply"/>
         <DerivedVariable name="g" exposure="g" value="conductance * gatefeff"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
 <p>
 This introduces one new construct, the <x>Children</x> element, that allows for an indeterminate number of children
 of a given type. This means that the same type can be used for potassium channels with only one gate, sodium channels with two gates
-or indeed other channels with more gates. The first derived variable in the Behavior block uses a xpath-style selection
+or indeed other channels with more gates. The first derived variable in the Dynamics block uses a xpath-style selection
 function to process the indeterminate number of children. In this case it computes the produce of the <x>fcond</x> variables 
 from the different gates. 
 </p>
@@ -389,7 +389,7 @@ alternative just with three levels of Component elements would look rather unhel
     the channel population, there is just a reference to it. 
    </p>
    <p>
-    The Behavior block for a cannel population just computes the total conductance and then
+    The Dynamics block for a cannel population just computes the total conductance and then
     the current, in this case using Ohm's law.
 </p>
 
@@ -400,11 +400,11 @@ alternative just with three levels of Component elements would look rather unhel
     <Parameter name="erev" dimension="voltage"/>
     <Requirement name="v" dimension="voltage"/>
     <Exposure name="current" dimension="current"/>
-    <Behavior>
+    <Dynamics>
         <DerivedVariable name="channelg" select="channel/g"/>
         <DerivedVariable name="geff" value="channelg * number"/>
         <DerivedVariable name="current" exposure="current" value="geff * (erev - v)"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
@@ -421,7 +421,7 @@ alternative just with three levels of Component elements would look rather unhel
     <Parameter name="injection" dimension="current"/>
     <Parameter name="v0" dimension="voltage"/>
     <Exposure name="v" dimension="voltage"/>
-    <Behavior>
+    <Dynamics>
         <OnStart>
              <StateAssignment variable="v" value="v0"/>
         </OnStart>
@@ -429,14 +429,14 @@ alternative just with three levels of Component elements would look rather unhel
          <DerivedVariable name="totcurrent" select="populations[*]/current" reduce="add"/>
         <StateVariable name="v" dimension="voltage"/> 
         <TimeDerivative variable="v" value="(totcurrent + injection) / capacitance"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
 <p>
-    This Behavior block introduces the <x>OnStart</x> element which is much like the <x>OnEvent</x> elements earlier, except the
+    This Dynamics block introduces the <x>OnStart</x> element which is much like the <x>OnEvent</x> elements earlier, except the
     block applies only when the simulation starts. In this case it just sets the voltage to a value supplied as a parameter.
-    The Behavior block uses another selector function "sum(..." to sum the currents delivered by the various populations.
+    The Dynamics block uses another selector function "sum(..." to sum the currents delivered by the various populations.
 </p>
 
 

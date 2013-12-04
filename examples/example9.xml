@@ -1,0 +1,258 @@
+<Lems>
+ 	<Target component="potentials"/>
+ 	<Target component="roomTemperaturePotentials"/>
+ 	<Target component="freezingPotentials"/>
+ 
+ 
+    <Dimension name="distance" l="1"/>
+    <Dimension name="time" t="1"/>
+    <Dimension name="mass" m="1"/>
+    <Dimension name="velocity" l="1" t = "-1"/>
+    <Dimension name="acceleration" l="1" t="-2"/>
+    <Dimension name="force" m="1" l="1" t="-2"/>
+    <Dimension name="volume" l="3"/>
+	<Dimension name="voltage" m="1" l="2" t="-3" i="-1"/>
+	<Dimension name="capacitance" m="-1" l="-2" t="4" i="2"/>
+	<Dimension name="current" i="1"/>
+	<Dimension name="charge" i="1" t="1"/> 
+	<Dimension name="mole" n="1"/>
+	<Dimension name="per_mole" n="-1"/>
+	<Dimension name="charge_per_mole" i="1" t="1" n="-1"/>
+	<Dimension name="kelvin" k="1"/>
+	<Dimension name="energy" m="1" l="2" t="-2"/>
+	<Dimension name="energy_per_kelvin" m="1" l="2" t="-2" k="-1"/>
+	<Dimension name="energy_per_kelvin_per_mol" m="1" l="2" t="-2" k="-1" n="-1"/>
+	<Dimension name="charge_per_volt-meter" m="-1" l="-3" i="2" t="4"/> 
+	<Dimension name="energy-time" m="1" l="2" t="-1"/>
+	<Dimension name="conductance" m="-1" l="-2" t="3" i="2"/>
+	<Dimension name="resistance" m="1" l="2" t="-3" i="-2"/>
+	<Dimension name="resistivity" m="1" l="3" t="-3" i="-2"/>
+	<Dimension name="concentration" n="1" l="-3"/>
+	<Dimension name="temperature" k="1"/>
+	
+	<Assertion dimension="resistance" matches="1 / conductance"/>
+	<Assertion dimension="force" matches="mass * acceleration"/>
+	<Assertion dimension="energy" matches="force * distance"/>
+	<Assertion dimension="energy_per_kelvin" matches="energy / kelvin"/>
+	<Assertion dimension="charge_per_volt-meter" matches="charge / (voltage * distance)"/>
+	<Assertion dimension="energy-time" matches="energy * time"/>
+	<Assertion dimension="resistivity" matches="resistance * distance"/>
+	<Assertion dimension="concentration" matches="mole / volume"/>
+	<Assertion dimension="conductance" matches="1 / resistance"/>
+	
+	
+	
+	<Constant name="Avagadro's number" symbol="N" dimension="none" value="6.0221E23"/>
+	
+	<Constant name="Elementary charge" symbol="q_e" dimension="charge" value="1.6E-19"/>
+ 	<Constant name="Boltzmann's constant" symbol="k_B" dimension="energy_per_kelvin" value="1.3807E-23"/>
+ 	<Constant name="Gas constant" symbol="R" dimension="energy_per_kelvin_per_mol" value="N * k_B"/>
+	<Constant name="Faraday's constant" symbol="F" dimension="charge_per_mole" value="N * q_e"/>
+	<Constant name="Polarizability of free space" symbol="epsilon_0" dimension="charge_per_volt-meter" value="8.8542E-12"/>
+	<Constant name="Planck's constant" symbol="h" dimension="energy-time" value="6.6261E-34"/>
+
+
+    <Unit name="Mole" symbol="mol" dimension="mole"/>
+	<Unit name="Per mole" symbol="per_mol" dimension="per_mole"/>	
+	<Unit symbol="C_per_mol" dimension="charge_per_mole"/>
+	<Unit name="Ohm" symbol="ohm" dimension="resistance"/>
+	<Unit name="Ohm centimetres" symbol="ohm_cm" dimension="resistivity" power="-2"/>
+    <Unit name="farad" symbol="F" dimension="capacitance"/>
+    <Unit name="siemens" symbol="S" dimension="conductance"/>
+    <Unit name="Molar" symbol="M" dimension="concentration"/>
+    <Unit name="milliMolar" symbol="mM" dimension="concentration" power="-3"/>
+	<Unit name="microMolar" symbol="uM" dimension="concentration" power="-6"/>
+	<Unit name="nanoMolar" symbol="nM" dimension="concentration" power="-9"/>
+	<Unit name="milliVolt" symbol="mV" dimension="voltage" power="-3"/>
+	
+	<Unit name="Celsius" symbol="C" dimension="temperature" offset="273.5"/>
+
+
+
+
+	<ComponentType name="ThermalEnvironment">
+		<Parameter dimension="kelvin" name="temperature"/>
+	</ComponentType>
+
+
+	<ComponentType name="BoltzmannState">
+		<Parameter name="u" dimension="energy"/>
+	</ComponentType>
+
+	
+	<ComponentType name="BoltzmannSystem">
+		<ComponentReference name="env" type="ThermalEnvironment"/>
+		<Child name="state1" type="BoltzmannState"/>
+		<Child name="state2" type="BoltzmannState"/>
+		<Exposure name="p1_over_p2" dimension="none"/>
+		
+		<Dynamics>
+			<DerivedVariable name="u1" dimension="energy" select="state1/u"/>
+			<DerivedVariable name="u2" dimension="energy" select="state2/u"/>
+			<DerivedVariable name="T" dimension="temperature" select="env/temperature"/>
+			<DerivedVariable exposure="p1_over_p2" dimension="none" value="exp(-(u2 - u1) / (k_B * T))"/> 		
+		</Dynamics>
+	</ComponentType>
+
+
+
+	<ComponentType name="NernstCompartment">
+		<Parameter name="concentration" dimension="concentration"/>
+    </ComponentType>	
+	
+	
+	
+	<ComponentType name="NernstSystem">
+		<ComponentReference name="species" type="Species"/>
+		<Child name="Inside" type="NernstCompartment"/>
+		<Child name="Outside" type="NernstCompartment"/>
+		<Exposure name="E_S" dimension="voltage"/>
+		<Requirement name="temperature" dimension="temperature"/>
+		
+		<Dynamics>
+			<DerivedVariable name="z_S" select="species/valence" dimension="none"/>
+			<DerivedVariable name="T" select="temperature" dimension="temperature"/>
+			<DerivedVariable name="Si" select="Inside/concentration" dimension="concentration"/>
+			<DerivedVariable name="So" select="Outside/concentration" dimension="concentration"/>
+			<DerivedVariable exposure="E_S" value="(R * T) / (z_S * F) * log(So / Si) "/> 		
+		</Dynamics>
+		
+		
+		<Structure>
+			 <ChildInstance component="species"/>
+		</Structure>
+	</ComponentType>
+	
+	
+	
+	<ComponentType name="Species">
+		<Text name="symbol"/>
+		<Parameter name="valence" dimension="none"/>
+	</ComponentType>
+
+	
+
+
+	<Species id="Sodium" symbol="Na" valence="1"/>
+	<Species id="Calcium" symbol="Ca" valence="2"/>
+	<Species id="Potassium" symbol="K" valence="1"/>
+	<Species id="Chloride" symbol="Cl" valence="-1"/>
+
+
+ 	
+ 	<NernstSystem id="skeletalMuscleSodium" species="Sodium">
+ 		<Inside concentration="12 mM"/>
+ 		<Outside concentration="145 mM"/>
+ 	</NernstSystem>
+
+ 
+ 
+ 	<NernstSystem id="skeletalMusclePotassium" species="Potassium">
+ 		<Inside concentration="155 mM"/>
+ 		<Outside concentration="4 mM"/>
+ 	</NernstSystem>
+ 	
+ 	
+ 	<NernstSystem id="skeletalMuscleCalcium" species="Calcium">
+ 		<Inside concentration="100 nM"/>
+ 		<Outside concentration="1.5 mM"/>
+ 	</NernstSystem>
+ 
+ 
+	 <NernstSystem id="skeletalMuscleChloride" species="Chloride">
+ 		<Inside concentration="4.2 mM"/>
+ 		<Outside concentration="123 mM"/>
+ 	</NernstSystem>
+ 	
+ 
+	<ComponentType name="EquilibriumCalculation">
+		<Parameter name="temperature" dimension="temperature"/>
+		<Children name="systems" type="NernstSystem"/>
+		
+	    <Procedure>
+	    	<Equilibrate/>
+	    	<ForEachComponent select="systems" as="system">
+	    		<Print template="${system/name} \tat ${temperature:C}: \tinside=${system/Inside/concentration:mM} \toutside=${system/Outside/concentration:mM} \tpotential=${system/E_S:mV}"/>
+	    	</ForEachComponent>
+    	</Procedure>
+	</ComponentType>
+ 
+ 	<ThermalEnvironment name="bodyTemperature" temperature="37 C"/>
+	<ThermalEnvironment name="roomTemperature" temperature="21 C"/>
+  	<ThermalEnvironment name="freezing" temperature="0 C"/>
+ 	
+ 	
+ 	
+ 	<EquilibriumCalculation id="potentials" temperature="37 C">
+ 		<Insertion component="skeletalMuscleSodium"/>
+ 		<Insertion component="skeletalMusclePotassium"/>
+ 		<Insertion component="skeletalMuscleCalcium"/>
+ 		<Insertion component="skeletalMuscleChloride"/>	
+ 	</EquilibriumCalculation>
+ 	
+ 	
+ 	<EquilibriumCalculation id="roomTemperaturePotentials" extends="potentials" temperature="21 C"/>
+  	
+ 	<EquilibriumCalculation id="freezingPotentials" extends="potentials" temperature="0 C"/>
+ 		
+ 		
+ 		
+ 		
+ 		
+ 	<ComponentType name="CompoundElement">
+		<ComponentReference name="species" type="Species"/>
+		<IntegerParameter name="n"/>
+	</ComponentType>
+	
+	
+	<ComponentType name="Compound">
+		<Children name="elements" type="CompoundElement"/>
+	</ComponentType>
+
+
+	<ComponentType name="Solute">
+		<ComponentReference name="compound" type="Compound"/>
+		<Parameter name="concentration" dimension="concentration"/>
+	</ComponentType>
+
+
+	<ComponentType name="Solution">
+		<Children type="Solute" name="solutes"/>
+	</ComponentType>
+ 		
+ 		
+ 	<Species id="Bicarbonate" symbol="HCO3" valence="-1"/>	
+ 		
+ 		
+ 	<Compound id="NaCl">
+ 		<CompoundElement species="Sodium" n="1"/>
+ 		<CompoundElement species="Chloride" n="1"/>
+ 	</Compound>	
+
+	<Compound id="KCl">
+		<CompoundElement species="Potassium" n="1"/>
+ 		<CompoundElement species="Chloride" n="1"/>
+	</Compound>
+
+	<Compound id="CaCl2">
+		<CompoundElement species="Calcium" n="1"/>
+ 		<CompoundElement species="Chloride" n="2"/>
+	</Compound>
+
+	<Compound id="NaHCO3">
+		<CompoundElement species="Sodium" n="1"/>
+ 		<CompoundElement species="Bicarbonate" n="1"/>
+	</Compound>
+
+
+	<Solution id="Ringers">
+		<Solute compound="NaCl" concentration="105mM"/>
+		<Solute compound="KCl" concentration="4mM"/>
+		<Solute compound="CaCl2" concentration="0.15mM"/>
+		<Solute compound="NaHCO3" concentration="25mM"/>
+	</Solution>
+ 		
+ 		
+ 		
+ 
+</Lems>

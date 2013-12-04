@@ -96,8 +96,8 @@ gleak="5pS" current="0.00001nA" deltaV="5mV"/>
 
 
 <ComponentType name="EventConnectivity">
-    <ComponentReference local="true" name="source" type="Population"/>
-    <ComponentReference local="true" name="target" type="Population"/>
+    <Link name="source" type="Population"/>
+    <Link name="target" type="Population"/>
     <Child name="Connections" type="ConnectionPattern"/>
 </ComponentType>
 

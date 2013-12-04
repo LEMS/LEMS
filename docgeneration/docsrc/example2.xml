@@ -23,12 +23,12 @@
     refers to channel types coming from the included hhmodels.xml file which in turn depends on hhcell.xml and hhchannel.xml.
 </p>
 
-<xinclude src="../examples/example2.xml"/>
+<xinclude src="../../examples/example2.xml"/>
 
 
 <h2>Included files</h2>
 
-<xinclude src="../examples/ex2dims.xml"/>
+<xinclude src="../../examples/ex2dims.xml"/>
 
 
 <p>
@@ -36,42 +36,42 @@
     of gates based on the three standard types used in the original HH work.
 </p>
 
-<xinclude src="../examples/hhchannel.xml"/>
+<xinclude src="../../examples/hhchannel.xml"/>
 
 
 <p>
 As mentioned in example1, the numerics are too feeble to cope with this gate definition though, so a change of 
 variables is employed instead:
 </p>
-<xinclude src="../examples/hhaltgate.xml"/>
+<xinclude src="../../examples/hhaltgate.xml"/>
 
 <p>
     The file hhcell.xml defines a simple cell model with some populations of HH channels.
 </p>
 
-<xinclude src="../examples/hhcell.xml"/>
+<xinclude src="../../examples/hhcell.xml"/>
 
 <p>
 A couple of spike generators.
 </p>
 
-<xinclude src="../examples/spikegenerators.xml"/>
+<xinclude src="../../examples/spikegenerators.xml"/>
 
 <p>
 And now the components themselves. These are the standard HH sodium and potassium channels (as used in Rallpack3).
 </p>
-<xinclude src="../examples/hhmodels.xml"/>
+<xinclude src="../../examples/hhmodels.xml"/>
 
 <p>
 Some miscellaneous iaf models.
 </p>
 
-<xinclude src="../examples/misciaf.xml"/>
+<xinclude src="../../examples/misciaf.xml"/>
 
 <p>
 Finally, a small collection of dimension definitions useful for things like the miscellaneous iaf cell definitions.
 </p>
 
-<xinclude src="../examples/elecdims.xml"/>
+<xinclude src="../../examples/elecdims.xml"/>
 
 </page>

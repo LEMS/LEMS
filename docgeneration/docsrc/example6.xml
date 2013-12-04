@@ -4,7 +4,7 @@
     <p>
         Up until now, the examples have used a set of simple <x>Simulation</x>, <x>Display</x> and <x>Line</x> 
         constructs without explaining how they are defined.
-        This shows what is needed in the <x>Behavior</x> block to let the user defined types to specify that
+        This shows what is needed in the <x>Dynamics</x> block to let the user defined types to specify that
         they actually define a runnable simulation or settings that can be used to display results.
     </p>
     <p>
@@ -14,7 +14,7 @@
     </p>
 
 <p>
-    Example 6 shows two new elements that can be used in the <x>Behavior</x> block, <x>Run</x> and <x>Show</x> as illustrated
+    Example 6 shows two new elements that can be used in the <x>Dynamics</x> block, <x>Run</x> and <x>Show</x> as illustrated
     in the following user-defined type that defines a simulation:
 </p>
 
@@ -24,11 +24,11 @@
     <Parameter name="step" dimension="time"/>
     <ComponentRef name="target" type="HHCell"/>
     <Children name="displays" type="Display"/>
-    <Behavior>
+    <Dynamics>
         <StateVariable name="t" dimension="time"/>
         <Run component="target" variable="t" increment="step" total="length"/>
         <Show src="displays"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 <p>
@@ -39,11 +39,11 @@ timestep and total runtime. The 'variable' attribute is for future use - at pres
 </p>
  
 <p>
-    A <x>Run</x> element can be added to the Behavior block in any type definition to make it independently runnable.
+    A <x>Run</x> element can be added to the Dynamics block in any type definition to make it independently runnable.
 </p>
 <p>
     Running a simulation without any output is rarely much use, so there are two futher elements that can be included
-    in the <x>Behavior</x> block: <x>Show</x> and <x>Record</x>. The 'src' attribute of the <x>Show</x> element points to the
+    in the <x>Dynamics</x> block: <x>Show</x> and <x>Record</x>. The 'src' attribute of the <x>Show</x> element points to the
     components that should be shown. These in turn can contain other <x>Show</x> elements but eventually everything pointed
     to by a <x>Show</x> element should contain one or more <x>Record</x> elements. These specify what will actually be 
     sent as output. They have the path to the variable as the 'quantity' attribute, its scale as the 'scale' attribute and 
@@ -58,18 +58,18 @@ or more lines.
 <ComponentType name="Display">
     <Parameter name="timeScale" dimension="time"/>
     <Children name="lines" type="Line"/>
-    <Behavior>
+    <Dynamics>
          <Show src="lines" scale="timeScale"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 
 <ComponentType name="Line">
     <Parameter name="scale" dimension="*"/>
     <Text name="color"/>
     <Path name="quantity"/>
-    <Behavior>
+    <Dynamics>
         <Record quantity="quantity" scale="scale" color="color"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 

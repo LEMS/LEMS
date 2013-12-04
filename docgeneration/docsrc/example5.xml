@@ -16,7 +16,7 @@
 </xcode>
 <p>
 In fact, of course, the reversal potential is not a property of a channel population, or of a channel. It depends on the 
-environment the channel is put in and the ions it is permeable to. But, it is needed in the Behavior specification for
+environment the channel is put in and the ions it is permeable to. But, it is needed in the Dynamics specification for
  the population so just putting it in as a parameter solves the immediate problem. In the process, however, it introduces 
  the potential for easily creating contradictory models, by, for example setting different reversals for populations of the 
  same type of channel.
@@ -75,11 +75,11 @@ are permeant to.
     <Parameter name="conductance" dimension="conductance"/>
     <ComponentRef name="species" type="Species"/> 
     <Children name="gates" type="KSGate"/>
-    <Behavior>
+    <Dynamics>
         <DerivedVariable name="fopen" dimension="none" select="gates[*]/fopen" reduce="multiply"/>
         <DerivedVariable name="g" dimension="conductance" value="fopen * conductance"/>
      
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
@@ -94,11 +94,11 @@ membrane properties:
     <Parameter name="number" dimension="none"/>
     <Requirement name="v" dimension="voltage"/>
     <DerivedParameter name="erev" dimension="voltage" select="//MenbranePotential[species = channel/species]/reversal"/>
-    <Behavior>
+    <Dynamics>
         <DerivedVariable name="channelg" dimension="conductance" select="channel/g"/>
         <DerivedVariable name="geff" value="channelg * number"/>
         <DerivedVariable name="current" value="geff * (erev - v)"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 
 </xcode>
@@ -120,11 +120,11 @@ the quantity from the specified path:
  </p>
 
 <p>
-The Behavior of this model is exactly the same as example 4. The full model including both the type definitions and the
+The Dynamics of this model is exactly the same as example 4. The full model including both the type definitions and the
 components is included below.
 </p>
 
-<xinclude src="../examples/example5.xml"/>
+<xinclude src="../../examples/example5.xml"/>
 
 
 

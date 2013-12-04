@@ -1,11 +1,11 @@
 <page>
-    <h1>Regimes in Behavior definitions</h1>
+    <h1>Regimes in Dynamics definitions</h1>
     
     
     <p>
        This example introduces the <x>Regime</x>, <x>Transition</x> 
        and <x>OnEntry</x> elements within
-       a Behavior block. Rather than having a single state instance, the entity can
+       a Dynamics block. Rather than having a single state instance, the entity can
        be on one of the defined regimes at any given time. The <x>Transition</x> element
        occurring inside a condition block serves to move it from one regime to another.
        The <x>OnEntry</x> block inside a regime can contain initialization directives 
@@ -29,7 +29,7 @@
     <EventPort name="out" direction="out"/>
     <EventPort name="in" direction="in"/>
   
-<Behavior>
+<Dynamics>
    <StateVariable name="v" dimension="voltage" />        
    <OnStart>
     <StateAssignment variable="v" value="v0"/>
@@ -57,7 +57,7 @@
       </OnEvent>
    
    </Regime>
-</Behavior>
+</Dynamics>
 
 </ComponentType>
 </xcode>
@@ -65,7 +65,7 @@
 <p>
 Full listing:
 </p>
-<xinclude src="../examples/example8.xml"/>
+<xinclude src="../../examples/example8.xml"/>
 
 
 </page>

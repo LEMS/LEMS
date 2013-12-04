@@ -30,25 +30,25 @@
 
 
 <p>
-The harder part is to provide elements in the <x>Behavior</x> blocks to express what should be done with components
+The harder part is to provide elements in the <x>Dynamics</x> blocks to express what should be done with components
  based on these types. The Network element doesn't pose any problems because the default behavior on instantiation will
  do the right thing: it will instantiate each of the child populations and EventConnectivity elements.
 </p>
 <p>
 But the population element needs to say that its instantiation involves making 'size' instances of the component referred
 to by the 'component' reference, where 'size' is the value supplied for the size parameter in a component specification.
-This can be done by including a <x>Build</x> element inside the <x>Behavior</x> block:
+This can be done by including a <x>Build</x> element inside the <x>Dynamics</x> block:
 </p>
 
 <xcode>
 <ComponentType name="Population">
     <ComponentRef name="component" type="Component"/>
     <Parameter name="size" dimension="none"/>
-    <Behavior>
+    <Dynamics>
         <Build>
             <MultiInstantiate number="size" component="component"/>
         </Build>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 <p>
@@ -80,7 +80,7 @@ a specific instance for All-All connectivity.
 
 
 <ComponentType name="AllAll" extends="ConnectionPattern">
-    <Behavior>
+    <Dynamics>
         <Build>
             <ForEach instances="../source" as="a">
                  <ForEach instances="../target" as="b">
@@ -88,7 +88,7 @@ a specific instance for All-All connectivity.
                  </ForEach>
             </ForEach>    
         </Build>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
@@ -131,6 +131,6 @@ With these definitions in place, a network simulation can be defined with the fo
 <p>The output when the model is run is shown below, followed by the full listing.</p>
 <img src="ex7run.png"/>
 
-<xinclude src="../examples/example7.xml"/>
+<xinclude src="../../examples/example7.xml"/>
 
 </page>

@@ -90,8 +90,8 @@
 
 
 <ComponentType name="KSTransition">
-    <ComponentReference local="true" name="from" type="KSState"/>
-    <ComponentReference local="true" name="to" type="KSState"/>
+    <Link name="from" type="KSState"/>
+    <Link name="to" type="KSState"/>
     <Exposure name="rf" dimension="per_time"/>
     <Exposure name="rr" dimension="per_time"/>
  

@@ -36,7 +36,7 @@ are identical.
 <p>
     Conceptually, you need a number of things:
     <ul>
-        <li>Something like a <x>FieldVariable</x> declaration in a <x>Behavior</x> analogous to a <x>StateVaraible</x>
+        <li>Something like a <x>FieldVariable</x> declaration in a <x>Dynamics</x> analogous to a <x>StateVaraible</x>
         but spatially extended.</li>
         <li>Some notion of geometry</li>
         <li>A mechanism for extracting a value for a <x>FieldVariable</x> at a point for use in a point process model.

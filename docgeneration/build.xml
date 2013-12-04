@@ -69,7 +69,7 @@
 			<fileset dir="images" includes="*.png" />
 		</copy>
 		<copy todir="html">
-			<fileset dir="examples" includes="*.xml" />
+			<fileset dir="../examples" includes="*.xml" />
 		</copy>
 
 	</target>

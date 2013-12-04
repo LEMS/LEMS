@@ -4,7 +4,7 @@
 <p>
     The existing components provide everything necessary to define types that allow 
     a model to specify a kinetic scheme (Markov model).  The 
-    missing ingredient is the Behavior element to actually expresses how instances of the components develop through time.
+    missing ingredient is the Dynamics element to actually expresses how instances of the components develop through time.
 </p>
 <p>
 First then, the following definitions can be used to express ion channel models where the the channel state is represented by 
@@ -24,10 +24,10 @@ an occupancy vector among a number of distinct states with rates for the transit
 <ComponentType name="KSState">
     <Parameter name="relativeConductance" dimension="none"/>
 
-    <Behavior>
+    <Dynamics>
         <StateVariable name="occupancy" dimension="none"/>
         <DerivedVariable name="q" value="relativeConductance * occupancy"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 
 <ComponentType name="KSClosedState" extends="KSState">
@@ -54,11 +54,11 @@ an occupancy vector among a number of distinct states with rates for the transit
     <Parameter name="conductance" dimension="conductance"/>
     <Children name="gates" type="KSGate"/>
     <Exposure name="g" dimension="conductance"/>
-    <Behavior>
+    <Dynamics>
         <DerivedVariable name="fopen" dimension="none" select="gates[*]/fopen" reduce="multiply"/>
         <DerivedVariable name="g" exposure="g" dimension="conductance" value="fopen * conductance"/>
      
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 
 </xcode>
@@ -69,7 +69,7 @@ transition has links to two states giving the source and target states for the t
 </p>
    
 <p>
-The transition element here is an abstract element because it doesn't provide a Behavior block but just specifies
+The transition element here is an abstract element because it doesn't provide a Dynamics block but just specifies
 what quantities transitions should privide via the two exposures. 
 One of the most useful forms of transition is a damped Boltzman equation which can be parameterizd as 
 follows:
@@ -86,12 +86,12 @@ follows:
     <Constant name="kte" dimension="voltage" value="25.3mV"/>
     <Requirement name="v" dimension="voltage"/>
    
-    <Behavior>
+    <Dynamics>
         <DerivedVariable name="rf0" dimension="per_time" value="exp(z * gamma * (v - vHalf) / kte) / tau"/>
         <DerivedVariable name="rr0" dimension="per_time" value="exp(-z * (1 - gamma) * (v - vHalf) / kte) / tau"/>
         <DerivedVariable name="rf" exposure="rf" dimension="per_time" value="1 / (1/rf0 + tauMin)"/>
         <DerivedVariable name="rr" exposure="rr" dimension="per_time" value="1 / (1/rr0 + tauMin)"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
@@ -134,8 +134,8 @@ governing equation and the rates
 generate "rf" and "rr" quantities that are not unused anywhere. 
 </p>
 <p>
-What is needed is a new element in the <x>Behavior</x> block to link these together and say that the rates apply to the
-changes of occupancy among the state elements. This is done by adding a <x>KineticScheme</x> element to the Behavior block
+What is needed is a new element in the <x>Dynamics</x> block to link these together and say that the rates apply to the
+changes of occupancy among the state elements. This is done by adding a <x>KineticScheme</x> element to the Dynamics block
 for a gate as follows (this now shows the full definition of the KSGate element):
 </p>
 
@@ -146,7 +146,7 @@ for a gate as follows (this now shows the full definition of the KSGate element)
     <Children name="states" type="KSState"/>
     <Children name="transitions" type="KSTransition"/>
     
-    <Behavior>
+    <Dynamics>
         <KineticScheme name="ks">
             <Nodes children="states" variable="occupancy"/> 
             <Edges children="transitions" sourceNodeName="from" targetNodeName="to" forwardRate="rf" reverseRate="rr"/>
@@ -155,7 +155,7 @@ for a gate as follows (this now shows the full definition of the KSGate element)
     
         <DerivedVariable name="q" dimension="none" select="states[*]/q" reduce="add"/>
         <DerivedVariable name="fopen" exposure="fopen" dimension="none" value="q^power"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 </xcode>
 
@@ -194,11 +194,11 @@ the two <x>DerivedVaraible</x> declarations. No special elements are needed in t
     <Parameter name="number" dimension="none"/>
     <Parameter name="erev" dimension="voltage"/>
     <Requirement name="v" dimension="voltage"/>
-    <Behavior>
+    <Dynamics>
         <DerivedVariable name="channelg" dimension="conductance" select="channel/g"/>
         <DerivedVariable name="geff" value="channelg * number"/>
         <DerivedVariable name="current" value="geff * (erev - v)"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 
 
@@ -209,7 +209,7 @@ the two <x>DerivedVaraible</x> declarations. No special elements are needed in t
     <Children name="populations" type="ChannelPopulation"/>
     <Parameter name="injection" dimension="current"/>
     <Parameter name="v0" dimension="voltage"/>
-    <Behavior>
+    <Dynamics>
         <OnStart>
              <StateAssignment variable="v" value="v0"/>
         </OnStart>
@@ -217,7 +217,7 @@ the two <x>DerivedVaraible</x> declarations. No special elements are needed in t
          <DerivedVariable name="totcurrent" dimension="current" select="sum(populations[*]/current)"/>
         <StateVariable name="v" dimension="voltage"/> 
         <TimeDerivative variable="v" value="(totcurrent + injection) / capacitance"/>
-    </Behavior>
+    </Dynamics>
 </ComponentType>
 
 
@@ -246,7 +246,7 @@ When run, this produces:
 <img src="ex1ss.png"/>
 
 <p>
-There are clearly some initialization issues but the basic Behavior is the same as the PSICS version of this model.
+There are clearly some initialization issues but the basic Dynamics is the same as the PSICS version of this model.
 </p>
 
 </page>

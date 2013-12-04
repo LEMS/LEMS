@@ -6,7 +6,7 @@
     <p>
         Models are based on user-defined types (the term <x>ComponentType</x> is used in the XML) that contain parameter declarations,
         reference declarations and specification of what children an instance of 
-        a type can have. Typically they also contain a <x>Behavior</x> specification which
+        a type can have. Typically they also contain a <x>Dynamics</x> specification which
         can contain build-time and run-time declarations.  Build-time declarations apply
         when a simulation is set up, for example to connect cells. Run-time 
         declarations 
@@ -78,7 +78,7 @@
         elements in their model component specification. They only affect how the 
         component can be used when a model is instantiated. EventPorts specify that 
         a model can send or receive events, and should match up with declarations in 
-        its Behavior specification. An "Attachments" declaration specifies that a run-time
+        its Dynamics specification. An "Attachments" declaration specifies that a run-time
         instance can have dynamically generated attachments as, for example, when 
         a new synapse run-time instance is added to a cell for each incoming connection.
     </p>
@@ -97,13 +97,13 @@
         it needs a child or children of a particular supertype, but doesn't care about which
         particular sub-type is used in a model. This applies, for example, where a cell
         requires synapses that compute a quantity with dimensions current, but doesn't 
-        need access to any other parts of the synapse Behavior.
+        need access to any other parts of the synapse Dynamics.
       </p>
     
-    <h2>Run-time Behavior</h2>
+    <h2>Run-time Dynamics</h2>
         
     <p>
-        Run time Behavior are included within a Behavior block in a type specification.
+        Run time Dynamics are included within a Dynamics block in a type specification.
         They include declaration of:
         <ul>
             <li>state variables</li>
@@ -114,13 +114,13 @@
     </p>
     
     <p>
-        Run time Behavior can be grouped into Regimes, where only one regime is operative
+        Run time Dynamics can be grouped into Regimes, where only one regime is operative
         at a given time for a particular run-time instance. Regimes have access to all the 
         variables in the parent instance and can define their own local variables.
     </p>
     
     <p>
-        Behavior can also contain event blocks:
+        Dynamics can also contain event blocks:
         <ul>
             <li>OnStart blocks contain any initialization declarations needed when a 
             run-time state is instantiated</li>
@@ -135,9 +135,9 @@
         to another.
      </p>
     
-    <h2>Build-time Behavior</h2>
+    <h2>Build-time Structure</h2>
     <p>
-        Build-time Behavior define the structure of a multi-component model. Currently there are:
+        Build-time Structure defines the structure of a multi-component model. Currently there are:
         <ul>
             <li>MultiInstantiate - for declaring that a component yields multiple
             run-time instances corresponding to a particular model component. Eg, for defining 
@@ -150,7 +150,7 @@
     <h2>Other</h2>
     
     <p>
-        There are also Run, Show and Record Behavior for creating type definitions that
+        There are also Run, Show and Record Dynamics for creating type definitions that
         define simulations and what should be recorded or displayed from such a simulation.
     </p>
     
@@ -161,7 +161,7 @@
     <p>
         The numerous references to "run-time instances" above is problematic, since the 
         structures do not dictate any particular way of building a simulator or running a model.
-        In particular, there is no requirement that a component or Behavior declaration
+        In particular, there is no requirement that a component or Dynamics declaration
         should give rise to any particular collection of state variables that could be 
         interpreted as a run-time instance in the state of a simulator. 
     </p>
