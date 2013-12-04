@@ -2,11 +2,10 @@
 <project name="LEMS documentation" default="html" basedir=".">
 
 	<description>
-	        LEMS documentation
-	    </description>
+        LEMS documentation
+    </description>
 
 	<property environment="env" />
-
 
 	<property name="version.date" value="vdate" />
 	<property name="version.number" value="vnumber" />
@@ -23,10 +22,25 @@
 			<fileset dir="html" includes="**/*" />
 		</delete>
 	</target>
+    
+    
+	<target name="compile" description="Compile src to bin">
+		<echo>Compiling to bin</echo>
+		<mkdir dir="bin"/>
+        
+		<javac srcdir="src"
+               destdir="bin"
+               debug="true"
+               source="1.5"
+               target="1.5"
+               includeantruntime="false"
+        		classpathref="generation.classpath">
+			<include name="**/*.java"/>
+		</javac>
+	</target>
 
 
-
-	<target name="extractdocs" description="Extract documentation from annotations and write to xml">
+	<target name="extractdocs" depends="compile" description="Extract documentation from annotations and write to xml">
 		<mkdir dir="extractedannotations"/>
 
 		<java classname="org.lemsml.jlems.docextraction.DocExtractor" fork="false">
@@ -35,7 +49,6 @@
 
 		</java>
 	</target>
-
 
 
 
@@ -62,31 +75,6 @@
 	</target>
 
 
-	<target name="upload-docs">
-		<ftp server="psics.org" remotedir="/www/lems" userid="xxx" password="xxx" action="send" passive="yes" depends="no" binary="yes" verbose="yes" ignoreNoncriticalErrors="yes" skipFailedTransfers="yes">
-			<fileset dir="site">
-				<include name="**/*.html" />
-				<include name="**/*.xml" />
-				<include name="**/*.png" />
-				<include name="**/*.css" />
-				<include name="**/*.zip" />
-				<include name="**/*.php" />
-				<include name="**/*.jar" />
-
-			</fileset>
-		</ftp>
-	</target>
-
-
-	<target name="upload-html">
-		<ftp server="psics.org" remotedir="/www/lems" userid="xxx" password="xxx" action="send" passive="yes" depends="no" binary="yes" verbose="yes" ignoreNoncriticalErrors="yes" skipFailedTransfers="yes">
-			<fileset dir="site">
-				<include name="**/*.html" />
-			</fileset>
-		</ftp>
-	</target>
-
-
 
 
 
@@ -107,26 +95,6 @@
 	</target>
 
 	
-	<!--
-	<taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
-		<classpath>
-			<fileset dir="antlib">
-				<include name="fop*.jar" />
-			</fileset>
-		</classpath>
-	</taskdef>
-
-
-	<target name="pdfdocs" depends="fo" description="Generates PDF of content of website">
-
-		<mkdir dir="site" />
-
-		<fop format="application/pdf" fofile="tmp/wklems.fo" outfile="site/lems.pdf" />
-
-	</target>
-
-
--->
 
 
 
