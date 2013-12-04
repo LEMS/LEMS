@@ -258,8 +258,6 @@
     <Component id="celltype_c" type="iaf3" leakConductance="3 pS" refractoryPeriod="3 ms" threshold="45 mV" leakReversal="-50 mV" deltaV="5mV" capacitance="1uF" />
 
 
-    <Component id="celltype_d" extends="celltype_c" leakConductance="5 pS" />
-
     <Component id="gen1" type="spikeGenerator" period="30ms" />
 
     <Component id="gen2" type="spikeGenerator2" period="32ms" />
