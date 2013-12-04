@@ -1,0 +1,136 @@
+<page>
+    <h1>User defined types for networks and populations</h1>
+    
+ 
+    <p>
+       This example shows how the standard component type structures can be used to declare components for simple 
+       networks. The following three definitions allow networks to be constructed containing fixed size populations
+        of a particular component type.
+    </p>
+<xcode>
+<ComponentType name="Network">
+    <Children name="populations" type="Population"/>
+    <Children name="connectivities" type="EventConnectivity"/>
+</ComponentType>
+
+
+<ComponentType name="Population">
+    <ComponentRef name="component" type="Component"/>
+    <Parameter name="size" dimension="none"/>
+ </ComponentType>
+
+
+
+<ComponentType name="EventConnectivity">
+    <Link name="source" type="Population"/>
+    <Link name="target" type="Population"/>
+    <Child name="Connections" type="ConnectionPattern"/>
+</ComponentType>
+</xcode>
+
+
+<p>
+The harder part is to provide elements in the <x>Dynamics</x> blocks to express what should be done with components
+ based on these types. The Network element doesn't pose any problems because the default behavior on instantiation will
+ do the right thing: it will instantiate each of the child populations and EventConnectivity elements.
+</p>
+<p>
+But the population element needs to say that its instantiation involves making 'size' instances of the component referred
+to by the 'component' reference, where 'size' is the value supplied for the size parameter in a component specification.
+This can be done by including a <x>Build</x> element inside the <x>Dynamics</x> block:
+</p>
+
+<xcode>
+<ComponentType name="Population">
+    <ComponentRef name="component" type="Component"/>
+    <Parameter name="size" dimension="none"/>
+    <Dynamics>
+        <Build>
+            <MultiInstantiate number="size" component="component"/>
+        </Build>
+    </Dynamics>
+</ComponentType>
+</xcode>
+<p>
+    The <x>MultiInstantiate</x> specification says that there should be 'size' instances of the component referred to in the 
+    'component' parameter created when the model is built. This overrides the default behavior.
+    [TODO: what is the <x>Build</x> element content corresponding to the default behavior?].
+</p>
+
+<p>
+This serves to create some rather simple populations. More complex specifications, such as putting one instance at each
+point of a grid satisfying a particular constraint could be handled via first declaring elements to form the grid, and then
+using selectors that pick the points in the population element to actually put the cells at [its not clear to me how much 
+more would be required to make this work, other than implementing proper xpath-like selectors].
+</p>
+
+<p>
+The following three types define a general connectivity structure with an abstract <x>ConnectionPattern</x> type, and 
+a specific instance for All-All connectivity.
+</p>
+<xcode>
+<ComponentType name="EventConnectivity">
+    <Link name="source" type="Population"/>
+    <Link name="target" type="Population"/>
+    <Child name="Connections" type="ConnectionPattern"/>
+</ComponentType>
+
+<ComponentType name="ConnectionPattern">
+</ComponentType>
+
+
+<ComponentType name="AllAll" extends="ConnectionPattern">
+    <Dynamics>
+        <Build>
+            <ForEach instances="../source" as="a">
+                 <ForEach instances="../target" as="b">
+                      <EventConnection from="a" to="b"/>
+                 </ForEach>
+            </ForEach>    
+        </Build>
+    </Dynamics>
+</ComponentType>
+</xcode>
+
+<p>
+The <x>Build</x> element in the <x>AllAll</x> pattern uses a new <x>ForEach</x> construct and the <x>EventConnectin</x>
+element from before. The <x>ForEach</x> element operates selects each instance matching its 'instances' attribute, and 
+applies the enclosing directives, much in the same way as <x>for-each</x> in XSL.  The proof of concept interpreter
+also has <x>Choose</x>, <x>When</x> and <x>Otherwise</x> elements that operate much like their XSL equivalents, although these
+are not used in this example.
+
+</p>
+
+
+<p>
+With these definitions in place, a network simulation can be defined with the following:
+</p>
+
+<xcode>
+<Network id="net1">
+    <Population id="p1" component="gen1" size="2"/>
+    <Population id="p3" component="iaf3cpt" size="3"/>
+     
+    <EventConnectivity id="p1-p3" source="p1" target="p3">
+        <Connections type="AllAll"/>
+    </EventConnectivity>
+</Network>
+
+
+<Simulation id="sim1" length="80ms" step="0.05ms" target="net1">
+    <Display timeScale="1ms">
+        <Line id="gen_v" quantity="p3[0]/v" scale="1mV" color="#0000f0"/>
+        <Line id="gen_tsince" quantity="p1[0]/tsince" scale="1ms" color="#00c000"/>
+    </Display>
+</Simulation>
+</xcode>
+
+
+
+
+<p>The output when the model is run is shown below, followed by the full listing.</p>
+<img src="ex7run.png"/>
+
+<xinclude src="../../examples/example7.xml"/>
+
+</page>

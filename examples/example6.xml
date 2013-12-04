@@ -1,0 +1,105 @@
+<Lems>
+ 
+<Target component="simset"/> 
+ 
+<Include file="ex2dims.xml"/>
+<Include file="hhchannel.xml"/> 
+ 
+<Include file="hhcell.xml"/>
+<Include file="spikegenerators.xml"/>
+<Include file="hhmodels.xml"/>
+<Include file="misciaf.xml"/>
+ 
+
+<HHCell id="hhcell_1" capacitance="1pF" injection="4pA" v0="-60mV">
+    <ChannelPopulation id="NaPop" channel="na" number="6000" erev="50mV"/>
+    <ChannelPopulation id="KPop" channel="k" number="1800" erev="-77mV"/>
+</HHCell>
+ 
+<Component id="gen1" type="spikeGenerator" period="30ms"/>
+
+<Component id="gen2" type="spikeGenerator2" period="32ms"/>
+
+<Component id="iaf3cpt" type="iaf3" leakReversal="-50mV" deltaV="50mV" threshold="-30mV" leakConductance="50pS"
+refractoryPeriod="4ms" capacitance="1pF"/>
+
+
+
+ 
+ 
+
+<ComponentType name="DisplayList">
+    <Parameter name="timeScale" dimension="time"/>
+    <Children name="lines" type="Line"/>
+    
+    <Text name="title"/>  
+    <Text name="display"/>
+</ComponentType>
+
+
+
+<ComponentType name="Display">
+    <Text name="title"/>   
+	<Parameter name="xmin" dimension="none"/>
+	<Parameter name="xmax" dimension="none"/>
+	<Parameter name="ymin" dimension="none"/>
+	<Parameter name="ymax" dimension="none"/>
+
+    <Simulation>
+         <DataDisplay title="title" dataRegion="xmin,xmax,ymin,ymax"/>
+    </Simulation>
+</ComponentType>
+
+
+<ComponentType name="Line">
+    <Parameter name="scale" dimension="*"/>
+	 <Parameter name="timeScale" dimension="*"/>
+    <Text name="color"/>
+    <Text name="save"/>
+    <Path name="quantity"/>
+    <Simulation>
+        <Record quantity="quantity" timeScale="timeScale" scale="scale" color="color" destination="display"/>
+    </Simulation>
+</ComponentType>
+
+
+<ComponentType name="Simulation">
+    <Parameter name="length" dimension="time"/>
+    <Parameter name="step" dimension="time"/>
+    <ComponentReference name="target" type="Component"/>
+    <Link name="display" type="Display"/>
+    <Children name="outputs" type="DisplayList"/>
+    <Dynamics>
+        <StateVariable name="t" dimension="time"/>
+    </Dynamics>
+    
+    <Simulation>
+        <Run component="target" variable="t" increment="step" total="length"/>
+    </Simulation>
+</ComponentType>
+
+
+<ComponentType name="SimulationSet">
+    <Children name="simulations" type="Simulation"/>
+    <Children name="displays" type="Display"/>
+    
+   
+ </ComponentType>
+
+ 
+
+<SimulationSet id="simset">
+	<Display id="disp1" title="Example 6:  User defined types for simulation and display" xmin="0" xmax="80" ymin="-80" ymax="50"/>
+	 
+	<Simulation id="sim1" length="80ms" step="0.05ms" target="hhcell_1" display="disp1">
+    	<DisplayList timeScale="1ms" title="">
+             <Line id="V" quantity="v" scale="1mV" timeScale="1ms" color="#0000f0"/>
+         
+        <Line id="Na_q" quantity="NaPop/geff" scale="1nS" timeScale="1ms" color="#f00000"/>
+        <Line id="K_q" quantity="KPop/geff" scale="1nS" timeScale="1ms" color="#00f000"/>
+    	</DisplayList>
+	</Simulation>
+</SimulationSet>
+
+
+</Lems>
