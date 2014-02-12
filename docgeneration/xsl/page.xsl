@@ -54,7 +54,7 @@
  	           <div id="left">
                              <div><a href="index.html">About</a></div>
                             <div><a href="introduction.html">Introduction</a></div>
-                            <div><a href="elements.html">Elements</a></div>
+                            <div><a href="elements.html">LEMS Elements</a></div>
                             <div><a href="example1.html">Example 1</a></div>
                             <div><a href="example2.html">Example 2</a></div>
                             <div><a href="example3.html">Example 3</a></div>
