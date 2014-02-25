@@ -6,7 +6,7 @@
     <Dimension name="conductance" m="-1" l="-2" t="3" i="2"/>
     <Dimension name="capacitance" m="-1" l="-2" t="4" i="2"/>
     <Dimension name="current" i="1"/>
-	<Dimension name="temperature" k="1"/>
+    <Dimension name="temperature" k="1"/>
 
     <Unit symbol="mV" dimension="voltage" power="-3"/> 
     <Unit symbol="ms" dimension="time" power="-3"/> 
@@ -18,6 +18,6 @@
     <Unit symbol="per_ms" dimension="per_time" power="3"/>
     <Unit symbol="pA" dimension="current" power="-12"/>
     <Unit symbol="nA" dimension="current" power="-9"/>
-	<Unit symbol="degC" dimension="temperature" offset="273.15"/>
+    <Unit symbol="degC" dimension="temperature" offset="273.15"/>
 
 </Lems>
