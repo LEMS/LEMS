@@ -17,7 +17,7 @@
         
             <TimeDerivative variable="x" value="(1 + ex)^2 / ex * (rf * (1 - q) - rr * q)"/>
       
-            <DerivedVariable name="fcond" exposure="fcond" value="q^power"/>
+            <DerivedVariable name="fcond" dimension="none" exposure="fcond" value="q^power"/>
         </Dynamics>    
     </ComponentType>
 

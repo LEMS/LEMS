@@ -74,7 +74,7 @@
     <ComponentType name="spikeGenerator2" extends="spikeGenerator">
         <Dynamics>
             <StateVariable name="tlast" dimension="time" />
-            <DerivedVariable name="tsince" exposure="tsince" value="t - tlast" />
+            <DerivedVariable name="tsince" dimension="time" exposure="tsince" value="t - tlast" />
             <OnCondition test="t - tlast .gt. period">
                 <StateAssignment variable="tlast" value="t" />
                 <EventOut port="a" />
@@ -94,22 +94,22 @@
 
     <ComponentType name="HHExpRate" extends="HHRate">
         <Dynamics>
-            <DerivedVariable name="r" exposure="r" value="rate * exp((v - midpoint)/scale)" />
+            <DerivedVariable name="r" dimension="per_time" exposure="r" value="rate * exp((v - midpoint)/scale)" />
         </Dynamics>
     </ComponentType>
 
 
     <ComponentType name="HHSigmoidRate" extends="HHRate">
         <Dynamics>
-            <DerivedVariable name="r" exposure="r" value="rate / (1 + exp( -(v - midpoint)/scale))" />
+            <DerivedVariable name="r" dimension="per_time" exposure="r" value="rate / (1 + exp( -(v - midpoint)/scale))" />
         </Dynamics>
     </ComponentType>
 
 
     <ComponentType name="HHExpLinearRate" extends="HHRate">
         <Dynamics>
-            <DerivedVariable name="x" value="(v - midpoint) / scale" />
-            <DerivedVariable name="r" exposure="r" value="rate * x / (1 - exp(-x))" />
+            <DerivedVariable name="x" dimension="none" value="(v - midpoint) / scale" />
+            <DerivedVariable name="r" dimension="per_time" exposure="r" value="rate * x / (1 - exp(-x))" />
         </Dynamics>
     </ComponentType>
 
@@ -125,7 +125,7 @@
             <DerivedVariable dimension="per_time" name="rf" select="Forward/r" />
             <DerivedVariable dimension="per_time" name="rr" select="Reverse/r" />
             <TimeDerivative variable="q" value="rf * (1 - q) - rr * q" />
-            <DerivedVariable name="fcond" exposure="fcond" value="q^power" />
+            <DerivedVariable name="fcond" dimension="none" exposure="fcond" value="q^power" />
         </Dynamics>
     </ComponentType>
 
@@ -143,7 +143,7 @@
             <DerivedVariable name="rf" dimension="per_time" select="Forward/r" />
             <DerivedVariable name="rr" dimension="per_time" select="Reverse/r" />
             <TimeDerivative variable="x" value="(1 + ex)^2 / ex * (rf * (1 - q) - rr * q)" />
-            <DerivedVariable name="fcond" exposure="fcond" value="q^power" />
+            <DerivedVariable name="fcond" dimension="none" exposure="fcond" value="q^power" />
         </Dynamics>
     </ComponentType>
 
@@ -195,11 +195,9 @@
         <Exposure name="current" dimension="current" />
 
         <Dynamics>
-            <DerivedVariable name="channelg" dimension="conductance"
-                             select="channel/g" />
-            <DerivedVariable name="geff" value="channelg * number" />
-            <DerivedVariable name="current" exposure="current"
-                             value="geff * (erev - v)" />
+            <DerivedVariable name="channelg" dimension="conductance" select="channel/g" />
+            <DerivedVariable name="geff" dimension="conductance" value="channelg * number" />
+            <DerivedVariable name="current" dimension="current" exposure="current" value="geff * (erev - v)" />
         </Dynamics>
 
         <Structure>

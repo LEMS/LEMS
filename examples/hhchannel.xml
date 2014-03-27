@@ -19,22 +19,22 @@
 
     <ComponentType name="HHExpRate" extends="HHRate">
         <Dynamics>
-            <DerivedVariable name="r" exposure="r" value="rate * exp((v - midpoint)/scale)"/>
+            <DerivedVariable name="r" exposure="r"  dimension="per_time" value="rate * exp((v - midpoint)/scale)"/>
         </Dynamics>
     </ComponentType>
 
 
     <ComponentType name="HHSigmoidRate" extends="HHRate">
         <Dynamics>
-            <DerivedVariable name="r" exposure="r" value="rate / (1 + exp( -(v - midpoint)/scale))"/>
+            <DerivedVariable name="r" dimension="per_time" exposure="r" value="rate / (1 + exp( -(v - midpoint)/scale))"/>
         </Dynamics>
     </ComponentType>
 
 
     <ComponentType name="HHExpLinearRate" extends="HHRate">
         <Dynamics>
-            <DerivedVariable name="x" value="(v - midpoint) / scale"/>
-            <DerivedVariable name="r" exposure="r" value="rate * x / (1 - exp(-x))"/>
+            <DerivedVariable name="x" dimension="none" value="(v - midpoint) / scale"/>
+            <DerivedVariable name="r" dimension="per_time" exposure="r" value="rate * x / (1 - exp(-x))"/>
         </Dynamics>
     </ComponentType>
  
@@ -51,7 +51,7 @@
             <DerivedVariable dimension="per_time" name="rf" select="Forward/r"/>
             <DerivedVariable dimension="per_time" name="rr" select="Reverse/r"/> 
             <TimeDerivative variable="q" value="rf * (1 - q) - rr * q"/>
-            <DerivedVariable name="fcond" exposure="fcond" value="q^power"/>
+            <DerivedVariable name="fcond" dimension="none" exposure="fcond" value="q^power"/>
         </Dynamics>    
     </ComponentType>
 
