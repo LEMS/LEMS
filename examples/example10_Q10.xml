@@ -1,0 +1,100 @@
+<Lems>
+ 
+<Target component="simset"/> 
+ 
+<Include file="ex2dims.xml"/>
+<Include file="hhchannel.xml"/> 
+<Include file="hhcell.xml"/>
+<Include file="hhmodels.xml"/>
+<Include file="MultiRunSimulation.xml"/>
+
+
+    <ComponentType name="TemperatureDependency">    
+        <Exposure name="rateFactor" dimension="none"/>
+        <Requirement name="temperature" dimension="temperature"/>
+    </ComponentType>
+
+
+
+    <ComponentType name="Q10TemperatureDependency" extends="TemperatureDependency" description="Provides a q10 value">
+ 		<Parameter name="Q10" dimension="none"/>
+	    <Parameter name="baseTemperature" dimension="temperature"/>
+	    <Constant name="tenC" dimension="temperature" value="10 degC"/>
+         <Dynamics>
+            <DerivedVariable name="rateFactor" exposure="rateFactor" dimension="none" 
+                       value="Q10^((temperature - baseTemperature) / tenC)"/>
+        </Dynamics>
+    </ComponentType>
+ 
+     
+
+  <ComponentType name="HHGateQ10" extends="HHGate">
+     <Child name="temperatureDependency" type="TemperatureDependency"/>
+     
+    <Dynamics simultaneous="false">
+        <StateVariable name="x" dimension="none"/>
+
+       <DerivedVariable name="rateFactor" dimension="none" select="temperatureDependency/rateFactor" 
+       			reduce="multiply" required="false"/>
+
+        <DerivedVariable name="rf" dimension="per_time" select="Forward/r"/>
+        <DerivedVariable name="rr" dimension="per_time" select="Reverse/r"/> 
+        
+        <TimeDerivative variable="x" value="(1 + ex)^2 / ex * (rateFactor * rf * (1 - q) -  rateFactor * rr * q)"/>
+      
+        <DerivedVariable name="ex" dimension="none" value="exp(x)"/>
+        <DerivedVariable name="q" dimension="none" value="ex / (1 + ex)"/>
+        <DerivedVariable name="fcond" exposure="fcond" value="q^power"/>
+    </Dynamics>    
+</ComponentType>
+
+
+
+
+
+<HHChannel id="naq10"  conductance="10pS">
+
+   <HHGateQ10 id="m" power="3">
+        <temperatureDependency type="Q10TemperatureDependency" Q10="3" baseTemperature="32degC" /> 
+        <Forward type="HHExpLinearRate" rate="1per_ms" midpoint="-40mV" scale="10mV"/>
+        <Reverse type="HHExpRate" rate="4per_ms" midpoint="-65mV" scale="-18mV"/>
+   </HHGateQ10>
+
+   <HHGateQ10 id="h" power="1">
+        <Forward type="HHExpRate" rate="0.07per_ms" midpoint="-65mV" scale="-20mV"/>
+        <Reverse type="HHSigmoidRate" rate="1per_ms" midpoint="-35mV" scale="10mV"/>
+   </HHGateQ10>
+
+</HHChannel>
+
+
+<ComponentType name="HHCellT" extends="HHCell">
+	<Parameter name="temperature" dimension="temperature"/>
+
+</ComponentType>
+
+<HHCellT id="hhcell_1" capacitance="1pF" injection="4pA" v0="-60mV" temperature="22degC">
+    <ChannelPopulation id="NaPop" channel="naq10" number="8000" erev="50mV"/>
+    <ChannelPopulation id="KPop" channel="k" number="1100" erev="-77mV"/>
+</HHCellT>
+ 
+ 
+  
+
+<SimulationSet id="simset">
+	<Display id="disp1" title="Example 10: Challen kinetics with Q10" xmin="0" xmax="80" ymin="-80" ymax="50"/>
+	 
+	<Simulation id="sim1" length="80ms" step="0.05ms" target="hhcell_1" display="disp1">
+    	<DisplayList timeScale="1ms" title="">
+             <Line id="V" quantity="v" scale="1mV" timeScale="1ms" color="#0000f0"/>
+         
+        <Line id="Na_q" quantity="NaPop/geff" scale="1nS" timeScale="1ms" color="#f00000"/>
+        <Line id="K_q" quantity="KPop/geff" scale="1nS" timeScale="1ms" color="#00f000"/>
+        
+        
+    	</DisplayList>
+	</Simulation>
+</SimulationSet>
+
+
+</Lems>

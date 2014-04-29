@@ -1,6 +1,6 @@
 <Lems>
 
-    <Target component="simset" />
+    <Target component="sim1" />
 
     <Dimension name="voltage" m="1" l="2" t="-3" i="-1" />
     <Dimension name="time" t="1" />
@@ -56,7 +56,6 @@
     </ComponentType>
 
 
-
     <ComponentType name="spikeGenerator">
         <Parameter name="period" dimension="time" />
         <EventPort name="a" direction="out" />
@@ -75,7 +74,7 @@
     <ComponentType name="spikeGenerator2" extends="spikeGenerator">
         <Dynamics>
             <StateVariable name="tlast" dimension="time" />
-            <DerivedVariable name="tsince" exposure="tsince" value="t - tlast" />
+            <DerivedVariable name="tsince" dimension="time" exposure="tsince" value="t - tlast" />
             <OnCondition test="t - tlast .gt. period">
                 <StateAssignment variable="tlast" value="t" />
                 <EventOut port="a" />
@@ -84,38 +83,35 @@
     </ComponentType>
 
 
-
-
     <ComponentType name="HHRate">
         <Parameter name="rate" dimension="per_time" />
         <Parameter name="midpoint" dimension="voltage" />
         <Parameter name="scale" dimension="voltage" />
         <Requirement name="v" dimension="voltage" />
         <Exposure name="r" dimension="per_time" />
-
-
     </ComponentType>
+
 
     <ComponentType name="HHExpRate" extends="HHRate">
         <Dynamics>
-            <DerivedVariable name="r" exposure="r" value="rate * exp((v - midpoint)/scale)" />
+            <DerivedVariable name="r" dimension="per_time" exposure="r" value="rate * exp((v - midpoint)/scale)" />
         </Dynamics>
     </ComponentType>
 
 
     <ComponentType name="HHSigmoidRate" extends="HHRate">
         <Dynamics>
-            <DerivedVariable name="r" exposure="r" value="rate / (1 + exp( -(v - midpoint)/scale))" />
+            <DerivedVariable name="r" dimension="per_time" exposure="r" value="rate / (1 + exp( -(v - midpoint)/scale))" />
         </Dynamics>
     </ComponentType>
+
 
     <ComponentType name="HHExpLinearRate" extends="HHRate">
         <Dynamics>
-            <DerivedVariable name="x" value="(v - midpoint) / scale" />
-            <DerivedVariable name="r" exposure="r" value="rate * x / (1 - exp(-x))" />
+            <DerivedVariable name="x" dimension="none" value="(v - midpoint) / scale" />
+            <DerivedVariable name="r" dimension="per_time" exposure="r" value="rate * x / (1 - exp(-x))" />
         </Dynamics>
     </ComponentType>
-
 
 
     <ComponentType name="HHGate0">
@@ -124,13 +120,12 @@
         <Child name="Reverse" type="HHRate" />
         <Requirement name="v" dimension="voltage" />
         <Exposure name="fcond" dimension="none" />
-
         <Dynamics>
             <StateVariable name="q" dimension="none" />
             <DerivedVariable dimension="per_time" name="rf" select="Forward/r" />
             <DerivedVariable dimension="per_time" name="rr" select="Reverse/r" />
             <TimeDerivative variable="q" value="rf * (1 - q) - rr * q" />
-            <DerivedVariable name="fcond" exposure="fcond" value="q^power" />
+            <DerivedVariable name="fcond" dimension="none" exposure="fcond" value="q^power" />
         </Dynamics>
     </ComponentType>
 
@@ -141,23 +136,16 @@
         <Child name="Reverse" type="HHRate" />
         <Requirement name="v" dimension="voltage" />
         <Exposure name="fcond" dimension="none" />
-
-
         <Dynamics>
             <StateVariable name="x" dimension="none" />
             <DerivedVariable name="ex" dimension="none" value="exp(x)" />
             <DerivedVariable name="q" dimension="none" value="ex / (1 + ex)" />
             <DerivedVariable name="rf" dimension="per_time" select="Forward/r" />
             <DerivedVariable name="rr" dimension="per_time" select="Reverse/r" />
-
             <TimeDerivative variable="x" value="(1 + ex)^2 / ex * (rf * (1 - q) - rr * q)" />
-
-            <DerivedVariable name="fcond" exposure="fcond" value="q^power" />
+            <DerivedVariable name="fcond" dimension="none" exposure="fcond" value="q^power" />
         </Dynamics>
     </ComponentType>
-
-
-
 
 
     <ComponentType name="HHChannel">
@@ -166,28 +154,25 @@
         <Exposure name="g" dimension="conductance" />
         <Dynamics>
             <DerivedVariable name="gatefeff" dimension="none"
-                select="gates[*]/fcond" reduce="multiply" />
+                             select="gates[*]/fcond" reduce="multiply" />
             <DerivedVariable name="g" exposure="g"
-                dimension="conductance" value="conductance * gatefeff" />
+                             dimension="conductance" value="conductance * gatefeff" />
         </Dynamics>
     </ComponentType>
-
-
 
 
     <HHChannel id="na" conductance="20pS">
         <HHGate id="m" power="3">
             <Forward type="HHExpLinearRate" rate="1.per_ms"
-                midpoint="-40mV" scale="10mV" />
+                     midpoint="-40mV" scale="10mV" />
             <Reverse type="HHExpRate" rate="4per_ms" midpoint="-65mV"
-                scale="-18mV" />
+                     scale="-18mV" />
         </HHGate>
-
         <HHGate id="h" power="1">
             <Forward type="HHExpRate" rate="0.07per_ms"
-                midpoint="-65.mV" scale="-20.mV" />
+                     midpoint="-65.mV" scale="-20.mV" />
             <Reverse type="HHSigmoidRate" rate="1per_ms"
-                midpoint="-35mV" scale="10mV" />
+                     midpoint="-35mV" scale="10mV" />
         </HHGate>
     </HHChannel>
 
@@ -195,12 +180,11 @@
     <HHChannel id="k" conductance="20pS">
         <HHGate id="n" power="4">
             <Forward type="HHExpLinearRate" rate="0.1per_ms"
-                midpoint="-55mV" scale="10mV" />
+                     midpoint="-55mV" scale="10mV" />
             <Reverse type="HHExpRate" rate="0.125per_ms"
-                midpoint="-65mV" scale="-80mV" />
+                     midpoint="-65mV" scale="-80mV" />
         </HHGate>
     </HHChannel>
-
 
 
     <ComponentType name="ChannelPopulation">
@@ -211,18 +195,15 @@
         <Exposure name="current" dimension="current" />
 
         <Dynamics>
-            <DerivedVariable name="channelg" dimension="conductance"
-                select="channel/g" />
-            <DerivedVariable name="geff" value="channelg * number" />
-            <DerivedVariable name="current" exposure="current"
-                value="geff * (erev - v)" />
+            <DerivedVariable name="channelg" dimension="conductance" select="channel/g" />
+            <DerivedVariable name="geff" dimension="conductance" value="channelg * number" />
+            <DerivedVariable name="current" dimension="current" exposure="current" value="geff * (erev - v)" />
         </Dynamics>
 
         <Structure>
             <ChildInstance component="channel" />
         </Structure>
     </ComponentType>
-
 
 
 
@@ -238,12 +219,12 @@
             </OnStart>
 
             <DerivedVariable name="totcurrent"
-                dimension="current" select="populations[*]/current"
-                reduce="add" />
+                             dimension="current" select="populations[*]/current"
+                             reduce="add" />
             <StateVariable name="v" exposure="v"
-                dimension="voltage" />
+                           dimension="voltage" />
             <TimeDerivative variable="v"
-                value="(totcurrent + injection) / capacitance" />
+                            value="(totcurrent + injection) / capacitance" />
         </Dynamics>
     </ComponentType>
 
@@ -256,7 +237,6 @@
 
 
     <Component id="celltype_c" type="iaf3" leakConductance="3 pS" refractoryPeriod="3 ms" threshold="45 mV" leakReversal="-50 mV" deltaV="5mV" capacitance="1uF" />
-
 
     <Component id="gen1" type="spikeGenerator" period="30ms" />
 
@@ -275,7 +255,6 @@
 
         <Population id="hhpop" component="hhcell_1" size="1" />
 
-
         <EventConnectivity id="p1-p3" source="p1" target="p3">
             <Connections type="AllAll" />
         </EventConnectivity>
@@ -283,19 +262,14 @@
 
 
     <Include file="SingleSimulation.xml" />
-    <Simulation id="simset" length="80ms" step="0.05ms"
-        target="net1">
-
+    
+    <Simulation id="sim1" length="80ms" step="0.01ms" target="net1">
         <Display id="d0" title="Example 1: Dimensions, Units, ComponentTypes and Components" 
-            timeScale="1ms" xmin="-10" xmax="90" ymin="-90" ymax="60">
+                 timeScale="1ms" xmin="-10" xmax="90" ymin="-90" ymax="60">
             <Line id="tsince" quantity="p1[0]/tsince" scale="1ms" timeScale="1ms" color="#00c000" />
             <Line id="p3v" quantity="p3[0]/v" scale="1mV" timeScale="1ms" color="#0000f0" />
             <Line id="p0v" quantity="hhpop[0]/v" scale="1mV" timeScale="1ms" color="#ff4040" />
         </Display>
-
-
     </Simulation>
-
-
 
 </Lems>

@@ -1,5 +1,27 @@
 <Lems>
+ 
+    <Target component="sim1"/> 
+ 
+    <Include file="ex2dims.xml"/>
+    <Include file="hhchannel.xml"/> 
+ 
+    <Include file="hhcell.xml"/>
+    <Include file="spikegenerators.xml"/>
+    <Include file="hhmodels.xml"/>
+    <Include file="misciaf.xml"/>
+ 
 
+    <HHCell id="hhcell_1" capacitance="1pF" injection="4pA" v0="-60mV">
+        <ChannelPopulation id="NaPop" channel="na" number="6000" erev="50mV"/>
+        <ChannelPopulation id="KPop" channel="k" number="1800" erev="-77mV"/>
+    </HHCell>
+ 
+    <Component id="gen1" type="spikeGenerator" period="30ms"/>
+
+    <Component id="gen2" type="spikeGenerator2" period="32ms"/>
+
+    <Component id="iaf3cpt" type="iaf3" leakReversal="-50mV" deltaV="50mV" threshold="-30mV" leakConductance="50pS"
+               refractoryPeriod="4ms" capacitance="1pF"/>
 
     <ComponentType name="Display">
         <Text name="title"/>   
@@ -28,28 +50,6 @@
     </ComponentType>
 
 
-    <ComponentType name="OutputFile">
-        <Text name="path"/>
-        <Text name="fileName"/>
-	
-        <Children name="outputColumn" type="OutputColumn"/>
-	
-        <Simulation>
-            <DataWriter path="path" fileName="fileName"/>
-        </Simulation>
-
-    </ComponentType>
-
-
-    <ComponentType name="OutputColumn">
-        <Path name="quantity"/>
-        <Simulation>
-            <Record quantity="quantity"/>
-        </Simulation>
-    </ComponentType>
-
-
-
     <ComponentType name="Simulation">
         <Parameter name="length" dimension="time"/>
         <Parameter name="step" dimension="time"/>
@@ -58,9 +58,7 @@
 
 
         <Children name="displays" type="Display"/>
-       
-        <Children name="outputs" type="OutputFile"/>
-   
+        
         <Dynamics>
             <StateVariable name="t" dimension="time"/>
         </Dynamics>
@@ -69,7 +67,14 @@
             <Run component="target" variable="t" increment="step" total="length"/>
         </Simulation>
     </ComponentType>
-
-
+    
+    <Simulation id="sim1" length="80ms" step="0.01ms" target="hhcell_1">
+        <Display id="d0" title="Example 6: User defined types for simulation and display" timeScale="1ms" xmin="-10" xmax="90" ymin="-90" ymax="60">
+            <Line id="V" quantity="v" scale="1mV" timeScale="1ms" color="#0000f0"/>
+            <!--<Line id="Na_q" quantity="NaPop/geff" scale="1nS" timeScale="1ms" color="#f00000"/>
+            <Line id="K_q" quantity="KPop/geff" scale="1nS" timeScale="1ms" color="#00f000"/>-->
+        </Display>
+    </Simulation>
+  
 
 </Lems>
