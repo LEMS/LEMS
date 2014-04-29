@@ -69,7 +69,7 @@
     </ComponentType>
     
     <Simulation id="sim1" length="80ms" step="0.01ms" target="hhcell_1">
-        <Display id="d0" title="Example 3: User defined types for networks and populations" timeScale="1ms" xmin="-10" xmax="90" ymin="-90" ymax="60">
+        <Display id="d0" title="Example 6: User defined types for simulation and display" timeScale="1ms" xmin="-10" xmax="90" ymin="-90" ymax="60">
             <Line id="V" quantity="v" scale="1mV" timeScale="1ms" color="#0000f0"/>
             <!--<Line id="Na_q" quantity="NaPop/geff" scale="1nS" timeScale="1ms" color="#f00000"/>
             <Line id="K_q" quantity="KPop/geff" scale="1nS" timeScale="1ms" color="#00f000"/>-->
