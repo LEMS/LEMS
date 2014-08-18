@@ -11,6 +11,8 @@ See http://lems.github.io/LEMS
 
 [jLEMS](https://github.com/LEMS/jLEMS)
 
+jLEMS can be used to parse and execute any LEMS model. For an application which adds NeuroML 2 ComponentType definitions and various options for importing & exporting LEMS to other formats, see [jNeuroML](https://github.com/NeuroML/jNeuroML).
+
 **Python based LEMS interpreter/simulator**
 
 [PyLEMS](https://github.com/LEMS/pylems)
