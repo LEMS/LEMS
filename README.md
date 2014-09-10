@@ -7,6 +7,13 @@ The Low Entropy Model Specification language. This repository contains the [Sche
 
 See http://lems.github.io/LEMS
 
+For more details on LEMS see: 
+
+LEMS: A language for expressing complex biological models in concise and hierarchical form and its use in underpinning NeuroML 2
+Robert C. Cannon, Padraig Gleeson, Sharon Crook, Gautham Ganapathy, Boris Marin, Eugenio Piasini and R. Angus Silver
+Frontiers in Neuroinformatics 2014, doi: 10.3389/fninf.2014.00079
+http://journal.frontiersin.org/Journal/10.3389/fninf.2014.00079/abstract
+
 **Java based LEMS interpreter/simulator**
 
 [jLEMS](https://github.com/LEMS/jLEMS)
