@@ -21,3 +21,5 @@ jLEMS can be used to parse and execute any LEMS model. For an application which 
 **Python based LEMS interpreter/simulator**
 
 [PyLEMS](https://github.com/LEMS/pylems)
+
+This code is distributed under the terms of the GNU General Public License v3.
