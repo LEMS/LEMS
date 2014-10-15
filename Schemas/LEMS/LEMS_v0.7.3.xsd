@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    v0.7.3...
+    v0.7.3 supporting new LEMS elements required for GapJunctions & new connection specifications: 
+    Tunnel, InstanceRequirement, IndexParameter, ComponentRequirement
     
     v0.7.2 added the ability to validate LEMS files containing Simulation elements, as the form of this element
     is reasonably stable now
@@ -128,6 +129,7 @@
 
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
+        <xs:attribute name="local" type="xs:string" use="optional"/>
 
     </xs:complexType>
 
@@ -345,6 +347,8 @@
             <xs:element name="Property" type="Property" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="Parameter" type="Parameter" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="DerivedParameter" type="DerivedParameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="IndexParameter" type="IndexParameter" minOccurs="0" maxOccurs="unbounded"/>
+            
             <xs:element name="Constant" type="Constant" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="Child" type="Child" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="Children" type="Children" minOccurs="0" maxOccurs="unbounded"/>
@@ -357,6 +361,10 @@
 
             <xs:element name="Exposure" type="Exposure" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="Requirement" type="Requirement" minOccurs="0" maxOccurs="unbounded"/>
+            
+            <xs:element name="ComponentRequirement" type="ComponentRequirement" minOccurs="0" maxOccurs="unbounded"/>
+            
+            <xs:element name="InstanceRequirement" type="InstanceRequirement" minOccurs="0" maxOccurs="unbounded"/>
 
             <xs:element name="Path" type="Path" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="Text" type="Text" minOccurs="0" maxOccurs="unbounded"/>
@@ -392,6 +400,10 @@
             <xs:extension base="NamedDimensionalType"/>
         </xs:complexContent>
     </xs:complexType>
+    
+    <xs:complexType name="IndexParameter">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
 
     <xs:complexType name="Requirement"> <!-- For language binding generators, so there will be a class of this name... -->
         <xs:complexContent>
@@ -404,6 +416,17 @@
             <xs:extension base="NamedDimensionalType"/>
         </xs:complexContent>
     </xs:complexType>
+    
+    
+    <xs:complexType name="ComponentRequirement">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+    
+    <xs:complexType name="InstanceRequirement">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+    </xs:complexType>
+    
 
 
 
@@ -432,6 +455,7 @@
             <xs:element name="MultiInstantiate" type="MultiInstantiate" minOccurs="0" maxOccurs="1"/>
             <xs:element name="ForEach" type="ForEach" minOccurs="0" maxOccurs="1"/>
             <xs:element name="With" type="With" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="Tunnel" type="Tunnel" minOccurs="0" maxOccurs="1"/>
             <xs:element name="EventConnection" type="EventConnection" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
 
@@ -455,11 +479,11 @@
 
     <xs:complexType name="ForEach">
 
-        <xs:choice>
+        <xs:sequence>
             <xs:element name="MultiInstantiate" type="MultiInstantiate" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="ForEach" type="ForEach" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="EventConnection" type="EventConnection" minOccurs="0" maxOccurs="1"/>
-        </xs:choice>
+            <!--<xs:element name="ForEach" type="ForEach" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="EventConnection" type="EventConnection" minOccurs="0" maxOccurs="1"/>-->
+        </xs:sequence>
 
         <xs:attribute name="instances" type="xs:string" use="required"/>
         <xs:attribute name="as" type="xs:string" use="required"/>
@@ -468,8 +492,25 @@
 
     <xs:complexType name="With">
 
-        <xs:attribute name="instance" type="xs:string" use="required"/>
+        <!-- EITHER instance OR list & index shoulf be used!!-->
+        <xs:attribute name="instance" type="xs:string" use="optional"/>
+        <xs:attribute name="list" type="xs:string" use="optional"/>
+        <!-- EITHER instance OR list & index shoulf be used!!-->
+        <xs:attribute name="index" type="xs:string" use="optional"/>
+        
+        
         <xs:attribute name="as" type="xs:string" use="required"/>
+
+    </xs:complexType>
+    
+    
+    <xs:complexType name="Tunnel">
+
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="endA" type="xs:string" use="required"/>
+        <xs:attribute name="endB" type="xs:string" use="required"/>
+        <xs:attribute name="componentA" type="xs:string" use="required"/>
+        <xs:attribute name="componentB" type="xs:string" use="required"/>
 
     </xs:complexType>
 
