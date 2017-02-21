@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    v0.7.4 supporting new LEMS elements required for recording events: EventWriter, EventRecord
+    v0.7.4 supporting new LEMS elements required for recording events: EventWriter, EventRecord; 
+    added Assign as possible child of Tunnel
     
     v0.7.3 supporting new LEMS elements required for GapJunctions & new connection specifications: 
     Tunnel, InstanceRequirement, IndexParameter, ComponentRequirement
@@ -508,6 +509,10 @@
     
     
     <xs:complexType name="Tunnel">
+
+        <xs:sequence>
+            <xs:element name="Assign" type="Assign" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
 
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="endA" type="xs:string" use="required"/>
