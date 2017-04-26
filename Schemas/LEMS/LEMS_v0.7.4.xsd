@@ -455,12 +455,12 @@
     <xs:complexType name="Structure">
 
         <xs:sequence>
-            <xs:element name="ChildInstance" type="ChildInstance" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="ChildInstance" type="ChildInstance" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="MultiInstantiate" type="MultiInstantiate" minOccurs="0" maxOccurs="1"/>
             <xs:element name="ForEach" type="ForEach" minOccurs="0" maxOccurs="1"/>
             <xs:element name="With" type="With" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="Tunnel" type="Tunnel" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="EventConnection" type="EventConnection" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="EventConnection" type="EventConnection" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
 
     </xs:complexType>
