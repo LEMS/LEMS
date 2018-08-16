@@ -15,12 +15,15 @@ install:
     - echo $main_repo_branch
     - if [[ ${main_repo_branch} != "master" && ${main_repo_branch} != "development" && ${main_repo_branch} != "experimental" ]]; then main_repo_branch=development ; fi
     
-    
+    - pwd
+    - cd ..
     - git clone https://github.com/LEMS/jLEMS.git
     - cd jLEMS
     - git checkout $main_repo_branch
     - mvn install
-    - cd ..
+    - cd ../LEMS
+    - pwd
+    - ls -alt
     
     - cd docgeneration
     - ant
