@@ -23,3 +23,5 @@ jLEMS can be used to parse and execute any LEMS model. For an application which 
 [PyLEMS](https://github.com/LEMS/pylems) (see also [here](https://docs.neuroml.org/Userdocs/Software/pyLEMS.html)).
 
 This code is distributed under the terms of the GNU General Public License v3.
+
+[![Build Status](https://travis-ci.com/LEMS/LEMS.svg?branch=master)](https://travis-ci.com/LEMS/LEMS)
