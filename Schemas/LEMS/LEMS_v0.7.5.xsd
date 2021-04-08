@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    v0.7.5: Adds description attribute to DerivedParameter and Derived…Variable
+    v0.7.5: Adds description attribute to DerivedParameter and DerivedVariable
 
     v0.7.4 supporting new LEMS elements required for recording events: EventWriter, EventRecord;
     added Assign as possible child of Tunnel
