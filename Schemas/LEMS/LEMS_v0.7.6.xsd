@@ -21,8 +21,8 @@
     and pylems (https://github.com/lisphacker/pylems)
 -->
 
-<xs:schema targetNamespace="http://www.neuroml.org/lems/0.7.5"
-    xmlns="http://www.neuroml.org/lems/0.7.5"
+<xs:schema targetNamespace="http://www.neuroml.org/lems/0.7.6"
+    xmlns="http://www.neuroml.org/lems/0.7.6"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     elementFormDefault="qualified"
     attributeFormDefault="unqualified">
