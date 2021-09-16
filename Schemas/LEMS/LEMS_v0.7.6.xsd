@@ -319,7 +319,7 @@
 
         <xs:sequence>
             <xs:element name="TimeDerivative" type="TimeDerivative" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="OnEntry" type="OnStart" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="OnEntry" type="OnEntry" minOccurs="0" maxOccurs="1"/>
             <xs:element name="OnCondition" type="OnCondition" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
 
