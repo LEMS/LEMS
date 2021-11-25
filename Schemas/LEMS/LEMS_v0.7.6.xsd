@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    v0.7.6: Adds description attribute to Child and Children
+    v0.7.6: Adds description attribute to Child and Children & ComponentReference
 
     v0.7.5: Adds description attribute to DerivedParameter and DerivedVariable
 
@@ -138,6 +138,7 @@
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
         <xs:attribute name="local" type="xs:string" use="optional"/>
+        <xs:attribute name="description" type="xs:string" use="optional"/>
 
     </xs:complexType>
 
