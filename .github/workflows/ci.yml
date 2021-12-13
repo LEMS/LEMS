@@ -63,8 +63,8 @@ jobs:
         if ( $env:main_repo_branch -ne "master" -and $env:main_repo_branch -ne "development" -and $env:main_repo_branch -ne "experimental" -and $env:main_repo_branch -notlike '*osb*' ) { $env:main_repo_branch="development" }
         echo "Using branch $env:main_repo_branch..."
         
-        git clone https://github.com/NeuroML/org.neuroml.model.injectingplugin.git
-        cd org.neuroml.model.injectingplugin
+        git clone https://github.com/NeuroML/jLEMS.git
+        cd jLEMS
         git checkout $env:main_repo_branch
         mvn install
         mvn dependency:tree
