@@ -42,18 +42,18 @@ jobs:
         git checkout $main_repo_branch
         mvn install
         mvn dependency:tree
-        cd ../LEMS/examples
+        cd ../examples
         
         pwd
         ls -alt
-        ../../jLEMS/lems example1.xml -nogui
-        ../../jLEMS/lems example2.xml -nogui
-        ../../jLEMS/lems example3.xml -nogui
-        ../../jLEMS/lems example4.xml -nogui
-        ../../jLEMS/lems example5.xml -nogui
-        ../../jLEMS/lems example6.xml -nogui
-        ../../jLEMS/lems example7.xml -nogui
-        ../../jLEMS/lems example8.xml -nogui
+        ../jLEMS/lems example1.xml -nogui
+        ../jLEMS/lems example2.xml -nogui
+        ../jLEMS/lems example3.xml -nogui
+        ../jLEMS/lems example4.xml -nogui
+        ../jLEMS/lems example5.xml -nogui
+        ../jLEMS/lems example6.xml -nogui
+        ../jLEMS/lems example7.xml -nogui
+        ../jLEMS/lems example8.xml -nogui
 
         
     - name: Further tests, Windows
