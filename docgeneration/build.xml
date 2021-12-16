@@ -22,17 +22,17 @@
 			<fileset dir="html" includes="**/*" />
 		</delete>
 	</target>
-    
-    
+
+
 	<target name="compile" description="Compile src to bin">
 		<echo>Compiling to bin</echo>
 		<mkdir dir="bin"/>
-        
+
 		<javac srcdir="src"
                destdir="bin"
                debug="true"
-               source="1.5"
-               target="1.5"
+               source="1.7"
+               target="1.7"
                includeantruntime="false"
         		classpathref="generation.classpath">
 			<include name="**/*.java"/>
@@ -94,7 +94,7 @@
 		</xslt>
 	</target>
 
-	
+
 
 
 
