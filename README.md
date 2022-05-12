@@ -1,5 +1,6 @@
 LEMS
 ====
+[![Java CI with Maven](https://github.com/LEMS/LEMS/actions/workflows/ci.yml/badge.svg)](https://github.com/LEMS/LEMS/actions/workflows/ci.yml)
 
 The Low Entropy Model Specification language. This repository contains the [Schema](https://github.com/LEMS/LEMS/tree/master/Schemas/LEMS) for the language, some [examples](https://github.com/LEMS/LEMS/tree/master/examples) and code for [generating the documentation](https://github.com/LEMS/LEMS/tree/master/docgeneration).
 
@@ -24,4 +25,4 @@ jLEMS can be used to parse and execute any LEMS model. For an application which 
 
 This code is distributed under the terms of the GNU General Public License v3.
 
-[![Build Status](https://travis-ci.com/LEMS/LEMS.svg?branch=master)](https://travis-ci.com/LEMS/LEMS)
+
