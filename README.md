@@ -1,6 +1,7 @@
 LEMS
 ====
 [![Java CI with Maven](https://github.com/LEMS/LEMS/actions/workflows/ci.yml/badge.svg)](https://github.com/LEMS/LEMS/actions/workflows/ci.yml)
+[![pages-build-deployment](https://github.com/LEMS/LEMS/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/LEMS/LEMS/actions/workflows/pages/pages-build-deployment)
 
 The Low Entropy Model Specification language. This repository contains the [Schema](https://github.com/LEMS/LEMS/tree/master/Schemas/LEMS) for the language, some [examples](https://github.com/LEMS/LEMS/tree/master/examples) and code for [generating the documentation](https://github.com/LEMS/LEMS/tree/master/docgeneration).
 
