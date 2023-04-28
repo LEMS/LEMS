@@ -31,8 +31,8 @@
 		<javac srcdir="src"
                destdir="bin"
                debug="true"
-               source="1.7"
-               target="1.7"
+               source="1.8"
+               target="1.8"
                includeantruntime="false"
         		classpathref="generation.classpath">
 			<include name="**/*.java"/>
