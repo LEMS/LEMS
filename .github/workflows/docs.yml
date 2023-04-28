@@ -28,7 +28,11 @@ jobs:
 
     - name: Build docs
       run: |
-        cd docgeneration
+        cd ..
+        git clone https://github.com/LEMS/jLEMS.git
+        cd jLEMS
+        mvn install
+        cd ../LEMS/docgeneration
         ant -p
         ant 
         ls -alt html
