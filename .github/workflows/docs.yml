@@ -39,6 +39,6 @@ jobs:
 
     - name: Publish documentation on GH pages
       run: |
-        echo "Pushing to gh-pages dir..."
-        ghp-import -f -m "Regenerate LEMS documentation through docs.yml GHA script" -b gh-pages -n -p docgeneration/html
+        echo "Testing in $(pwd)"
+        ghp-import -f -m "Regenerate documentation" -b gh-pages -n -p docgeneration/html/
 
