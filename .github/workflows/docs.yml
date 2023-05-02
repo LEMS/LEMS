@@ -40,5 +40,5 @@ jobs:
     - name: Publish documentation on GH pages
       run: |
         echo "Testing in $(pwd)"
-        #ghp-import -f -m "Regenerate documentation" -b gh-pages -n -p html/
+        ghp-import -f -m "Regenerate documentation" -b gh-pages -n -p docgeneration/html/
 
