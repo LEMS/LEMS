@@ -39,6 +39,6 @@ jobs:
 
     - name: Publish documentation on GH pages
       run: |
-        echo "Testing..."
-        #ghp-import -f -m "Regenerate documentation" -b gh-pages -n -p target/site/apidocs
+        echo "Testing in $(pwd)"
+        #ghp-import -f -m "Regenerate documentation" -b gh-pages -n -p html/
 
