@@ -1,0 +1,575 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>LEMS Interpreter</title>
+        <link type="text/css" rel="stylesheet" href="static.css">
+        <link rel="icon" href="favico.png" type="image/png">
+    </head>
+    <body>
+        <div class="pagemain">
+            <div class="leftbg">
+                <div id="left">
+                    <div>
+                        <a href="index.html">About</a>
+                    </div>
+                    <div>
+                        <a href="introduction.html">Introduction</a>
+                    </div>
+                    <div>
+                        <a href="elements.html">LEMS Elements</a>
+                    </div>
+                    <div>
+                        <a href="example1.html">Example 1</a>
+                    </div>
+                    <div>
+                        <a href="example2.html">Example 2</a>
+                    </div>
+                    <div>
+                        <a href="example3.html">Example 3</a>
+                    </div>
+                    <div>
+                        <a href="example4.html">Example 4</a>
+                    </div>
+                    <div>
+                        <a href="example5.html">Example 5</a>
+                    </div>
+                    <div>
+                        <a href="example6.html">Example 6</a>
+                    </div>
+                    <div>
+                        <a href="example7.html">Example 7</a>
+                    </div>
+                    <div>
+                        <a href="example-regimes.html">Regimes example</a>
+                    </div>
+                    <div>
+                        <a href="example-n.html">Example n</a>
+                    </div>
+                    <div>
+                        <a href="canonical.html">Canonical form</a>
+                    </div>
+                    <div>
+                        <a href="discussion.html">Discussion</a>
+                    </div>
+                    <div class="footer">
+                                Code and content GPL
+                            </div>
+                </div>
+            </div>
+            <div id="content">
+                  
+
+    
+                <h1>Model structure overview</h1>
+                    
+                <p>
+                            Models are based on user-defined types (the term <span class="xelt">ComponentType</span> is used in the XML) that contain parameter declarations,
+        reference declarations and specification of what children an instance of 
+        a type can have. Typically they also contain a <span class="xelt">Dynamics</span> specification which
+        can contain build-time and run-time declarations.  Build-time declarations apply
+        when a simulation is set up, for example to connect cells. Run-time 
+        declarations 
+        specify the state variables, equations and events that are involved. 
+    
+                </p>
+                    
+                <p>
+                            An instance of a <span class="xelt">ComponentType</span> is a model <span class="xelt">Component</span> It specifies a particular set of
+        parameters for a given <span class="xelt">ComponentType</span>. It says nothing
+        about state variables: in a simulation, typically many run-time instances will
+        correspond to a single model component definition, and several model component 
+        definitions will use the same type.  A run-time instance holds its own set of 
+        state variables as defined by the Type definition and a reference to its 
+        component for the parameter values specific to that particular model component.
+        The update rules come from the type definition.
+        As such, neither the <span class="xelt">ComponentType</span> nor the <span class="xelt">Component</span> is properly a "prototype" for the
+        runtime instance.
+    
+                </p>
+                 
+    
+                <h2>
+                    Defining <span class="xelt">ComponentType</span>s
+                </h2>
+                    
+                <p>
+                            <span class="xelt">ComponentType</span>s are declared as, for example:
+        
+                    <div class="xcode">
+                                
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">myCell</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">threshold</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                        </div>
+                                
+                    </div>
+                        
+    
+                </p>
+                    
+    
+                <p>
+                            A <span class="xelt">Component</span> based on such a type is expressed as:
+        
+                    <div class="xcode">
+                                   
+                        <div class="xcodeelement">
+                            <br>
+                            &lt;<span class="xmlverb-element-name">Component</span> <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">myCell</span>" <span class="xmlverb-attr-name">threshold</span>="<span class="xmlverb-attr-content">dimensional_quantity</span>" /&gt;
+                        </div>
+                         
+        
+                    </div>
+                        
+                </p>
+                    
+                <p>
+                            The quoted value for 'threshold' here is a rich quantity with size and
+        dimensions, typically consisting of a numerical value and a unit symbol. 
+        Assignments like this are the <i>only place</i> unit symbols can occur. 
+        Equations and expressions relate rich types, independent of any particular 
+        unit system.
+    
+                </p>
+                    
+                <p>
+                            An equivalent way of writing the above in shorthand notation (using an example of a string with size and
+        dimension for threshold) is:
+        
+                    <div class="xcode">
+                                   
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">myCell</span> <span class="xmlverb-attr-name">threshold</span>="<span class="xmlverb-attr-content">-30 mV</span>" /&gt;
+                        </div>
+                                
+                    </div>
+                        
+                </p>
+                    
+     
+                <p>
+                            A type can contain elements for specifying the 
+        following aspects of the structure and parameters of a model component:
+        
+                    <ul>
+                                   
+                        <li>
+                            <span class="xelt">Parameter</span> - dimensional quantities that remain fixed within a model
+                        </li>
+                                    
+                        <li>
+                            <span class="xelt">Child</span> - a required single sub-component of a given type
+                        </li>
+                                    
+                        <li>
+                            <span class="xelt">Children</span> - variable number of sub-components of the given type 
+                        </li>
+                                    
+                        <li>
+                            <span class="xelt">ComponentRef</span> - a reference to a top-level component definition.
+                        </li>
+                                    
+                        <li>
+                            <span class="xelt">Link</span> - a reference to a component definition relative to the referrer
+                        </li>
+                                    
+                        <li>
+                            <span class="xelt">Attachments</span> - for build-time connections
+                        </li>
+                                    
+                        <li>
+                            <span class="xelt">EventPort</span> - for run-time discrete event communication
+                        </li>
+                                    
+                        <li>
+                            <span class="xelt">Exposure</span> - quantities that can be accessed from other components
+                        </li>
+                                    
+                        <li>
+                            <span class="xelt">Requirement</span> - quantities that must be accessible to the component for it to make sense
+                        </li>
+                                    
+                        <li>
+                            <span class="xelt">DerivedParameter</span> - like parameters, but derived from some other quantity in the model
+                        </li>
+                                
+                    </ul>
+                        
+                </p>
+                    
+                <p>
+        The "EventPort" and "Attachments" declarations don't have any corresponding 
+        elements in their model component specification. They only affect how the 
+        component can be used when a model is instantiated. EventPorts specify that 
+        a model can send or receive events, and should match up with declarations in 
+        its Dynamics specification. An "Attachments" declaration specifies that a run-time
+        instance can have dynamically generated attachments as, for example, when 
+        a new synapse run-time instance is added to a cell for each incoming connection.
+    </p>
+                    
+    
+    
+  
+    
+    
+    
+                <h2>Inheritance</h2>
+                    
+      
+                <p>
+        A type can extend another type, adding new parameters, or supplying values (SetParam)
+        for inherited parameters. As well as reducing duplication, the key application 
+        of this is with the Child and Children declarations, where a type can specify that 
+        it needs a child or children of a particular supertype, but doesn't care about which
+        particular sub-type is used in a model. This applies, for example, where a cell
+        requires synapses that compute a quantity with dimensions current, but doesn't 
+        need access to any other parts of the synapse Dynamics.
+      </p>
+                    
+    
+                <h2>Run-time Dynamics</h2>
+                        
+    
+                <p>
+                            Run time Dynamics are included within a Dynamics block in a type specification.
+        They include declaration of:
+        
+                    <ul>
+                                    
+                        <li>state variables</li>
+                                    
+                        <li>first order differential equations with respect to time of state variables</li>
+                                    
+                        <li>derived quantities - things computed in terms of other local quantities or computed from other run-time instances</li>
+                                     
+        
+                    </ul>
+                        
+                </p>
+                    
+    
+                <p>
+        Run time Dynamics can be grouped into Regimes, where only one regime is operative
+        at a given time for a particular run-time instance. Regimes have access to all the 
+        variables in the parent instance and can define their own local variables.
+    </p>
+                    
+    
+                <p>
+                            Dynamics can also contain event blocks:
+        
+                    <ul>
+                                    
+                        <li>OnStart blocks contain any initialization declarations needed when a 
+            run-time state is instantiated</li>
+                                    
+                        <li>OnEvent blocks specify what happens when an event is received on a specified port</li>
+                                    
+                        <li>OnEntry blocks (only within regimes) specify things that should happen
+            each time the system enters that regime.</li>
+                                    
+                        <li>OnCondition blocks have a test condition and specify what should happen
+            when it is met.</li>
+                                
+                    </ul>
+                            Blocks may contain state variable assignments, event sending directives and 
+        transition directives to indicate that the system should change from one regime 
+        to another.
+     
+                </p>
+                    
+    
+                <h2>Build-time Structure</h2>
+                    
+                <p>
+                            Build-time Structure defines the structure of a multi-component model. Currently there are:
+        
+                    <ul>
+                                    
+                        <li>MultiInstantiate - for declaring that a component yields multiple
+            run-time instances corresponding to a particular model component. Eg, for defining 
+            populations of cells.</li>
+                                    
+                        <li>ForEach - for iterating over multiple instances in the run-time structure</li>
+                                    
+                        <li>EventConnection - for connecting ports between run-time instances</li>
+                                
+                    </ul>
+                        
+                </p>
+                    
+    
+                <h2>Other</h2>
+                    
+    
+                <p>
+        There are also Run, Show and Record Dynamics for creating type definitions that
+        define simulations and what should be recorded or displayed from such a simulation.
+    </p>
+                    
+    
+    
+    
+                <h2>Observations</h2>
+                    
+    
+                <p>
+        The numerous references to "run-time instances" above is problematic, since the 
+        structures do not dictate any particular way of building a simulator or running a model.
+        In particular, there is no requirement that a component or Dynamics declaration
+        should give rise to any particular collection of state variables that could be 
+        interpreted as a run-time instance in the state of a simulator. 
+    </p>
+                    
+                <p>
+        So, it is convenient to think of eventual state instances, and that is indeed how
+        the reference interpreter works, but the model specification structure should 
+        avoid anything that is specific to this picture. 
+    </p>
+                 
+    
+    
+    
+    
+    
+    
+    
+    
+                <h2>Type specification examples</h2>
+                    
+    
+     
+    
+                <p>
+       Examples of type definitions using the various types of child element:
+</p>
+                
+                <p>
+                           
+                    <div class="xcode">
+                                
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">synapse</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">EventPort</span> <span class="xmlverb-attr-name">direction</span>="<span class="xmlverb-attr-content">in</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                        </div>
+                                
+                    </div>
+                        says that instances of components using this type can receive events.
+
+                </p>
+                 
+
+
+
+                <p>
+                            
+                    <div class="xcode">
+                                    
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">HHChannel</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">gates</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">HHGate</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                        </div>
+                                
+                    </div>
+                             says that a HHChannel can have gates.
+
+                </p>
+                
+                <p>
+                             
+                    <div class="xcode">
+                                 
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">HHGate</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Child</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Forward</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">HHRate</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Child</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Reverse</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">HHRate</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                        </div>
+                                 
+                    </div>
+                             says that a HHGate has two children called Forward and Reverse, each of type HHRate.
+
+                </p>
+                
+                <p>
+                             
+                    <div class="xcode">
+                                 
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">synapseCell</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Attachments</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">synapses</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">synapse</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                        </div>
+                                 
+                    </div>
+                     
+            says that instances of components based on the synapseCell type can have 
+            instances of component based on the synapse type attached to them at build time.
+
+                </p>
+                
+                <p>
+                             
+                    <div class="xcode">
+                                    
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Population</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentRef</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">component</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Component</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                        </div>
+                                 
+                    </div>
+                               
+            says that components based on the Population type need a reference to a 
+            component of type Component (ie, anything) (which would then be used as 
+            the thing to be repeated in the population, but it doesn't say that here). 
+
+                </p>
+                         
+
+                <p>
+                               
+                    <div class="xcode">
+                                     
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">EventConnectivity</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Link</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">source</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Population</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                        </div>
+                                    
+                    </div>
+                             
+            says that EventConnectivity components need a relative path to a local component
+            of type Population which will be accessed via the name "source".
+
+                </p>
+                    
+    
+    
+    
+                <p>
+                           The model component declarations corresponding to the channel and gate
+        types would be:
+       
+                    <div class="xcode">
+                                
+                        <div class="xcodeelement">
+                            <br>
+                            &lt;<span class="xmlverb-element-name">Component</span> <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">HHChanne</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Component</span> <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">HHGate</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Component</span> <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">some_hh_gate_type</span>" <span class="xmlverb-attr-name">role</span>="<span class="xmlverb-attr-content">Forward</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Component</span> <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">some_hh_gate_type</span>" <span class="xmlverb-attr-name">role</span>="<span class="xmlverb-attr-content">Reverse</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Component</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &lt;/<span class="xmlverb-element-name">Component</span>&gt;
+                        </div>
+                               
+                    </div>
+                           
+       or, in the shorthand notation:
+       
+                    <div class="xcode">
+                                    
+                        <div class="xcodeelement">
+                            <br>
+                            &lt;<span class="xmlverb-element-name">HHChannel</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">HHGate</span>&gt;<span class="xmlverb-text">&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Forward</span> <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">some_hh_gate_type</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Reverse</span> <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">some_hh_gate_type</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">HHGate</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &lt;/<span class="xmlverb-element-name">HHChannel</span>&gt;
+                        </div>
+                               
+                    </div>
+                        
+                </p>
+                    
+                <p>
+                        For the population type it would be:
+    
+                    <div class="xcode">
+                                
+                        <div class="xcodeelement">
+                            <br>
+                            &lt;<span class="xmlverb-element-name">Component</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">myPopulation</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">population</span>" <span class="xmlverb-attr-name">component</span>="<span class="xmlverb-attr-content">myCellModel</span>" /&gt;
+                        </div>
+                            
+                    </div>
+                        And for the connections:
+    
+                    <div class="xcode">
+                                
+                        <div class="xcodeelement">
+                            <br>
+                            &lt;<span class="xmlverb-element-name">Component</span> <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">EventConnectivity</span>" <span class="xmlverb-attr-name">source</span>="<span class="xmlverb-attr-content">myPopulation</span>" /&gt;
+                        </div>
+                            
+                    </div>
+                        
+    
+                </p>
+                    
+    
+    
+
+
+            </div>
+        </div>
+    </body>
+</html>

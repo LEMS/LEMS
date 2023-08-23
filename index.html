@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>LEMS - Low Entropy Model Specification</title>
+        <link type="text/css" rel="stylesheet" href="static.css">
+        <link rel="icon" href="favico.png" type="image/png">
+    </head>
+    <body>
+        <div class="pagemain">
+            <div class="leftbg">
+                <div id="left">
+                    <div>
+                        <a href="index.html">About</a>
+                    </div>
+                    <div>
+                        <a href="introduction.html">Introduction</a>
+                    </div>
+                    <div>
+                        <a href="elements.html">LEMS Elements</a>
+                    </div>
+                    <div>
+                        <a href="example1.html">Example 1</a>
+                    </div>
+                    <div>
+                        <a href="example2.html">Example 2</a>
+                    </div>
+                    <div>
+                        <a href="example3.html">Example 3</a>
+                    </div>
+                    <div>
+                        <a href="example4.html">Example 4</a>
+                    </div>
+                    <div>
+                        <a href="example5.html">Example 5</a>
+                    </div>
+                    <div>
+                        <a href="example6.html">Example 6</a>
+                    </div>
+                    <div>
+                        <a href="example7.html">Example 7</a>
+                    </div>
+                    <div>
+                        <a href="example-regimes.html">Regimes example</a>
+                    </div>
+                    <div>
+                        <a href="example-n.html">Example n</a>
+                    </div>
+                    <div>
+                        <a href="canonical.html">Canonical form</a>
+                    </div>
+                    <div>
+                        <a href="discussion.html">Discussion</a>
+                    </div>
+                    <div class="footer">
+                                Code and content GPL
+                            </div>
+                </div>
+            </div>
+            <div id="content">
+                
+                <h1>LEMS: Low Entropy Model Specification</h1>
+                 
+                <h2 class="sub">A language for specifying hierarchical models based on fundamental physical relationships</h2>
+                 
+                <p class="version">
+                    Current version: vnumber&nbsp; vdate  &nbsp;&nbsp; <a href="lems.pdf">These pages as a single PDF</a>
+                </p>
+                	
+   
+   
+   
+                <p>
+   	LEMS is being developed to provide a compact, minimally redundant, human-readable,
+   	human-writable, declarative way of expressing models of biological systems. 
+   </p>
+                   
+                <p>
+   	It differs from other systems such as CellML or SBML in its requirement to be human writable
+   	and the inclusion of basic physical concepts such as dimensionality and physical nesting as 
+   	part of the language.
+   </p>
+                   
+                <p>
+   	The main goal is to enable model developers to write declarative models in LEMS in
+   	much the same way as software developers write software applications in computer languages 
+   	such as in C, Java or Python. 
+   </p>
+                   
+      
+                <p>
+   	The examples shown here use XML for expressing models as text, but LEMS is not 
+   	primarily an XML language. Rather it defines a set of structures for representing
+   	models. The reference implementation also supports a more concise indentation-based
+   	format for representing models.
+   </p>
+                   
+   
+                <p>
+                       	There are two independent implementaitons of LEMS: jLEMS, written in Java 
+   	and pyLEMS written in Python. Both are hosted on the <a href="http://github.com/LEMS">github.com/LEMS</a>.
+   
+                </p>
+                   
+                <p>
+                       	LEMS forms an essential part of <b>NeuroML version 2.0</b> See <a href="https://docs.neuroml.org/Userdocs/NeuroMLv2.html#defining-dynamics-in-lems">here</a> for more details.
+   
+                </p>
+                   
+   
+   
+                <h2>Contents</h2>
+                 
+                <p>
+                     
+                    <ul>
+                         
+                        <li>
+                            A <a href="introduction.html">An overview</a> of how types and models are declared
+                        </li>
+                            
+                        <li>
+                            A <a href="elements.html">The elements available</a> for defining and using user-defined types
+                        </li>
+                          
+       
+                        <li>Some examples (left menu)
+      illustrating how elements can be defined and used.</li>
+                             
+    
+                        <li>
+                            A brief <a href="discussion">discussion</a> of the objectives, design issues, benefits and weaknesses of this approach
+                        </li>
+                             
+ 
+                    </ul>
+                     
+                </p>
+                 
+ 
+                <p>
+                        The best place to start is probably the <a href="example1.html">first example</a>. Anyone familiar with modeling and 
+    model specification should be able to read the XML and make out what is going on.  
+ 
+                </p>
+                 
+ 
+  
+ 
+                <h2>Capabilities</h2>
+                 
+ 
+                <p>
+                        You can define <span class="xelt">ComponentType</span>s (e.g. a "HH channel" or "a bi-exponential synapse") which express the general
+    properties of a particular type of thing that goes in a model. This includes saying what parameters they have, what 
+    child elements they are allowed, and how they behave (the equations).
+ 
+                </p>
+                 
+                <p>
+                        You can then define <span class="xelt">Component</span>s based on these types by supplying values for the parameters and adding any child elements
+    that are required, so, for example, a bi-exponential synapse model with rise time 1ms and decay 5ms would be a component.
+ 
+                </p>
+                 
+                <p>
+                    <span class="xelt">ComponentType</span>s can extend other <span class="xelt">ComponentType</span>s to add extra parameters, fix certain values, and otherwise
+ modify their behavior. <span class="xelt">Component</span>s can extend other <span class="xelt">Component</span>s to reuse specified parameter values.
+ There is also a loose notion of abstract types, so a component can accept children with a particular lineage
+ without needing to know exactly what type they are. This can be used, for example, to define cells that accept 
+ synaptic connections provided they have a particular signature.
+ 
+                </p>
+                 
+ 
+                <p>
+                    Each <span class="xelt">ComponentType</span> can have a <span class="xelt">Dynamics</span> element that specifies how it behaves: what the state variables are, the equations
+ that govern them, and what happens when events are sent or received. 
+    The interpreter takes a model consisting of type and component elements referenced from a network, builds an instance
+    from them and runs it.
+ 
+                </p>
+                 
+ 
+                <p>
+                        For those familiar with object oriented languages, the <span class="xelt">ComponentType</span>/<span class="xelt">Component</span> distinction is close to the normal
+    Class/Instance distinction. When the model is run, the same pattern applies again, with the <span class="xelt">Component</span>s acting
+    as class definitions, with their "instances" actually containing the state variables in the running mode.
+ 
+                </p>
+                 
+ 
+ 
+                <h2>Background</h2>
+                 
+                <p>
+                        The <a href="http://www.neuroml.org/files/NeuroMLWorkshop2010.pdf">March 2010 NeuroML meeting</a> identified a need to extend the capability within NeuroML for expressing a range
+    of models of synapses. It was decided that the hitherto adopted approach of defining parameterized building blocks to 
+    construct models by combining blocks and setting parameters was unlikely to be flexible enough to cope with the needs 
+    for synapse models. This is not obvious a-priori, since, for example, the pre NeuroML 2.0 ion channel
+    building blocks are fully adequate to describe the dynamics of a wide range existing channel models. But there appears to be
+     no such commonality in models used for synapses, where the mechanisms used range from highly detailed biochemical
+    models to much more abstract ones.
+ 
+                </p>
+                   
+ 
+    
+                <p>
+                            This work also has antecedents in Catacomb 3, which was essentially a GUI for a component definition system and 
+        model builder using a type system similar to that proposed here. Much of the XML processing code used in the interpreter
+        was taken from <a href="http://www.neuroml.org/tool_support.php#PSICS">PSICS</a> which itself currently uses the "building block" approach to model specification.
+        The need for user-defined types has been considered with respect to future PSICS development, and this proposal also
+        reflects potential requirements for PSICS.
+ 
+                </p>
+                 
+ 
+                <h2>Example</h2>
+                 
+ 
+                <p>
+                     Here is the XML for a simple integrate-and-fire cell definition:
+ 
+                    <div class="xcode">
+                             
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">refractiaf</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">threshold</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">refractoryPeriod</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">time</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">capacitance</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">capacitance</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">vleak</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">gleak</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">conductance</span>" /&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">current</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">current</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">vreset</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">deltaV</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">v0</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">EventPort</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">out</span>" <span class="xmlverb-attr-name">direction</span>="<span class="xmlverb-attr-content">out</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">EventPort</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">in</span>" <span class="xmlverb-attr-name">direction</span>="<span class="xmlverb-attr-content">in</span>" /&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Exposure</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">StateVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">exposure</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">StateVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">tin</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">time</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">OnStart</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">StateAssignment</span> <span class="xmlverb-attr-name">variable</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">v0</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">OnStart</span>&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Regime</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">refr</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">OnEntry</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">StateAssignment</span> <span class="xmlverb-attr-name">variable</span>="<span class="xmlverb-attr-content">tin</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">t</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">StateAssignment</span> <span class="xmlverb-attr-name">variable</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">vreset</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">OnEntry</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">OnCondition</span> <span class="xmlverb-attr-name">test</span>="<span class="xmlverb-attr-content">t .gt. tin + refractoryPeriod</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Transition</span> <span class="xmlverb-attr-name">regime</span>="<span class="xmlverb-attr-content">int</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">OnCondition</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Regime</span>&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Regime</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">int</span>" <span class="xmlverb-attr-name">initial</span>="<span class="xmlverb-attr-content">true</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">TimeDerivative</span> <span class="xmlverb-attr-name">variable</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">(current + gleak * (vleak - v)) / capacitance</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">OnCondition</span> <span class="xmlverb-attr-name">test</span>="<span class="xmlverb-attr-content">v .gt. threshold</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">EventOut</span> <span class="xmlverb-attr-name">port</span>="<span class="xmlverb-attr-content">out</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Transition</span> <span class="xmlverb-attr-name">regime</span>="<span class="xmlverb-attr-content">refr</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">OnCondition</span>&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Regime</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <br>
+                            &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                        </div>
+                        
+                    </div>
+                     
+                </p>
+                 
+ 
+                <p>
+                     Once this definition is available, a particular model using this structure can be specified with the following 
+ XML: 
+ 
+                    <div class="xcode">
+                            
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">refractiaf</span> <span class="xmlverb-attr-name">threshold</span>="<span class="xmlverb-attr-content">-40mV</span>" <span class="xmlverb-attr-name">refractoryPeriod</span>="<span class="xmlverb-attr-content">5ms</span>" <span class="xmlverb-attr-name">capacitance</span>="<span class="xmlverb-attr-content">1nF</span>" <span class="xmlverb-attr-name">vleak</span>="<span class="xmlverb-attr-content">-80mV</span>" <span class="xmlverb-attr-name">gleak</span>="<span class="xmlverb-attr-content">100pS</span>" <span class="xmlverb-attr-name">vreset</span>="<span class="xmlverb-attr-content">-70mV</span>" <span class="xmlverb-attr-name">v0</span>="<span class="xmlverb-attr-content">-70mV</span>" <span class="xmlverb-attr-name">deltaV</span>="<span class="xmlverb-attr-content">10mV</span>" /&gt;
+                        </div>
+                         
+                    </div>
+                     
+                </p>
+                
+                <p>
+    More complex models will have nested components and other types of parameters, but the basic principle of 
+    separating out the equations and parameters for reusable model components, such that the equations are 
+    only stated once, remains the same.
+</p>
+                
+                <p>
+    
+</p>
+                
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title></title>
+        <link type="text/css" rel="stylesheet" href="static.css">
+        <link rel="icon" href="favico.png" type="image/png">
+    </head>
+    <body>
+        <div class="pagemain">
+            <div class="leftbg">
+                <div id="left">
+                    <div>
+                        <a href="index.html">About</a>
+                    </div>
+                    <div>
+                        <a href="introduction.html">Introduction</a>
+                    </div>
+                    <div>
+                        <a href="elements.html">LEMS Elements</a>
+                    </div>
+                    <div>
+                        <a href="example1.html">Example 1</a>
+                    </div>
+                    <div>
+                        <a href="example2.html">Example 2</a>
+                    </div>
+                    <div>
+                        <a href="example3.html">Example 3</a>
+                    </div>
+                    <div>
+                        <a href="example4.html">Example 4</a>
+                    </div>
+                    <div>
+                        <a href="example5.html">Example 5</a>
+                    </div>
+                    <div>
+                        <a href="example6.html">Example 6</a>
+                    </div>
+                    <div>
+                        <a href="example7.html">Example 7</a>
+                    </div>
+                    <div>
+                        <a href="example-regimes.html">Regimes example</a>
+                    </div>
+                    <div>
+                        <a href="example-n.html">Example n</a>
+                    </div>
+                    <div>
+                        <a href="canonical.html">Canonical form</a>
+                    </div>
+                    <div>
+                        <a href="discussion.html">Discussion</a>
+                    </div>
+                    <div class="footer">
+                                Code and content GPL
+                            </div>
+                </div>
+            </div>
+            <div id="content">
+                
+                <h1>Example 3: Connection dependent synaptic components</h1>
+                
+                <p>
+    In many models, a synapse is only created where a connection exists. This means that the model of the receiving 
+    cell should only declare that particular types of synapse can be added to it, not the actual synapse sub-components
+    themselves.
+</p>
+                
+                <p>
+                    Not much is needed beyond the elements described in example 1 except for some extensions to 
+the component that declares the connectivity and a new child element in the component that 
+the synapses are attached to. The full example is shown below. The synapse type includes an 
+<span class="xelt">EventPort</span> just like the previously defined cell type. The cell type however includes a new child element: 
+<span class="xelt">Attachments</span> defined as:
+
+                    <div class="xcode">
+                          
+                        <div class="xcodeelement">
+                            &lt;<span class="xmlverb-element-name">Attachments</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">synapses</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">synapse</span>" /&gt;
+                        </div>
+                        
+                    </div>
+                    This operates rather like the <span class="xelt">Children</span> element except that when a component is defined using this type the
+sub-elements are not included in the component definition. Instead it indicates that instances of components of the 
+particular type may be attached later when the model is actually run.
+
+                </p>
+                  
+ 
+
+                <p>
+    TODO - replacement of the hard-coded Receiver element with something generic that is 
+    accessible from a component type definition.
+</p>
+                 
+ 
+
+            </div>
+        </div>
+    </body>
+</html>
