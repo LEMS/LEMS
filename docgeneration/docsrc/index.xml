@@ -21,7 +21,7 @@
    <p>
    	The main goal is to enable model developers to write declarative models in LEMS in
    	much the same way as software developers write software applications in computer languages 
-   	such as in c, Java or Python. 
+   	such as in C, Java or Python. 
    </p>
    
       <p>
@@ -34,6 +34,10 @@
    <p>
    	There are two independent implementaitons of LEMS: jLEMS, written in Java 
    	and pyLEMS written in Python. Both are hosted on the <a href="http://github.com/LEMS">github.com/LEMS</a>.
+   </p>
+
+   <p>
+   	LEMS forms an essential part of <b>NeuroML version 2.0</b> See <a href="https://docs.neuroml.org/Userdocs/NeuroMLv2.html#defining-dynamics-in-lems">here</a> for more details.
    </p>
    
    

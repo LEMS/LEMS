@@ -593,6 +593,7 @@
             <xs:element name="Run" type="Run" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="DataWriter" type="DataWriter" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="EventWriter" type="EventWriter" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="Meta" type="Meta" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
 
     </xs:complexType>
@@ -630,6 +631,13 @@
         <xs:attribute name="path" type="xs:string" use="required"/>
         <xs:attribute name="fileName" type="xs:string" use="required"/>
         <xs:attribute name="format" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="Meta">
+        <xs:sequence>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+        </xs:sequence>
+        <xs:anyAttribute processContents="skip"/>
     </xs:complexType>
 
 
