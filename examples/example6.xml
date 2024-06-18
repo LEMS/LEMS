@@ -1,43 +1,35 @@
+<?xml version="1.0"?>
 <Lems>
- 
-    <Target component="sim1"/> 
- 
+    <Target component="sim1"/>
+
     <Include file="ex2dims.xml"/>
-    <Include file="hhchannel.xml"/> 
- 
+    <Include file="hhchannel.xml"/>
     <Include file="hhcell.xml"/>
     <Include file="spikegenerators.xml"/>
     <Include file="hhmodels.xml"/>
     <Include file="misciaf.xml"/>
- 
 
     <HHCell id="hhcell_1" capacitance="1pF" injection="4pA" v0="-60mV">
         <ChannelPopulation id="NaPop" channel="na" number="6000" erev="50mV"/>
         <ChannelPopulation id="KPop" channel="k" number="1800" erev="-77mV"/>
     </HHCell>
- 
+
     <Component id="gen1" type="spikeGenerator" period="30ms"/>
-
     <Component id="gen2" type="spikeGenerator2" period="32ms"/>
-
-    <Component id="iaf3cpt" type="iaf3" leakReversal="-50mV" deltaV="50mV" threshold="-30mV" leakConductance="50pS"
-               refractoryPeriod="4ms" capacitance="1pF"/>
+    <Component id="iaf3cpt" type="iaf3" leakReversal="-50mV" deltaV="50mV" threshold="-30mV" leakConductance="50pS" refractoryPeriod="4ms" capacitance="1pF"/>
 
     <ComponentType name="Display">
-        <Text name="title"/>   
+        <Text name="title"/>
         <Parameter name="xmin" dimension="none"/>
         <Parameter name="xmax" dimension="none"/>
         <Parameter name="ymin" dimension="none"/>
         <Parameter name="ymax" dimension="none"/>
-
         <Parameter name="timeScale" dimension="time"/>
         <Children name="lines" type="Line"/>
-
         <Simulation>
             <DataDisplay title="title" dataRegion="xmin,xmax,ymin,ymax"/>
         </Simulation>
     </ComponentType>
-
 
     <ComponentType name="Line">
         <Parameter name="scale" dimension="*"/>
@@ -49,25 +41,19 @@
         </Simulation>
     </ComponentType>
 
-
     <ComponentType name="Simulation">
         <Parameter name="length" dimension="time"/>
         <Parameter name="step" dimension="time"/>
-    
         <ComponentReference name="target" type="Component"/>
-
-
         <Children name="displays" type="Display"/>
-        
         <Dynamics>
             <StateVariable name="t" dimension="time"/>
         </Dynamics>
-    
         <Simulation>
             <Run component="target" variable="t" increment="step" total="length"/>
         </Simulation>
     </ComponentType>
-    
+
     <Simulation id="sim1" length="80ms" step="0.01ms" target="hhcell_1">
         <Display id="d0" title="Example 6: User defined types for simulation and display" timeScale="1ms" xmin="-10" xmax="90" ymin="-90" ymax="60">
             <Line id="V" quantity="v" scale="1mV" timeScale="1ms" color="#0000f0"/>
@@ -75,6 +61,4 @@
             <Line id="K_q" quantity="KPop/geff" scale="1nS" timeScale="1ms" color="#00f000"/>-->
         </Display>
     </Simulation>
-  
-
 </Lems>
