@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <Lems>
     <ComponentType name="Network">
         <Children name="populations" type="Population"/>
