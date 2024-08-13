@@ -1,5 +1,5 @@
-<Lems> 
-
+<?xml version="1.0"?>
+<Lems>
     <Dimension name="voltage" m="1" l="2" t="-3" i="-1"/>
     <Dimension name="time" t="1"/>
     <Dimension name="per_time" t="-1"/>
@@ -8,8 +8,8 @@
     <Dimension name="current" i="1"/>
     <Dimension name="temperature" k="1"/>
 
-    <Unit symbol="mV" dimension="voltage" power="-3"/> 
-    <Unit symbol="ms" dimension="time" power="-3"/> 
+    <Unit symbol="mV" dimension="voltage" power="-3"/>
+    <Unit symbol="ms" dimension="time" power="-3"/>
     <Unit symbol="pS" dimension="conductance" power="-12"/>
     <Unit symbol="nS" dimension="conductance" power="-9"/>
     <Unit symbol="uF" dimension="capacitance" power="-6"/>
@@ -19,5 +19,4 @@
     <Unit symbol="pA" dimension="current" power="-12"/>
     <Unit symbol="nA" dimension="current" power="-9"/>
     <Unit symbol="degC" dimension="temperature" offset="273.15"/>
-
 </Lems>
