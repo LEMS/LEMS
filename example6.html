@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title></title>
+        <link type="text/css" rel="stylesheet" href="static.css">
+        <link rel="icon" href="favico.png" type="image/png">
+    </head>
+    <body>
+        <div class="pagemain">
+            <div class="leftbg">
+                <div id="left">
+                    <div>
+                        <a href="index.html">About</a>
+                    </div>
+                    <div>
+                        <a href="introduction.html">Introduction</a>
+                    </div>
+                    <div>
+                        <a href="elements.html">LEMS Elements</a>
+                    </div>
+                    <div>
+                        <a href="example1.html">Example 1</a>
+                    </div>
+                    <div>
+                        <a href="example2.html">Example 2</a>
+                    </div>
+                    <div>
+                        <a href="example3.html">Example 3</a>
+                    </div>
+                    <div>
+                        <a href="example4.html">Example 4</a>
+                    </div>
+                    <div>
+                        <a href="example5.html">Example 5</a>
+                    </div>
+                    <div>
+                        <a href="example6.html">Example 6</a>
+                    </div>
+                    <div>
+                        <a href="example7.html">Example 7</a>
+                    </div>
+                    <div>
+                        <a href="example-regimes.html">Regimes example</a>
+                    </div>
+                    <div>
+                        <a href="example-n.html">Example n</a>
+                    </div>
+                    <div>
+                        <a href="canonical.html">Canonical form</a>
+                    </div>
+                    <div>
+                        <a href="discussion.html">Discussion</a>
+                    </div>
+                    <div class="footer">
+                                Code and content GPL
+                            </div>
+                </div>
+            </div>
+            <div id="content">
+                    
+                <h1>User defined types for simulation and display</h1>
+                    
+    
+                <p>
+                            Up until now, the examples have used a set of simple <span class="xelt">Simulation</span>, <span class="xelt">Display</span> and <span class="xelt">Line</span> 
+        constructs without explaining how they are defined.
+        This shows what is needed in the <span class="xelt">Dynamics</span> block to let the user defined types to specify that
+        they actually define a runnable simulation or settings that can be used to display results.
+    
+                </p>
+                    
+                <p>
+        This means that the user can select their own names for the different parameters required for a simulation, and, 
+        more importantly, simulation and display attributes can be added to existing type definitions to make multi-faceted
+        type definitions that can both be run on their own or as part of a larger simulation.
+    </p>
+                
+                <p>
+                        Example 6 shows two new elements that can be used in the <span class="xelt">Dynamics</span> block, <span class="xelt">Run</span> and <span class="xelt">Show</span> as illustrated
+    in the following user-defined type that defines a simulation:
+
+                </p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Simulation</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">length</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">time</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">step</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">time</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentRef</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">target</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">HHCell</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">displays</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Display</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">StateVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">t</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">time</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Run</span> <span class="xmlverb-attr-name">component</span>="<span class="xmlverb-attr-content">target</span>" <span class="xmlverb-attr-name">variable</span>="<span class="xmlverb-attr-content">t</span>" <span class="xmlverb-attr-name">increment</span>="<span class="xmlverb-attr-content">step</span>" <span class="xmlverb-attr-name">total</span>="<span class="xmlverb-attr-content">length</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Show</span> <span class="xmlverb-attr-name">src</span>="<span class="xmlverb-attr-content">displays</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+                    The 'component' attribute of the <span class="xelt">Run</span> element specifies which parameter of the type contains the reference to the 
+component that should actually be run. The 'step' and 'increment' attributes specify the parameters that hold the 
+timestep and total runtime. The 'variable' attribute is for future use - at present, the independent variable is always 
+'t'.
+
+                </p>
+                 
+
+                <p>
+                        A <span class="xelt">Run</span> element can be added to the Dynamics block in any type definition to make it independently runnable.
+
+                </p>
+                
+                <p>
+                        Running a simulation without any output is rarely much use, so there are two futher elements that can be included
+    in the <span class="xelt">Dynamics</span> block: <span class="xelt">Show</span> and <span class="xelt">Record</span>. The 'src' attribute of the <span class="xelt">Show</span> element points to the
+    components that should be shown. These in turn can contain other <span class="xelt">Show</span> elements but eventually everything pointed
+    to by a <span class="xelt">Show</span> element should contain one or more <span class="xelt">Record</span> elements. These specify what will actually be 
+    sent as output. They have the path to the variable as the 'quantity' attribute, its scale as the 'scale' attribute and 
+    the line color for plotting.
+
+                </p>
+                
+                <p>
+The following two types show one way that these can be combined to allow the user to express a display object containing one
+or more lines.
+</p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Display</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">timeScale</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">time</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">lines</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Line</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Show</span> <span class="xmlverb-attr-name">src</span>="<span class="xmlverb-attr-content">lines</span>" <span class="xmlverb-attr-name">scale</span>="<span class="xmlverb-attr-content">timeScale</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Line</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">scale</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">*</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Text</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">color</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Path</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">quantity</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Record</span> <span class="xmlverb-attr-name">quantity</span>="<span class="xmlverb-attr-content">quantity</span>" <span class="xmlverb-attr-name">scale</span>="<span class="xmlverb-attr-content">scale</span>" <span class="xmlverb-attr-name">color</span>="<span class="xmlverb-attr-content">color</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+Once these have been defined, a component can be constructed that uses them as follows:
+</p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        <br>
+                        &lt;<span class="xmlverb-element-name">Simulation</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">sim1</span>" <span class="xmlverb-attr-name">length</span>="<span class="xmlverb-attr-content">80ms</span>" <span class="xmlverb-attr-name">step</span>="<span class="xmlverb-attr-content">0.05ms</span>" <span class="xmlverb-attr-name">target</span>="<span class="xmlverb-attr-content">hhcell_1</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Display</span> <span class="xmlverb-attr-name">timeScale</span>="<span class="xmlverb-attr-content">1ms</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Line</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">V</span>" <span class="xmlverb-attr-name">quantity</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">scale</span>="<span class="xmlverb-attr-content">1mV</span>" <span class="xmlverb-attr-name">color</span>="<span class="xmlverb-attr-content">#0000f0</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Line</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">Na_q</span>" <span class="xmlverb-attr-name">quantity</span>="<span class="xmlverb-attr-content">NaPop/geff</span>" <span class="xmlverb-attr-name">scale</span>="<span class="xmlverb-attr-content">1nS</span>" <span class="xmlverb-attr-name">color</span>="<span class="xmlverb-attr-content">#f00000</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Line</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">K_q</span>" <span class="xmlverb-attr-name">quantity</span>="<span class="xmlverb-attr-content">KPop/geff</span>" <span class="xmlverb-attr-name">scale</span>="<span class="xmlverb-attr-content">1nS</span>" <span class="xmlverb-attr-name">color</span>="<span class="xmlverb-attr-content">#00f000</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Display</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">Simulation</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+When run, this produces the output shown below:
+</p>
+                
+                <img src="ex6run.png">
+
+
+                <p>
+Note how the scale attributes are set to 1mV and 1nS for the different lines so that they show up on the same axes.
+</p>
+                
+            </div>
+        </div>
+    </body>
+</html>

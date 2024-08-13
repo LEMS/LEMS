@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>Canonical form</title>
+        <link type="text/css" rel="stylesheet" href="static.css">
+        <link rel="icon" href="favico.png" type="image/png">
+    </head>
+    <body>
+        <div class="pagemain">
+            <div class="leftbg">
+                <div id="left">
+                    <div>
+                        <a href="index.html">About</a>
+                    </div>
+                    <div>
+                        <a href="introduction.html">Introduction</a>
+                    </div>
+                    <div>
+                        <a href="elements.html">LEMS Elements</a>
+                    </div>
+                    <div>
+                        <a href="example1.html">Example 1</a>
+                    </div>
+                    <div>
+                        <a href="example2.html">Example 2</a>
+                    </div>
+                    <div>
+                        <a href="example3.html">Example 3</a>
+                    </div>
+                    <div>
+                        <a href="example4.html">Example 4</a>
+                    </div>
+                    <div>
+                        <a href="example5.html">Example 5</a>
+                    </div>
+                    <div>
+                        <a href="example6.html">Example 6</a>
+                    </div>
+                    <div>
+                        <a href="example7.html">Example 7</a>
+                    </div>
+                    <div>
+                        <a href="example-regimes.html">Regimes example</a>
+                    </div>
+                    <div>
+                        <a href="example-n.html">Example n</a>
+                    </div>
+                    <div>
+                        <a href="canonical.html">Canonical form</a>
+                    </div>
+                    <div>
+                        <a href="discussion.html">Discussion</a>
+                    </div>
+                    <div class="footer">
+                                Code and content GPL
+                            </div>
+                </div>
+            </div>
+            <div id="content">
+                    
+                <h1>Canonical form</h1>
+                    
+    
+    
+                <p>
+        The present proposal is not a canonical form for a model. Rather, it is a concise human accessible format that 
+        is intended to have a 1-1 mapping to some canonical form. The reason for defining the human accessible one first is 
+        that it is easier to work with. As long as the mapping is easily applied and lossless, then there is little reason 
+        ever to look at models expressed in the canonical form. Indeed, provided it is genuineley lossless, then it doesn't much 
+        matter which form of a model is treated as the primary version, although it seems more likely that other tools 
+        will support the canonical form than the human readable one.
+    </p>
+                    
+    
+    
+                <p>
+        Turning a model specification into its canonical form involves:
+    </p>
+                    
+                <ul>
+                            
+                    <li>Parsing expressions and writing out MathML</li>
+                            
+                    <li>Converting quantities to their SI values and putting the original units in metadata elements
+        (the canonical form has dimensions but no units)</li>
+                            
+                    <li>Using the "Component type='xyz'" format for model elements</li>
+                        
+                </ul>
+                    
+    
+                <p>
+        The interpreter should be able to do this at some stage, but it doesn't yet. Ideally, the conversion 
+        should be implemented in XSL too since that is probably the simplest dependency for other systems to swallow.
+        An XSL mapping to a canonical form would also provide a working reference as to what that form actually is 
+        until, and possibly even after, the documentation caught up.
+    </p>
+                    
+    
+   
+
+
+            </div>
+        </div>
+    </body>
+</html>

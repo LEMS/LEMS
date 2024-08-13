@@ -1,0 +1,487 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title></title>
+        <link type="text/css" rel="stylesheet" href="static.css">
+        <link rel="icon" href="favico.png" type="image/png">
+    </head>
+    <body>
+        <div class="pagemain">
+            <div class="leftbg">
+                <div id="left">
+                    <div>
+                        <a href="index.html">About</a>
+                    </div>
+                    <div>
+                        <a href="introduction.html">Introduction</a>
+                    </div>
+                    <div>
+                        <a href="elements.html">LEMS Elements</a>
+                    </div>
+                    <div>
+                        <a href="example1.html">Example 1</a>
+                    </div>
+                    <div>
+                        <a href="example2.html">Example 2</a>
+                    </div>
+                    <div>
+                        <a href="example3.html">Example 3</a>
+                    </div>
+                    <div>
+                        <a href="example4.html">Example 4</a>
+                    </div>
+                    <div>
+                        <a href="example5.html">Example 5</a>
+                    </div>
+                    <div>
+                        <a href="example6.html">Example 6</a>
+                    </div>
+                    <div>
+                        <a href="example7.html">Example 7</a>
+                    </div>
+                    <div>
+                        <a href="example-regimes.html">Regimes example</a>
+                    </div>
+                    <div>
+                        <a href="example-n.html">Example n</a>
+                    </div>
+                    <div>
+                        <a href="canonical.html">Canonical form</a>
+                    </div>
+                    <div>
+                        <a href="discussion.html">Discussion</a>
+                    </div>
+                    <div class="footer">
+                                Code and content GPL
+                            </div>
+                </div>
+            </div>
+            <div id="content">
+                    
+                <h1>User defined types for networks and populations</h1>
+                    
+ 
+    
+                <p>
+       This example shows how the standard component type structures can be used to declare components for simple 
+       networks. The following three definitions allow networks to be constructed containing fixed size populations
+        of a particular component type.
+    </p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Network</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">populations</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Population</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">connectivities</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">EventConnectivity</span>" /&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Population</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentRef</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">component</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Component</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">size</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" /&gt;<span class="xmlverb-text">
+&nbsp;</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">EventConnectivity</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Link</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">source</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Population</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Link</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">target</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Population</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Child</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Connections</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">ConnectionPattern</span>" /&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+                    The harder part is to provide elements in the <span class="xelt">Dynamics</span> blocks to express what should be done with components
+ based on these types. The Network element doesn't pose any problems because the default behavior on instantiation will
+ do the right thing: it will instantiate each of the child populations and EventConnectivity elements.
+
+                </p>
+                
+                <p>
+                    But the population element needs to say that its instantiation involves making 'size' instances of the component referred
+to by the 'component' reference, where 'size' is the value supplied for the size parameter in a component specification.
+This can be done by including a <span class="xelt">Build</span> element inside the <span class="xelt">Dynamics</span> block:
+
+                </p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Population</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentRef</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">component</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Component</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">size</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Build</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">MultiInstantiate</span> <span class="xmlverb-attr-name">number</span>="<span class="xmlverb-attr-content">size</span>" <span class="xmlverb-attr-name">component</span>="<span class="xmlverb-attr-content">component</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Build</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+                        The <span class="xelt">MultiInstantiate</span> specification says that there should be 'size' instances of the component referred to in the 
+    'component' parameter created when the model is built. This overrides the default behavior.
+    [TODO: what is the <span class="xelt">Build</span> element content corresponding to the default behavior?].
+
+                </p>
+                
+                <p>
+This serves to create some rather simple populations. More complex specifications, such as putting one instance at each
+point of a grid satisfying a particular constraint could be handled via first declaring elements to form the grid, and then
+using selectors that pick the points in the population element to actually put the cells at [its not clear to me how much 
+more would be required to make this work, other than implementing proper xpath-like selectors].
+</p>
+                
+                <p>
+                    The following three types define a general connectivity structure with an abstract <span class="xelt">ConnectionPattern</span> type, and 
+a specific instance for All-All connectivity.
+
+                </p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">EventConnectivity</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Link</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">source</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Population</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Link</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">target</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Population</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Child</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Connections</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">ConnectionPattern</span>" /&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">ConnectionPattern</span>"&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">AllAll</span>" <span class="xmlverb-attr-name">extends</span>="<span class="xmlverb-attr-content">ConnectionPattern</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Build</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ForEach</span> <span class="xmlverb-attr-name">instances</span>="<span class="xmlverb-attr-content">../source</span>" <span class="xmlverb-attr-name">as</span>="<span class="xmlverb-attr-content">a</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ForEach</span> <span class="xmlverb-attr-name">instances</span>="<span class="xmlverb-attr-content">../target</span>" <span class="xmlverb-attr-name">as</span>="<span class="xmlverb-attr-content">b</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">EventConnection</span> <span class="xmlverb-attr-name">from</span>="<span class="xmlverb-attr-content">a</span>" <span class="xmlverb-attr-name">to</span>="<span class="xmlverb-attr-content">b</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">ForEach</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">ForEach</span>&gt;<span class="xmlverb-text">&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Build</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+                    The <span class="xelt">Build</span> element in the <span class="xelt">AllAll</span> pattern uses a new <span class="xelt">ForEach</span> construct and the <span class="xelt">EventConnectin</span>
+element from before. The <span class="xelt">ForEach</span> element operates selects each instance matching its 'instances' attribute, and 
+applies the enclosing directives, much in the same way as <span class="xelt">for-each</span> in XSL.  The proof of concept interpreter
+also has <span class="xelt">Choose</span>, <span class="xelt">When</span> and <span class="xelt">Otherwise</span> elements that operate much like their XSL equivalents, although these
+are not used in this example.
+
+
+                </p>
+                
+                <p>
+With these definitions in place, a network simulation can be defined with the following:
+</p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        <br>
+                        &lt;<span class="xmlverb-element-name">Network</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">net1</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Population</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">p1</span>" <span class="xmlverb-attr-name">component</span>="<span class="xmlverb-attr-content">gen1</span>" <span class="xmlverb-attr-name">size</span>="<span class="xmlverb-attr-content">2</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Population</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">p3</span>" <span class="xmlverb-attr-name">component</span>="<span class="xmlverb-attr-content">iaf3cpt</span>" <span class="xmlverb-attr-name">size</span>="<span class="xmlverb-attr-content">3</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">EventConnectivity</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">p1-p3</span>" <span class="xmlverb-attr-name">source</span>="<span class="xmlverb-attr-content">p1</span>" <span class="xmlverb-attr-name">target</span>="<span class="xmlverb-attr-content">p3</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Connections</span> <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">AllAll</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">EventConnectivity</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">Network</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        <br>
+                        &lt;<span class="xmlverb-element-name">Simulation</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">sim1</span>" <span class="xmlverb-attr-name">length</span>="<span class="xmlverb-attr-content">80ms</span>" <span class="xmlverb-attr-name">step</span>="<span class="xmlverb-attr-content">0.05ms</span>" <span class="xmlverb-attr-name">target</span>="<span class="xmlverb-attr-content">net1</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Display</span> <span class="xmlverb-attr-name">timeScale</span>="<span class="xmlverb-attr-content">1ms</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Line</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">gen_v</span>" <span class="xmlverb-attr-name">quantity</span>="<span class="xmlverb-attr-content">p3[0]/v</span>" <span class="xmlverb-attr-name">scale</span>="<span class="xmlverb-attr-content">1mV</span>" <span class="xmlverb-attr-name">color</span>="<span class="xmlverb-attr-content">#0000f0</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Line</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">gen_tsince</span>" <span class="xmlverb-attr-name">quantity</span>="<span class="xmlverb-attr-content">p1[0]/tsince</span>" <span class="xmlverb-attr-name">scale</span>="<span class="xmlverb-attr-content">1ms</span>" <span class="xmlverb-attr-name">color</span>="<span class="xmlverb-attr-content">#00c000</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Display</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">Simulation</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>The output when the model is run is shown below, followed by the full listing.</p>
+                
+                <img src="ex7run.png">
+
+
+                <div class="fileincludetitle">
+                    example7.xml
+            (<a href="example7.xml">xml</a>)
+        
+                </div>
+                <div class="xcodefile">
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">Lems</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Target</span> <span class="xmlverb-attr-name">component</span>="<span class="xmlverb-attr-content">sim1</span>" /&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Include</span> <span class="xmlverb-attr-name">file</span>="<span class="xmlverb-attr-content">ex2dims.xml</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Include</span> <span class="xmlverb-attr-name">file</span>="<span class="xmlverb-attr-content">spikegenerators.xml</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Include</span> <span class="xmlverb-attr-name">file</span>="<span class="xmlverb-attr-content">misciaf.xml</span>" /&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Component</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">gen1</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">spikeGenerator</span>" <span class="xmlverb-attr-name">period</span>="<span class="xmlverb-attr-content">30ms</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Component</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">gen2</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">spikeGenerator2</span>" <span class="xmlverb-attr-name">period</span>="<span class="xmlverb-attr-content">32ms</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Component</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">iaf3cpt</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">iaf3</span>" <span class="xmlverb-attr-name">leakReversal</span>="<span class="xmlverb-attr-content">-50mV</span>" <span class="xmlverb-attr-name">deltaV</span>="<span class="xmlverb-attr-content">50mV</span>" <span class="xmlverb-attr-name">threshold</span>="<span class="xmlverb-attr-content">-30mV</span>" <span class="xmlverb-attr-name">leakConductance</span>="<span class="xmlverb-attr-content">50pS</span>" <span class="xmlverb-attr-name">refractoryPeriod</span>="<span class="xmlverb-attr-content">4ms</span>" <span class="xmlverb-attr-name">capacitance</span>="<span class="xmlverb-attr-content">1pF</span>" /&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Network</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">populations</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Population</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">connectivities</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">EventConnectivity</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Population</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentReference</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">component</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Component</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">size</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Structure</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">MultiInstantiate</span> <span class="xmlverb-attr-name">number</span>="<span class="xmlverb-attr-content">size</span>" <span class="xmlverb-attr-name">component</span>="<span class="xmlverb-attr-content">component</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Structure</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">EventConnectivity</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Link</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">source</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Population</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Link</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">target</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">Population</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Child</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">Connections</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">ConnectionPattern</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">ConnectionPattern</span>" /&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">AllAll</span>" <span class="xmlverb-attr-name">extends</span>="<span class="xmlverb-attr-content">ConnectionPattern</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Structure</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ForEach</span> <span class="xmlverb-attr-name">instances</span>="<span class="xmlverb-attr-content">../source</span>" <span class="xmlverb-attr-name">as</span>="<span class="xmlverb-attr-content">a</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ForEach</span> <span class="xmlverb-attr-name">instances</span>="<span class="xmlverb-attr-content">../target</span>" <span class="xmlverb-attr-name">as</span>="<span class="xmlverb-attr-content">b</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">EventConnection</span> <span class="xmlverb-attr-name">from</span>="<span class="xmlverb-attr-content">a</span>" <span class="xmlverb-attr-name">to</span>="<span class="xmlverb-attr-content">b</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">ForEach</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">ForEach</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Structure</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Network</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">net1</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Population</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">p1</span>" <span class="xmlverb-attr-name">component</span>="<span class="xmlverb-attr-content">gen1</span>" <span class="xmlverb-attr-name">size</span>="<span class="xmlverb-attr-content">2</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Population</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">p3</span>" <span class="xmlverb-attr-name">component</span>="<span class="xmlverb-attr-content">iaf3cpt</span>" <span class="xmlverb-attr-name">size</span>="<span class="xmlverb-attr-content">3</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">EventConnectivity</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">p1-p3</span>" <span class="xmlverb-attr-name">source</span>="<span class="xmlverb-attr-content">p1</span>" <span class="xmlverb-attr-name">target</span>="<span class="xmlverb-attr-content">p3</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Connections</span> <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">AllAll</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">EventConnectivity</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Network</span>&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Include</span> <span class="xmlverb-attr-name">file</span>="<span class="xmlverb-attr-content">SingleSimulation.xml</span>" /&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Simulation</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">sim1</span>" <span class="xmlverb-attr-name">length</span>="<span class="xmlverb-attr-content">80ms</span>" <span class="xmlverb-attr-name">step</span>="<span class="xmlverb-attr-content">0.05ms</span>" <span class="xmlverb-attr-name">target</span>="<span class="xmlverb-attr-content">net1</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Display</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">d0</span>" <span class="xmlverb-attr-name">title</span>="<span class="xmlverb-attr-content">Example 7: User defined types for networks and populations</span>" <span class="xmlverb-attr-name">timeScale</span>="<span class="xmlverb-attr-content">1ms</span>" <span class="xmlverb-attr-name">xmin</span>="<span class="xmlverb-attr-content">-10</span>" <span class="xmlverb-attr-name">xmax</span>="<span class="xmlverb-attr-content">90</span>" <span class="xmlverb-attr-name">ymin</span>="<span class="xmlverb-attr-content">-50</span>" <span class="xmlverb-attr-name">ymax</span>="<span class="xmlverb-attr-content">90</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Line</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">gen_v</span>" <span class="xmlverb-attr-name">quantity</span>="<span class="xmlverb-attr-content">p3[0]/v</span>" <span class="xmlverb-attr-name">scale</span>="<span class="xmlverb-attr-content">1mV</span>" <span class="xmlverb-attr-name">timeScale</span>="<span class="xmlverb-attr-content">1ms</span>" <span class="xmlverb-attr-name">color</span>="<span class="xmlverb-attr-content">#0000f0</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Line</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">gen_tsince</span>" <span class="xmlverb-attr-name">quantity</span>="<span class="xmlverb-attr-content">p1[0]/tsince</span>" <span class="xmlverb-attr-name">scale</span>="<span class="xmlverb-attr-content">1ms</span>" <span class="xmlverb-attr-name">timeScale</span>="<span class="xmlverb-attr-content">1ms</span>" <span class="xmlverb-attr-name">color</span>="<span class="xmlverb-attr-content">#00c000</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Display</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Simulation</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">Lems</span>&gt;
+                        <br>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>

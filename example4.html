@@ -1,0 +1,565 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title></title>
+        <link type="text/css" rel="stylesheet" href="static.css">
+        <link rel="icon" href="favico.png" type="image/png">
+    </head>
+    <body>
+        <div class="pagemain">
+            <div class="leftbg">
+                <div id="left">
+                    <div>
+                        <a href="index.html">About</a>
+                    </div>
+                    <div>
+                        <a href="introduction.html">Introduction</a>
+                    </div>
+                    <div>
+                        <a href="elements.html">LEMS Elements</a>
+                    </div>
+                    <div>
+                        <a href="example1.html">Example 1</a>
+                    </div>
+                    <div>
+                        <a href="example2.html">Example 2</a>
+                    </div>
+                    <div>
+                        <a href="example3.html">Example 3</a>
+                    </div>
+                    <div>
+                        <a href="example4.html">Example 4</a>
+                    </div>
+                    <div>
+                        <a href="example5.html">Example 5</a>
+                    </div>
+                    <div>
+                        <a href="example6.html">Example 6</a>
+                    </div>
+                    <div>
+                        <a href="example7.html">Example 7</a>
+                    </div>
+                    <div>
+                        <a href="example-regimes.html">Regimes example</a>
+                    </div>
+                    <div>
+                        <a href="example-n.html">Example n</a>
+                    </div>
+                    <div>
+                        <a href="canonical.html">Canonical form</a>
+                    </div>
+                    <div>
+                        <a href="discussion.html">Discussion</a>
+                    </div>
+                    <div class="footer">
+                                Code and content GPL
+                            </div>
+                </div>
+            </div>
+            <div id="content">
+                
+                <h1>Kinetic schemes</h1>
+                
+                <p>
+    The existing components provide everything necessary to define types that allow 
+    a model to specify a kinetic scheme (Markov model).  The 
+    missing ingredient is the Dynamics element to actually expresses how instances of the components develop through time.
+</p>
+                
+                <p>
+First then, the following definitions can be used to express ion channel models where the the channel state is represented by 
+an occupancy vector among a number of distinct states with rates for the transitions between states.
+</p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">KSGate</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">power</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">deltaV</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">states</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">KSState</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">transitions</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">KSTransition</span>" /&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                        
+
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">KSState</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">relativeConductance</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" /&gt;<span class="xmlverb-text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">StateVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">occupancy</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">q</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">relativeConductance * occupancy</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">KSClosedState</span>" <span class="xmlverb-attr-name">extends</span>="<span class="xmlverb-attr-content">KSState</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Fixed</span> <span class="xmlverb-attr-name">parameter</span>="<span class="xmlverb-attr-content">relativeConductance</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">0</span>" /&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">KSOpenState</span>" <span class="xmlverb-attr-name">extends</span>="<span class="xmlverb-attr-content">KSState</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Fixed</span> <span class="xmlverb-attr-name">parameter</span>="<span class="xmlverb-attr-content">relativeConductance</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">1</span>" /&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                     
+
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">KSTransition</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Link</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">from</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">KSState</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Link</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">to</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">KSState</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Requirement</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Exposure</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">rf</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">per_time</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Exposure</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">rr</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">per_time</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                     
+
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">KSChannel</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">conductance</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">conductance</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">gates</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">KSGate</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Exposure</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">g</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">conductance</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">fopen</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" <span class="xmlverb-attr-name">select</span>="<span class="xmlverb-attr-content">gates[*]/fopen</span>" <span class="xmlverb-attr-name">reduce</span>="<span class="xmlverb-attr-content">multiply</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">g</span>" <span class="xmlverb-attr-name">exposure</span>="<span class="xmlverb-attr-content">g</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">conductance</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">fopen * conductance</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+This says that a gate can contain any number of states and transitions. A state has an occupancy variable, and a 
+transition has links to two states giving the source and target states for the transition.
+</p>
+                   
+
+                <p>
+The transition element here is an abstract element because it doesn't provide a Dynamics block but just specifies
+what quantities transitions should privide via the two exposures. 
+One of the most useful forms of transition is a damped Boltzman equation which can be parameterizd as 
+follows:
+</p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">VHalfTransition</span>" <span class="xmlverb-attr-name">extends</span>="<span class="xmlverb-attr-content">KSTransition</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">vHalf</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">z</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">gamma</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">tau</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">time</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">tauMin</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">time</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Constant</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">kte</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">25.3mV</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Requirement</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">rf0</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">per_time</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">exp(z * gamma * (v - vHalf) / kte) / tau</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">rr0</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">per_time</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">exp(-z * (1 - gamma) * (v - vHalf) / kte) / tau</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">rf</span>" <span class="xmlverb-attr-name">exposure</span>="<span class="xmlverb-attr-content">rf</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">per_time</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">1 / (1/rf0 + tauMin)</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">rr</span>" <span class="xmlverb-attr-name">exposure</span>="<span class="xmlverb-attr-content">rr</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">per_time</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">1 / (1/rr0 + tauMin)</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+Given these definitions, we can express a couple of simple channel models that use kinetic schemes. There is nothing 
+special about these models. They are just examples used in PSICS that produce spikes (albeit rather unnatural looking ones)
+when used together. 
+</p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">KSChannel</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">na1</span>" <span class="xmlverb-attr-name">conductance</span>="<span class="xmlverb-attr-content">20pS</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">KSGate</span> <span class="xmlverb-attr-name">power</span>="<span class="xmlverb-attr-content">1</span>" <span class="xmlverb-attr-name">deltaV</span>="<span class="xmlverb-attr-content">0.1mV</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">KSClosedState</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">c1</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">KSClosedState</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">c2</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">KSOpenState</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">o1</span>" <span class="xmlverb-attr-name">relativeConductance</span>="<span class="xmlverb-attr-content">1</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">KSClosedState</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">c3</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">VHalfTransition</span> <span class="xmlverb-attr-name">from</span>="<span class="xmlverb-attr-content">c1</span>" <span class="xmlverb-attr-name">to</span>="<span class="xmlverb-attr-content">c2</span>" <span class="xmlverb-attr-name">vHalf</span>="<span class="xmlverb-attr-content">-35mV</span>" <span class="xmlverb-attr-name">z</span>="<span class="xmlverb-attr-content">2.5</span>" <span class="xmlverb-attr-name">gamma</span>="<span class="xmlverb-attr-content">0.8</span>" <span class="xmlverb-attr-name">tau</span>="<span class="xmlverb-attr-content">0.15ms</span>" <span class="xmlverb-attr-name">tauMin</span>="<span class="xmlverb-attr-content">0.001ms</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">VHalfTransition</span> <span class="xmlverb-attr-name">from</span>="<span class="xmlverb-attr-content">c2</span>" <span class="xmlverb-attr-name">to</span>="<span class="xmlverb-attr-content">o1</span>" <span class="xmlverb-attr-name">vHalf</span>="<span class="xmlverb-attr-content">-35mV</span>" <span class="xmlverb-attr-name">z</span>="<span class="xmlverb-attr-content">2.5</span>" <span class="xmlverb-attr-name">gamma</span>="<span class="xmlverb-attr-content">0.8</span>" <span class="xmlverb-attr-name">tau</span>="<span class="xmlverb-attr-content">0.15ms</span>" <span class="xmlverb-attr-name">tauMin</span>="<span class="xmlverb-attr-content">0.001ms</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">VHalfTransition</span> <span class="xmlverb-attr-name">from</span>="<span class="xmlverb-attr-content">o1</span>" <span class="xmlverb-attr-name">to</span>="<span class="xmlverb-attr-content">c3</span>" <span class="xmlverb-attr-name">vHalf</span>="<span class="xmlverb-attr-content">-70mV</span>" <span class="xmlverb-attr-name">z</span>="<span class="xmlverb-attr-content">1.1</span>" <span class="xmlverb-attr-name">gamma</span>="<span class="xmlverb-attr-content">0.90</span>" <span class="xmlverb-attr-name">tau</span>="<span class="xmlverb-attr-content">8.0ms</span>" <span class="xmlverb-attr-name">tauMin</span>="<span class="xmlverb-attr-content">0.01ms</span>" /&gt;<span class="xmlverb-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">KSGate</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">KSChannel</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">KSChannel</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">k1</span>" <span class="xmlverb-attr-name">conductance</span>="<span class="xmlverb-attr-content">30pS</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">KSGate</span> <span class="xmlverb-attr-name">power</span>="<span class="xmlverb-attr-content">1</span>" <span class="xmlverb-attr-name">deltaV</span>="<span class="xmlverb-attr-content">0.1mV</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">KSClosedState</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">c1</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">KSOpenState</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">o1</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">VHalfTransition</span> <span class="xmlverb-attr-name">from</span>="<span class="xmlverb-attr-content">c1</span>" <span class="xmlverb-attr-name">to</span>="<span class="xmlverb-attr-content">o1</span>" <span class="xmlverb-attr-name">vHalf</span>="<span class="xmlverb-attr-content">0mV</span>" <span class="xmlverb-attr-name">z</span>="<span class="xmlverb-attr-content">1.5</span>" <span class="xmlverb-attr-name">gamma</span>="<span class="xmlverb-attr-content">0.75</span>" <span class="xmlverb-attr-name">tau</span>="<span class="xmlverb-attr-content">3.2ms</span>" <span class="xmlverb-attr-name">tauMin</span>="<span class="xmlverb-attr-content">0.3ms</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">KSGate</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">KSChannel</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+This has all been done with the existing components. They allow types to be defined for expressing kinetic schemes, 
+and models can be expressed that use these types, but there is nothing so far that says that the model actually is governed by a kinetic 
+scheme. In particular, there is an "occupancy" state variable in each state element for which there is no 
+governing equation and the rates
+generate "rf" and "rr" quantities that are not unused anywhere. 
+</p>
+                
+                <p>
+                    What is needed is a new element in the <span class="xelt">Dynamics</span> block to link these together and say that the rates apply to the
+changes of occupancy among the state elements. This is done by adding a <span class="xelt">KineticScheme</span> element to the Dynamics block
+for a gate as follows (this now shows the full definition of the KSGate element):
+
+                </p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">KSGate</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">power</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">deltaV</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">states</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">KSState</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">transitions</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">KSTransition</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">KineticScheme</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">ks</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Nodes</span> <span class="xmlverb-attr-name">children</span>="<span class="xmlverb-attr-content">states</span>" <span class="xmlverb-attr-name">variable</span>="<span class="xmlverb-attr-content">occupancy</span>" /&gt;<span class="xmlverb-text">&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Edges</span> <span class="xmlverb-attr-name">children</span>="<span class="xmlverb-attr-content">transitions</span>" <span class="xmlverb-attr-name">sourceNodeName</span>="<span class="xmlverb-attr-content">from</span>" <span class="xmlverb-attr-name">targetNodeName</span>="<span class="xmlverb-attr-content">to</span>" <span class="xmlverb-attr-name">forwardRate</span>="<span class="xmlverb-attr-content">rf</span>" <span class="xmlverb-attr-name">reverseRate</span>="<span class="xmlverb-attr-content">rr</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Tabulable</span> <span class="xmlverb-attr-name">variable</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">increment</span>="<span class="xmlverb-attr-content">deltaV</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">KineticScheme</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">q</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" <span class="xmlverb-attr-name">select</span>="<span class="xmlverb-attr-content">states[*]/q</span>" <span class="xmlverb-attr-name">reduce</span>="<span class="xmlverb-attr-content">add</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">fopen</span>" <span class="xmlverb-attr-name">exposure</span>="<span class="xmlverb-attr-content">fopen</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">q^power</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+                    The new part here is the <span class="xelt">KineticScheme</span>  element and its children <span class="xelt">Nodes</span>, <span class="xelt">Edges</span> and <span class="xelt">Tabulable</span>.
+The <span class="xelt">Nodes</span> element says which elements in the parent container are goverened by the scheme, and which variable in 
+those elements represents the relative occupancy.
+ 
+                </p>
+                
+                <p>
+                    The <span class="xelt">Edges</span> element is a little more complicated. It has to say not only which elements define the transitions, but 
+how the fields in the transitions map to things the scheme knows about. For a transition in a kinetic scheme, you need to 
+know which state the transition comes from, which it goes to, and how fast it goes. It is possible (as here) that a single 
+transition defines both directions, in which case it must also say which variable in the target objects provides the reverse 
+transition rates. This is what the last four attributes of the <span class="xelt">Edges</span> element do. 
+
+                </p>
+                
+                <p>
+                    The <span class="xelt">Tabulable</span> element is a temporary convenience for implementation purposes. In this case it says that the rates depend only on 
+v and that the transition matrices can be cached an reused on a grid of spacing deltaV rather than recomputed every time.
+This is not used in the 0.2.1 version of the interpreter.
+
+                </p>
+                
+                <p>
+                    Note that the <span class="xelt">KineticScheme</span> element doesn't say anything about what the outputs are. All it does is control the 
+occupancy state variable in the state elements. The interpretation of these quantities is specified in the normal way with 
+the two <span class="xelt">DerivedVaraible</span> declarations. No special elements are needed in the scheme itself.
+
+                </p>
+                
+                <p>
+    To actually use these models  we need cell and population elements to link them all together.
+    There is nothing new here - it all works just as for HH channels. The rest of the example4.xml file is:
+</p>
+                
+                <div class="xcode">
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">ChannelPopulation</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ComponentRef</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">channel</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">KSChannel</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">number</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">none</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">erev</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Requirement</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">channelg</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">conductance</span>" <span class="xmlverb-attr-name">select</span>="<span class="xmlverb-attr-content">channel/g</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">geff</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">channelg * number</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">current</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">geff * (erev - v)</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">ComponentType</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">KSCell</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">capacitance</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">capacitance</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Children</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">populations</span>" <span class="xmlverb-attr-name">type</span>="<span class="xmlverb-attr-content">ChannelPopulation</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">injection</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">current</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Parameter</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">v0</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">OnStart</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">StateAssignment</span> <span class="xmlverb-attr-name">variable</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">v0</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">OnStart</span>&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">DerivedVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">totcurrent</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">current</span>" <span class="xmlverb-attr-name">select</span>="<span class="xmlverb-attr-content">sum(populations[*]/current)</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">StateVariable</span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">dimension</span>="<span class="xmlverb-attr-content">voltage</span>" /&gt;<span class="xmlverb-text">&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">TimeDerivative</span> <span class="xmlverb-attr-name">variable</span>="<span class="xmlverb-attr-content">v</span>" <span class="xmlverb-attr-name">value</span>="<span class="xmlverb-attr-content">(totcurrent + injection) / capacitance</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Dynamics</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">ComponentType</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        &lt;<span class="xmlverb-element-name">KSCell</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">kscell_1</span>" <span class="xmlverb-attr-name">capacitance</span>="<span class="xmlverb-attr-content">1pF</span>" <span class="xmlverb-attr-name">injection</span>="<span class="xmlverb-attr-content">1pA</span>" <span class="xmlverb-attr-name">v0</span>="<span class="xmlverb-attr-content">-60mV</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ChannelPopulation</span> <span class="xmlverb-attr-name">channel</span>="<span class="xmlverb-attr-content">na1</span>" <span class="xmlverb-attr-name">number</span>="<span class="xmlverb-attr-content">600</span>" <span class="xmlverb-attr-name">erev</span>="<span class="xmlverb-attr-content">50mV</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">ChannelPopulation</span> <span class="xmlverb-attr-name">channel</span>="<span class="xmlverb-attr-content">k1</span>" <span class="xmlverb-attr-name">number</span>="<span class="xmlverb-attr-content">180</span>" <span class="xmlverb-attr-name">erev</span>="<span class="xmlverb-attr-content">-77mV</span>" /&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">KSCell</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        <br>
+                        &lt;<span class="xmlverb-element-name">Network</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">net1</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">XPopulation</span> <span class="xmlverb-attr-name">id</span>="<span class="xmlverb-attr-content">kspop</span>" <span class="xmlverb-attr-name">component</span>="<span class="xmlverb-attr-content">kscell_1</span>" <span class="xmlverb-attr-name">size</span>="<span class="xmlverb-attr-content">1</span>" /&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">Network</span>&gt;
+                    </div>
+                    
+                    <div class="xcodeelement">
+                        <br>
+                        &lt;<span class="xmlverb-element-name">Simulation</span> <span class="xmlverb-attr-name">length</span>="<span class="xmlverb-attr-content">80ms</span>" <span class="xmlverb-attr-name">step</span>="<span class="xmlverb-attr-content">0.07ms</span>" <span class="xmlverb-attr-name">target</span>="<span class="xmlverb-attr-content">net1</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Display</span> <span class="xmlverb-attr-name">timeScale</span>="<span class="xmlverb-attr-content">ms</span>"&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="xmlverb-element-name">Line</span> <span class="xmlverb-attr-name">quantity</span>="<span class="xmlverb-attr-content">kspop[0]/v</span>" <span class="xmlverb-attr-name">scale</span>="<span class="xmlverb-attr-content">mV</span>" <span class="xmlverb-attr-name">color</span>="<span class="xmlverb-attr-content">#ff4040</span>" /&gt;<span class="xmlverb-text">
+&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&lt;/<span class="xmlverb-element-name">Display</span>&gt;<span class="xmlverb-text">
+</span>
+                        <br>
+                        &lt;/<span class="xmlverb-element-name">Simulation</span>&gt;
+                    </div>
+                    
+                </div>
+                
+                <p>
+When run, this produces:
+</p>
+                
+                <img src="ex1ss.png">
+
+
+                <p>
+There are clearly some initialization issues but the basic Dynamics is the same as the PSICS version of this model.
+</p>
+                
+            </div>
+        </div>
+    </body>
+</html>
