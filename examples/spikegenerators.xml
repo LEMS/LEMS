@@ -1,7 +1,5 @@
 <Lems>
-
     <Dimension name="time" t="1"/>
- 
 
     <ComponentType name="spikeGenerator">
         <Parameter name="period" dimension="time"/>
@@ -17,7 +15,6 @@
         </Dynamics>
     </ComponentType>
 
-
     <ComponentType name="spikeGenerator2" extends="spikeGenerator">
         <Dynamics>
             <DerivedVariable name="tsince" exposure="tsince" value="t - tlast"/>
@@ -28,6 +25,4 @@
             </OnCondition>
         </Dynamics>
     </ComponentType>
- 
-
 </Lems>
