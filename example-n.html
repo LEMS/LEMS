@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title></title>
+        <link type="text/css" rel="stylesheet" href="static.css">
+        <link rel="icon" href="favico.png" type="image/png">
+    </head>
+    <body>
+        <div class="pagemain">
+            <div class="leftbg">
+                <div id="left">
+                    <div>
+                        <a href="index.html">About</a>
+                    </div>
+                    <div>
+                        <a href="introduction.html">Introduction</a>
+                    </div>
+                    <div>
+                        <a href="elements.html">LEMS Elements</a>
+                    </div>
+                    <div>
+                        <a href="example1.html">Example 1</a>
+                    </div>
+                    <div>
+                        <a href="example2.html">Example 2</a>
+                    </div>
+                    <div>
+                        <a href="example3.html">Example 3</a>
+                    </div>
+                    <div>
+                        <a href="example4.html">Example 4</a>
+                    </div>
+                    <div>
+                        <a href="example5.html">Example 5</a>
+                    </div>
+                    <div>
+                        <a href="example6.html">Example 6</a>
+                    </div>
+                    <div>
+                        <a href="example7.html">Example 7</a>
+                    </div>
+                    <div>
+                        <a href="example-regimes.html">Regimes example</a>
+                    </div>
+                    <div>
+                        <a href="example-n.html">Example n</a>
+                    </div>
+                    <div>
+                        <a href="canonical.html">Canonical form</a>
+                    </div>
+                    <div>
+                        <a href="discussion.html">Discussion</a>
+                    </div>
+                    <div class="footer">
+                                Code and content GPL
+                            </div>
+                </div>
+            </div>
+            <div id="content">
+                
+                <h1>Possible extensions</h1>
+                   
+
+
+
+
+                <h2>Repeatable components</h2>
+                
+                <p>
+                        In a sense, the <span class="xelt">Dimension</span> and <span class="xelt">Unit</span> elements operate as model-independent global quantities since they
+    may be restated in different files without problems as long as the definitions are identical.
+
+                </p>
+                
+                <p>
+    There is probably a case for a user-definable type with similar properties. The canonical application would be 
+    in defining the ionic or molecular species present in a simulation.  For example, in specifying that a channel is 
+    permeable to Na+ ions, or blocked by TTX, it is necessary to match up the occurrences of these quantities in the 
+    channel definition with those in the environment of the cell model in which the channel is used.
+</p>
+                
+                <p>
+                    This can be done with the <span class="xelt">ExternalQuantity</span> element as in example 5, but that currently requires all references 
+to a global component to point to the <i>same</i> component since a component cannot be repeated. This prevents there being
+fully independent self contained channel definitions as they would need to share the same species file. It should be 
+easily resolved by allowing a flag on type definitions to say that duplicate components are allowed for particular types 
+as long as the definitions
+are identical.
+
+                </p>
+                 
+
+  
+
+
+                <h2>Scalar fields</h2>
+                
+                <p>
+                        Conceptually, you need a number of things:
+    
+                    <ul>
+                                
+                        <li>
+                            Something like a <span class="xelt">FieldVariable</span> declaration in a <span class="xelt">Dynamics</span> analogous to a <span class="xelt">StateVaraible</span>
+        but spatially extended.
+                        </li>
+                                
+                        <li>Some notion of geometry</li>
+                                
+                        <li>
+                            A mechanism for extracting a value for a <span class="xelt">FieldVariable</span> at a point for use in a point process model.
+        this could involve sampling, interpolation or integration over some kind of kernel
+                        </li>
+                                
+                        <li>A mechanism for associating point models with positions in a scalar field</li>
+                            
+                    </ul>
+                    
+                </p>
+                
+                <p>
+    Of these, the geometry and positioning is the hard part. Whether an implementation could actually 
+    do something useful with such a model is another question entirely.
+
+</p>
+                
+            </div>
+        </div>
+    </body>
+</html>
